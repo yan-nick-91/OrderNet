@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+base:
+  uri: mongodb://mongodb:27017
+
+spring:
+  application:
+    name: Orders-Service
+
+  data:
+    mongodb:
+      database: orders
+      uri: ${base.uri}/${spring.data.mongodb.database}
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.boot.autoconfigure: DEBUG

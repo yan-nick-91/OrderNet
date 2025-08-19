@@ -1,0 +1,19 @@
+server:
+  port: 8083
+
+base:
+  uri: mongodb://mongodb_inventory:27017
+
+spring:
+  application:
+    name: Inventory-Service
+
+  data:
+    mongodb:
+      database: inventories
+      uri: ${base.uri}/${spring.data.mongodb.database}
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.boot.autoconfigure: DEBUG

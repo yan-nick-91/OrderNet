@@ -1,0 +1,31 @@
+package com.yann.inventoryservice.application.mapper;
+
+import com.yann.inventoryservice.application.dto.ProductRequestDTO;
+import com.yann.inventoryservice.application.dto.ProductResponseDTO;
+import com.yann.inventoryservice.application.dto.StockResponseDTO;
+import com.yann.inventoryservice.domain.Product;
+import com.yann.inventoryservice.domain.vo.ProductID;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
+public class ProductMapper {
+    private static final String dateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+    public static Product toProduct(ProductRequestDTO productRequestDTO) {
+        ProductID productID = new ProductID(String.format("PROD-ID-%s-%s", dateFormat, UUID.randomUUID()));
+        return new Product(productID, productRequestDTO.name(), productRequestDTO.price(),
+                productRequestDTO.quantity(), productRequestDTO.maxQuantity());
+    }
+
+    public static ProductResponseDTO toProductRequestDTO(Product product) {
+        return new ProductResponseDTO(product.getId(), product.getName(),
+                product.getPrice(), product.getAvailableQuantity(), product.getMaxQuantity());
+    }
+
+    public static StockResponseDTO toStockResponseDTO(Product product) {
+        return new StockResponseDTO(product.getId(), product.getName(),
+                product.getAvailableQuantity(), product.checkAvailability());
+    }
+}

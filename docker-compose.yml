@@ -1,0 +1,72 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+# Orders
+  mongodb_orders:
+    image: mongo:latest
+    container_name: "mongodb_orders"
+    ports:
+      - "27017:27017"
+
+  orders-service:
+    build:
+      context: Orders-Service
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      RABBITMQ_URI: amqp:guest:guest@rabbitmq:5672
+    depends_on:
+      - mongodb_orders
+#      - rabbitmq
+    ports:
+      - "8081:8081"
+    links:
+      - mongodb_orders
+
+#  Customer
+  neo4j:
+    image: neo4j:5.23
+    container_name: neo4j_db_customer
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/test1234 # the auth should be changed (even better be hidden)
+
+  customer-service:
+    build:
+      context: Customer-Service
+    environment:
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: test1234
+    depends_on:
+      - neo4j
+#      - rabbitmq
+    ports:
+      - "8082:8082"
+
+# Inventory
+  mongodb_inventory:
+    image: mongo:latest
+    container_name: mongo_inventory
+    ports:
+      - "27018:27017"
+
+  inventory-service:
+    build:
+      context: Inventory-Service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongodb_inventory
+#      - rabbitmq
+    links:
+      - mongodb_inventory
