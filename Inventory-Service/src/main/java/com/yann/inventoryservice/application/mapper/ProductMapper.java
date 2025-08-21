@@ -1,5 +1,6 @@
 package com.yann.inventoryservice.application.mapper;
 
+import com.yann.inventoryservice.application.dto.ProductCustomerResponseDTO;
 import com.yann.inventoryservice.application.dto.ProductRequestDTO;
 import com.yann.inventoryservice.application.dto.ProductResponseDTO;
 import com.yann.inventoryservice.application.dto.StockResponseDTO;
@@ -22,6 +23,10 @@ public class ProductMapper {
     public static ProductResponseDTO toProductRequestDTO(Product product) {
         return new ProductResponseDTO(product.getId(), product.getName(),
                 product.getPrice(), product.getAvailableQuantity(), product.getMaxQuantity());
+    }
+
+    public static ProductCustomerResponseDTO productCustomerResponseDTO(Product product) {
+        return new ProductCustomerResponseDTO(product.getId(), product.getName(), product.getPrice());
     }
 
     public static StockResponseDTO toStockResponseDTO(Product product) {

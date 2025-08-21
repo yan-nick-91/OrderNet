@@ -1,6 +1,10 @@
 server:
   port: 8082
 
+inventory:
+  service:
+    url: http://inventory-service:8083/api/products
+
 spring:
   application:
     name: Network-Service

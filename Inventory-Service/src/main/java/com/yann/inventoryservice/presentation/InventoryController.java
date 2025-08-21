@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/inventories")
 public class InventoryController {
     private final InventoryService inventoryService;
 
@@ -48,6 +48,20 @@ public class InventoryController {
     public ResponseEntity<Object> getAvailableProducts(@PathVariable("id") String id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getStockPercentageByProductId(id));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (OutOfStockException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/item/{name}")
+    public ResponseEntity<Object> getProductByName(@PathVariable("name") String name) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body(inventoryService.getProductByNameForCustomer(name));
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (OutOfStockException e) {

@@ -1,5 +1,6 @@
 package com.yann.inventoryservice.application;
 
+import com.yann.inventoryservice.application.dto.ProductCustomerResponseDTO;
 import com.yann.inventoryservice.application.dto.ProductRequestDTO;
 import com.yann.inventoryservice.application.dto.ProductResponseDTO;
 import com.yann.inventoryservice.application.dto.StockResponseDTO;
@@ -45,6 +46,13 @@ class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    public ProductResponseDTO getProductByName(String productName) {
+        Product product = productsRepository.findByName(productName)
+                                            .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        return ProductMapper.toProductRequestDTO(product);
+    }
+
+    @Override
     public StockResponseDTO getStockPercentageByProductId(String productId) {
         ProductID productID = new ProductID(productId);
         Product product = productsRepository.findById(productID)
@@ -70,6 +78,13 @@ class InventoryServiceImpl implements InventoryService {
     @Override
     public StockResponseDTO decreaseStockWithProducts(String productId) {
         return null;
+    }
+
+    @Override
+    public ProductCustomerResponseDTO getProductByNameForCustomer(String productName) {
+        Product product = productsRepository.findByName(productName)
+                                            .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        return ProductMapper.productCustomerResponseDTO(product);
     }
 
     @Override

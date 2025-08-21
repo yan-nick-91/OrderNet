@@ -1,4 +1,4 @@
-package com.yann.ordersservice.application.dto;
+package com.yann.customerservices.application.dto;
 
 public record AddressDTO(
         String zipcode,
