@@ -11,12 +11,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-class InventoryClientRPCRPCImpl implements InventoryClientRPC {
+class InventoryClientRPCImpl implements InventoryClientRPC {
     private final RestTemplate restTemplate;
     private final String inventoryServiceUrl;
 
-    public InventoryClientRPCRPCImpl(RestTemplateBuilder builder,
-                                     @Value("${inventory.service.url}") String inventoryServiceUrl) {
+    public InventoryClientRPCImpl(RestTemplateBuilder builder,
+                                  @Value("${inventory.service.url}") String inventoryServiceUrl) {
         this.restTemplate = builder.build();
         this.inventoryServiceUrl = inventoryServiceUrl;
 
