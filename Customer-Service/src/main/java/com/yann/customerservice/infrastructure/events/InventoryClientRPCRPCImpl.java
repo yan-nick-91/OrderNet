@@ -25,9 +25,9 @@ class InventoryClientRPCRPCImpl implements InventoryClientRPC {
     @Override
     public ProductCustomerResponseDTO requestProduct(CustomerProductRequestDTO productRequest) {
         try {
-            ProductCustomerResponseDTO reply = restTemplate.postForObject(
-                    inventoryServiceUrl + "/" + productRequest.name(),
-                    productRequest,
+            String url = String.format("%s/item/%s", inventoryServiceUrl, productRequest.name());
+            ProductCustomerResponseDTO reply = restTemplate.getForObject(
+                    url,
                     ProductCustomerResponseDTO.class);
 
             if (reply == null) {
