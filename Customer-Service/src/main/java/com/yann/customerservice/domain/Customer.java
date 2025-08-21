@@ -46,7 +46,7 @@ public class Customer {
 
         Collections.nCopies(quantity, product)
                    .forEach(p -> this.productsRelations.add(
-                           new ProductRelation(product, ProductRelationType.ADD_TO_CART)));
+                           new ProductRelation(product, ProductRelationType.IN_CART)));
     }
 
     public void removeProduct(Product product) {
