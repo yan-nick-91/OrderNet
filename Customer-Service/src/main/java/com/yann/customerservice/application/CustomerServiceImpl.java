@@ -58,7 +58,20 @@ class CustomerServiceImpl implements CustomerService {
         Product product = ProductMapper.toProduct(productCustomerResponseDTO);
         customer.addProducts(product, productRequestDTO.quantity());
         customerRepository.save(customer);
-
         return CustomerMapper.toCustomerResponseDTO(customer);
+    }
+
+    @Override
+    public List<ProductCustomerResponseDTO> getCustomersProductsList(String customerId) {
+        CustomerID customerID = customerIDFactory.set(customerId);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() ->
+                                                      new CustomerNotFoundException(
+                                                              "Customer not found or invalid ID"));
+
+        return customer.getProductsRelations()
+                       .stream()
+                       .map(p -> ProductMapper.toProductCustomerResponseDTO(p.getProduct()))
+                       .toList();
     }
 }
