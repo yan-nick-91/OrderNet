@@ -1,7 +1,5 @@
 package com.yann.customerservice.application.dto;
 
-import com.yann.ordersservice.application.dto.AddressDTO;
-
 public record CustomerRequestDTO(
         String firstname,
         String lastname,

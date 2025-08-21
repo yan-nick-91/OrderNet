@@ -1,6 +1,5 @@
 package com.yann.customerservice.domain;
 
-import com.yann.customerservice.domain.ProductRelationType;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;

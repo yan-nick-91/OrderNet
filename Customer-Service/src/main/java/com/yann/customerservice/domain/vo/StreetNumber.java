@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class StreetNumber {
     private final static Pattern STREETNUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*[A-Za-z]?$");
-    private String value;
+    private final String value;
 
     public StreetNumber(String value) {
         if (value == null || value.isBlank()) {

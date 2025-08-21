@@ -1,7 +1,5 @@
 package com.yann.customerservice.domain;
 
-import com.yann.customerservice.domain.ProductRelation;
-import com.yann.customerservice.domain.ProductRelationType;
 import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
@@ -26,9 +24,9 @@ public class Customer {
     private Address address;
 
     @Relationship(type = "INTERACT_WITH")
-    private Set<ProductRelation> productsRelations = new HashSet<>();
+    private final Set<ProductRelation> productsRelations = new HashSet<>();
 
-    private Set<OrderID> orderIDS = new HashSet<>();
+    private final Set<OrderID> orderIDS = new HashSet<>();
 
     public Customer() {
     }
