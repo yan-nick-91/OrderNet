@@ -20,13 +20,13 @@ public class Customer {
     private String lastname;
     private Email email;
 
-    @Relationship(type = "RESIDENT_AT")
+    @Relationship(type = "RESIDENT_AT", direction = Relationship.Direction.OUTGOING)
     private Address address;
 
-    @Relationship(type = "INTERACT_WITH")
-    private final Set<ProductRelation> productsRelations = new HashSet<>();
+    @Relationship(type = "HAS_PRODUCT", direction = Relationship.Direction.OUTGOING)
+    private Set<ProductRelation> productsRelations = new HashSet<>();
 
-    private final Set<OrderID> orderIDS = new HashSet<>();
+    private Set<OrderID> orderIDS = new HashSet<>();
 
     public Customer() {
     }
@@ -73,7 +73,23 @@ public class Customer {
         return address;
     }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Set<ProductRelation> getProductsRelations() {
         return productsRelations;
+    }
+
+    public void setProductsRelations(Set<ProductRelation> productsRelations) {
+        this.productsRelations = productsRelations;
+    }
+
+    public Set<OrderID> getOrderIDS() {
+        return orderIDS;
+    }
+
+    public void setOrderIDS(Set<OrderID> orderIDS) {
+        this.orderIDS = orderIDS;
     }
 }
