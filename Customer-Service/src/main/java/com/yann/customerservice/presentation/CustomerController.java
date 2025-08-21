@@ -21,8 +21,12 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Object> addCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(customerService.addCustomer(customerRequestDTO));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                                 .body(customerService.addCustomer(customerRequestDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @PostMapping("/{id}/products")
@@ -44,13 +48,28 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<Object> getAllCustomers() {
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.getAllCustomers());
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.getAllCustomers());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findCustomerByID(@PathVariable String id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(customerService.findCustomerById(id));
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<Object> findProductsByCustomerID(@PathVariable String id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomersProductsList(id));
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
