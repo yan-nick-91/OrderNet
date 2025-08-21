@@ -3,7 +3,7 @@ server:
 
 inventory:
   service:
-    url: http://inventory-service:8083/api/products
+    url: http://inventory-service:8083/api/inventories
 
 spring:
   application:
