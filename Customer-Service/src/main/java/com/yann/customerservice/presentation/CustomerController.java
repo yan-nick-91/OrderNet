@@ -3,6 +3,7 @@ package com.yann.customerservice.presentation;
 import com.yann.customerservice.application.CustomerService;
 import com.yann.customerservice.application.dto.CustomerProductRequestDTO;
 import com.yann.customerservice.application.dto.CustomerRequestDTO;
+import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
 import com.yann.customerservice.domain.exceptions.CustomerNotFoundException;
 import com.yann.customerservice.domain.exceptions.ProductUnavailableException;
 import org.springframework.http.HttpStatus;
@@ -24,17 +25,19 @@ public class CustomerController {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                                  .body(customerService.addCustomer(customerRequestDTO));
+        } catch (CustomerAlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @PostMapping("/{id}/products")
+    @PostMapping("/{customerId}/products")
     public ResponseEntity<Object> addProductToCustomerByItsID(
-            @PathVariable String id, @RequestBody CustomerProductRequestDTO customerProductRequestDTO) {
+            @PathVariable String customerId, @RequestBody CustomerProductRequestDTO customerProductRequestDTO) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    customerService.addProductToCustomer(id, customerProductRequestDTO));
+                    customerService.addProductToCustomer(customerId, customerProductRequestDTO));
         } catch (CustomerNotFoundException | HttpClientErrorException.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (ProductUnavailableException e) {
