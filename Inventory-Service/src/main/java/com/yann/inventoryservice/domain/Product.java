@@ -1,14 +1,12 @@
 package com.yann.inventoryservice.domain;
 
-import com.yann.inventoryservice.domain.exception.IllegaInitInventoryException;
-import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
-import com.yann.inventoryservice.domain.exception.IllegalQuantityUpdateException;
-import com.yann.inventoryservice.domain.exception.OutOfStockException;
+import com.yann.inventoryservice.domain.exception.*;
+import com.yann.inventoryservice.domain.vo.CustomerID;
 import com.yann.inventoryservice.domain.vo.ProductID;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,11 +15,12 @@ import java.util.Set;
 public class Product {
     @Id
     private ProductID id;
-    @Indexed(unique = true)
     private String name;
     private double price;
     private int availableQuantity;
     private int maxQuantity;
+
+    private final List<ReservedProduct> reservedProducts = new ArrayList<>();
 
     public Product() {
     }
@@ -63,7 +62,7 @@ public class Product {
     private double getAvailabilityPercentage() {
         if (maxQuantity < 50) {
             throw new IllegaInitInventoryException("The initialization of a product cannot be lower than 50");
-        };
+        }
 
         return ((double) availableQuantity / maxQuantity) * 100;
     }
@@ -79,7 +78,7 @@ public class Product {
         this.availableQuantity += quantity;
     }
 
-    public void reduceQuantity(int quantity) {
+    public void decreaseQuantity(int quantity) {
         if (quantity <= 0) {
             throw new IllegalQuantityUpdateException("Quantity to reduce must be greater than zero");
         }
@@ -90,11 +89,11 @@ public class Product {
         this.availableQuantity -= quantity;
     }
 
-    public void checkIfProductExists(List<Product> products) {
+    public void checkIfProductIsAlreadyInitialized(List<Product> products) {
         Set<String> seenNames = new HashSet<>();
 
         boolean hasDuplicate = products.stream().map(Product::getName)
-                .anyMatch(name -> !seenNames.add(name));
+                                       .anyMatch(name -> !seenNames.add(name));
 
         if (hasDuplicate) {
             throw new IllegalInventoryUpdateException("Duplicate product found and therefor not added");
