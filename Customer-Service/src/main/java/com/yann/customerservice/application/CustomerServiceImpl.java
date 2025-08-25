@@ -29,6 +29,11 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequestDTO) {
+        List<Customer> existingCustomers = customerRepository.findAll();
+        existingCustomers.forEach(customer -> {
+            customer.checkIfCustomersEmailIsPersisted(existingCustomers, customerRequestDTO.email());
+        });
+
         CustomerID customerID = customerIDFactory.create();
         Customer customer = CustomerMapper.toCustomer(customerID, customerRequestDTO);
         customerRepository.save(customer);
@@ -49,14 +54,22 @@ class CustomerServiceImpl implements CustomerService {
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
-    public CustomerResponseDTO addProductToCustomer(String id, CustomerProductRequestDTO productRequestDTO) {
-        CustomerID customerID = customerIDFactory.set(id);
+    public CustomerResponseDTO addProductToCustomer(String customerId, CustomerProductRequestDTO productRequestDTO) {
+        CustomerID customerID = customerIDFactory.set(customerId);
         Customer customer = customerRepository.findById(customerID)
                                               .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
-        ProductCustomerResponseDTO productCustomerResponseDTO = inventoryClientRPC.requestProduct(productRequestDTO);
+        var customerProductQuantityRequest =
+                new CustomerProductQuantityRequestDTO(customerId, productRequestDTO.quantity());
+
+        ProductCustomerResponseDTO productCustomerResponseDTO =
+                inventoryClientRPC.requestProduct(
+                        productRequestDTO.name(),
+                        customerProductQuantityRequest);
+
         Product product = ProductMapper.toProduct(productCustomerResponseDTO);
-        customer.addProducts(product, productRequestDTO.quantity());
+        customer.addNewProductToCart(product, customerProductQuantityRequest.quantity());
+
         customerRepository.save(customer);
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
