@@ -1,5 +1,6 @@
 package com.yann.customerservice.domain;
 
+import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
 import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
@@ -8,8 +9,8 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Node("Customer")
@@ -39,14 +40,22 @@ public class Customer {
         this.address = address;
     }
 
-    public void addProducts(Product product, int quantity) {
+    public void checkIfCustomersEmailIsPersisted(List<Customer> existingCustomers, String emailToCheck) {
+        existingCustomers.stream()
+                         .map(Customer::getEmail)
+                         .map(Email::value)
+                         .filter(emailValue -> emailValue.equals(emailToCheck))
+                         .findAny()
+                         .ifPresent(emailValue -> {
+                             throw new CustomerAlreadyExistsException("Email already registered: " + emailToCheck);
+                         });
+    }
+
+    public void addNewProductToCart(Product product, int quantity) {
         if (quantity <= 0) {
             throw new IllegalProductQuantityException("Quantity must be greater than 0");
         }
-
-        Collections.nCopies(quantity, product)
-                   .forEach(p -> this.productsRelations.add(
-                           new ProductRelation(product, ProductRelationType.IN_CART)));
+        productsRelations.add(new ProductRelation(product, ProductRelationType.IN_CART, quantity));
     }
 
     public void removeProduct(Product product) {

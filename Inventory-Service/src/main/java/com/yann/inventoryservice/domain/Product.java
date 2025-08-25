@@ -20,8 +20,6 @@ public class Product {
     private int availableQuantity;
     private int maxQuantity;
 
-    private final List<ReservedProduct> reservedProducts = new ArrayList<>();
-
     public Product() {
     }
 
