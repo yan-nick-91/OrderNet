@@ -23,7 +23,7 @@ class InventoryClientRPCImpl implements InventoryClientRPC {
     @Override
     public ProductCustomerResponseDTO requestProduct(String productName) {
         try {
-            String url = String.format("%s/%s", inventoryServiceUrl, productName);
+            String url = String.format("%s/customer/%s", inventoryServiceUrl, productName);
             // Send request to inventory service to get the product from inventory.
             ProductCustomerResponseDTO reply = restTemplate.getForObject(url, ProductCustomerResponseDTO.class);
 
