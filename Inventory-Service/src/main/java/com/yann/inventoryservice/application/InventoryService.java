@@ -14,12 +14,18 @@ public interface InventoryService {
     ProductResponseDTO getProductById(String productId);
 
     ProductResponseDTO getProductByName(String productName);
+
+    ProductCustomerResponseDTO getProductForCustomerByName(String productName);
+
     StockResponseDTO getStockPercentageByProductId(String productId);
+
     List<StockResponseDTO> getAllStockPercentage();
+
     StockResponseDTO increaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
+
     StockResponseDTO decreaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
 
-    ProductCustomerResponseDTO getProductForCustomer(String name, ProductCustomerRequestDTO product);
+    StockUpdateResponseDTO updateProduct(String productId, StockUpdateRequestDTO stockUpdateRequestDTO);
 
     void deleteProduct(String productId);
 }
