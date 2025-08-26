@@ -1,12 +1,11 @@
 package com.yann.inventoryservice.domain;
 
 import com.yann.inventoryservice.domain.exception.*;
-import com.yann.inventoryservice.domain.vo.CustomerID;
+import com.yann.inventoryservice.domain.vo.MaxQuantity;
 import com.yann.inventoryservice.domain.vo.ProductID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,12 +17,12 @@ public class Product {
     private String name;
     private double price;
     private int availableQuantity;
-    private int maxQuantity;
+    private MaxQuantity maxQuantity;
 
     public Product() {
     }
 
-    public Product(ProductID id, String name, double price, int initialQuantity, int maxQuantity) {
+    public Product(ProductID id, String name, double price, int initialQuantity, MaxQuantity maxQuantity) {
         if (name == null || name.isBlank()) {
             throw new IllegaInitInventoryException("Name cannot be null or empty");
         }
@@ -32,7 +31,7 @@ public class Product {
             throw new IllegaInitInventoryException("Price cannot be less than or equal to 0.0");
         }
 
-        if (initialQuantity > maxQuantity) {
+        if (initialQuantity > maxQuantity.value()) {
             throw new IllegaInitInventoryException("Initial quantity cannot be greater than max quantity");
         }
 
@@ -58,11 +57,10 @@ public class Product {
     }
 
     private double getAvailabilityPercentage() {
-        if (maxQuantity < 50) {
+        if (maxQuantity.value() < 50) {
             throw new IllegaInitInventoryException("The initialization of a product cannot be lower than 50");
         }
-
-        return ((double) availableQuantity / maxQuantity) * 100;
+        return ((double) availableQuantity / maxQuantity.value()) * 100;
     }
 
     public void increaseQuantity(int quantity) {
@@ -70,7 +68,7 @@ public class Product {
             throw new IllegalQuantityUpdateException("Quantity to increase must be greater than zero");
         }
 
-        if (availableQuantity > maxQuantity) {
+        if (availableQuantity > maxQuantity.value()) {
             throw new IllegalQuantityUpdateException("Quantity to increase exceeds maximum quantity");
         }
         this.availableQuantity += quantity;
@@ -96,6 +94,10 @@ public class Product {
         if (hasDuplicate) {
             throw new IllegalInventoryUpdateException("Duplicate product found and therefor not added");
         }
+    }
+
+    public void updateMaxQuantity(int newMaxQuantity) {
+        this.maxQuantity = new MaxQuantity(newMaxQuantity);
     }
 
     public ProductID getId() {
@@ -124,15 +126,8 @@ public class Product {
         this.price = price;
     }
 
-    public int getMaxQuantity() {
+    public MaxQuantity getMaxQuantity() {
         return maxQuantity;
-    }
-
-    public void setMaxQuantity(int maxQuantity) {
-        if (maxQuantity < 50) {
-            throw new IllegalInventoryUpdateException("Max quantity must be equal or greater than 50");
-        }
-        this.maxQuantity = maxQuantity;
     }
 
     public int getAvailableQuantity() {
