@@ -8,7 +8,7 @@ import java.util.Objects;
 public class ProductID {
     private static final String PREFIX = "PROD-ID";
     private static final String DATE_FORMAT = "\\d{8}";
-    private String value;
+    private final String value;
 
     public ProductID(String value) {
         if (value == null || value.isBlank()) {

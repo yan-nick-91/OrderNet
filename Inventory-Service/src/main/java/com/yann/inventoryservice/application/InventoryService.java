@@ -1,8 +1,6 @@
 package com.yann.inventoryservice.application;
 
-import com.yann.inventoryservice.application.dto.ProductRequestDTO;
-import com.yann.inventoryservice.application.dto.ProductResponseDTO;
-import com.yann.inventoryservice.application.dto.StockResponseDTO;
+import com.yann.inventoryservice.application.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +11,21 @@ public interface InventoryService {
 
     List<ProductResponseDTO> getAllProducts();
 
-    ProductResponseDTO getProductById(String id);
+    ProductResponseDTO getProductById(String productId);
+
+    ProductResponseDTO getProductByName(String productName);
+
+    ProductCustomerResponseDTO getProductForCustomerByName(String productName);
 
     StockResponseDTO getStockPercentageByProductId(String productId);
-    List<StockResponseDTO> getAllStockPercentage();
-    StockResponseDTO increaseStockWithProducts(String productId);
-    StockResponseDTO decreaseStockWithProducts(String productId);
 
-    void deleteProduct(String id);
+    List<StockResponseDTO> getAllStockPercentage();
+
+    StockResponseDTO increaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
+
+    StockResponseDTO decreaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
+
+    StockUpdateResponseDTO updateProduct(String productId, StockUpdateRequestDTO stockUpdateRequestDTO);
+
+    void deleteProduct(String productId);
 }

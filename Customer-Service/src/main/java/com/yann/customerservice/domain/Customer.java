@@ -1,5 +1,7 @@
 package com.yann.customerservice.domain;
 
+import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
+import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
 import com.yann.customerservice.domain.vo.OrderID;
@@ -8,6 +10,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Node("Customer")
@@ -18,10 +21,10 @@ public class Customer {
     private String lastname;
     private Email email;
 
-    @Relationship(type = "RESIDENT_AT")
+    @Relationship(type = "RESIDENT_AT", direction = Relationship.Direction.OUTGOING)
     private Address address;
 
-    @Relationship(type = "INTERACT_WITH")
+    @Relationship(type = "HAS_PRODUCT", direction = Relationship.Direction.OUTGOING)
     private Set<ProductRelation> productsRelations = new HashSet<>();
 
     private Set<OrderID> orderIDS = new HashSet<>();
@@ -37,8 +40,22 @@ public class Customer {
         this.address = address;
     }
 
-    public void addProduct(Product product, ProductRelationType type) {
-        this.productsRelations.add(new ProductRelation(product, type));
+    public void checkIfCustomersEmailIsPersisted(List<Customer> existingCustomers, String emailToCheck) {
+        existingCustomers.stream()
+                         .map(Customer::getEmail)
+                         .map(Email::value)
+                         .filter(emailValue -> emailValue.equals(emailToCheck))
+                         .findAny()
+                         .ifPresent(emailValue -> {
+                             throw new CustomerAlreadyExistsException("Email already registered: " + emailToCheck);
+                         });
+    }
+
+    public void addNewProductToCart(Product product, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalProductQuantityException("Quantity must be greater than 0");
+        }
+        productsRelations.add(new ProductRelation(product, ProductRelationType.IN_CART, quantity));
     }
 
     public void removeProduct(Product product) {
@@ -65,7 +82,23 @@ public class Customer {
         return address;
     }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Set<ProductRelation> getProductsRelations() {
         return productsRelations;
+    }
+
+    public void setProductsRelations(Set<ProductRelation> productsRelations) {
+        this.productsRelations = productsRelations;
+    }
+
+    public Set<OrderID> getOrderIDS() {
+        return orderIDS;
+    }
+
+    public void setOrderIDS(Set<OrderID> orderIDS) {
+        this.orderIDS = orderIDS;
     }
 }

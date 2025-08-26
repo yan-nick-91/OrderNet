@@ -3,11 +3,9 @@ package com.yann.inventoryservice.application.dto;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
 import com.yann.inventoryservice.domain.vo.ProductID;
 
-public record ProductResponseDTO(
+public record StockUpdateResponseDTO(
         ProductID productID,
-        String name,
+        String productName,
         double price,
-        int availableQuantity,
-        MaxQuantity maxQuantity
-) {
+        MaxQuantity maxQuantity) {
 }

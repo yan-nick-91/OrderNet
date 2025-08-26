@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 
 public class Email {
-    private String value;
+    private final String value;
 
     public Email(String value) {
         if (value == null || value.isBlank()) {

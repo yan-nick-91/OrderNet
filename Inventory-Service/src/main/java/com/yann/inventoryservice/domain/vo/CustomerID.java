@@ -1,23 +1,26 @@
-package com.yann.customerservice.domain.vo;
+package com.yann.inventoryservice.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
-public class StreetNumber {
-    private final static Pattern STREETNUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*[A-Za-z]?$");
+public class CustomerID {
+    private static final String PREFIX = "CUS-ID";
+    private static final String DATE_FORMAT = "\\d{8}";
     private final String value;
 
-    public StreetNumber(String value) {
+    public CustomerID(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("StreetNumber value is null or empty");
+            throw new NullPointerException("value is null or empty");
         }
 
-        if (!value.matches(STREETNUMBER_PATTERN.pattern())) {
-            throw new IllegalArgumentException("StreetNumber value is invalid");
+        String formatted = String.format("%s-%s", PREFIX, DATE_FORMAT);
+
+        if (!value.matches(formatted + "-[0-9a-fA-F\\-]{36}")) {
+            throw new IllegalArgumentException("Invalid CustomerID format: " + value);
         }
+
         this.value = value;
     }
 
@@ -27,15 +30,15 @@ public class StreetNumber {
     }
 
     @JsonCreator
-    public static StreetNumber fromString(String value) {
-        return new StreetNumber(value);
+    public static CustomerID fromString(String value) {
+        return new CustomerID(value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StreetNumber that = (StreetNumber) o;
+        CustomerID that = (CustomerID) o;
         return Objects.equals(value, that.value);
     }
 
