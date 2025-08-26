@@ -59,17 +59,11 @@ class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findById(customerID)
                                               .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
-        var customerProductQuantityRequest =
-                new CustomerProductQuantityRequestDTO(customerId, productRequestDTO.quantity());
-
         ProductCustomerResponseDTO productCustomerResponseDTO =
-                inventoryClientRPC.requestProduct(
-                        productRequestDTO.name(),
-                        customerProductQuantityRequest);
+                inventoryClientRPC.requestProduct(productRequestDTO.name());
 
         Product product = ProductMapper.toProduct(productCustomerResponseDTO);
-        customer.addNewProductToCart(product, customerProductQuantityRequest.quantity());
-
+        customer.addNewProductToCart(product, productRequestDTO.quantity());
         customerRepository.save(customer);
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
