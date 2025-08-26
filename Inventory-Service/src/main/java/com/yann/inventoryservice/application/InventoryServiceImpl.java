@@ -49,6 +49,12 @@ class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    public ProductCustomerResponseDTO getProductForCustomerByName(String productName) {
+        Product product = checkProductNameForProduct(productName);
+        return ProductMapper.toProductCustomerResponseDTO(product);
+    }
+
+    @Override
     public StockResponseDTO getStockPercentageByProductId(String productId) {
         Product product = checkProductIdForProduct(productId);
         String percentage = product.checkAvailability();
@@ -79,10 +85,12 @@ class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public ProductCustomerResponseDTO getProductForCustomer(
-            String name, ProductCustomerRequestDTO productCustomerRequestDTO) {
-        Product product = checkProductNameForProduct(name);
-        return ProductMapper.productCustomerResponseDTO(product);
+    public StockUpdateResponseDTO updateProduct(String productId, StockUpdateRequestDTO stockUpdateRequestDTO) {
+        Product product = checkProductIdForProduct(productId);
+        Product updatedProduct = ProductMapper.toUpdateProduct(product, stockUpdateRequestDTO);
+        product.updateMaxQuantity(stockUpdateRequestDTO.maxQuantity());
+        productsRepository.save(product);
+        return ProductMapper.toStockUpdateResponse(updatedProduct);
     }
 
     @Override
