@@ -1,6 +1,5 @@
 package com.yann.customerservice.infrastructure.events;
 
-import com.yann.customerservice.application.dto.CustomerProductRequestDTO;
 import com.yann.customerservice.application.dto.ProductCustomerResponseDTO;
 import com.yann.customerservice.domain.exceptions.InventoryServiceException;
 import com.yann.customerservice.domain.exceptions.ProductUnavailableException;
@@ -19,26 +18,20 @@ class InventoryClientRPCImpl implements InventoryClientRPC {
                                   @Value("${inventory.service.url}") String inventoryServiceUrl) {
         this.restTemplate = builder.build();
         this.inventoryServiceUrl = inventoryServiceUrl;
-
     }
 
     @Override
-    public ProductCustomerResponseDTO requestProduct(CustomerProductRequestDTO productRequest) {
+    public ProductCustomerResponseDTO requestProduct(String productName) {
         try {
-            String url = String.format("%s/item/%s", inventoryServiceUrl, productRequest.name());
-            ProductCustomerResponseDTO reply = restTemplate.getForObject(
-                    url,
-                    ProductCustomerResponseDTO.class);
+            String url = String.format("%s/%s", inventoryServiceUrl, productName);
+            // Send request to inventory service to get the product from inventory.
+            ProductCustomerResponseDTO reply = restTemplate.getForObject(url, ProductCustomerResponseDTO.class);
 
             if (reply == null) {
                 // http status 503
                 throw new ProductUnavailableException("Inventory service unavailable, try again later");
             }
-            return new ProductCustomerResponseDTO(
-                    reply.productID(),
-                    reply.name(),
-                    reply.price());
-
+            return new ProductCustomerResponseDTO(reply.productID(), reply.name(), reply.price());
         } catch (ProductUnavailableException |
                  HttpClientErrorException.NotFound |
                  HttpClientErrorException.Conflict e) {
