@@ -1,7 +1,6 @@
 package com.yann.customerservice.domain.utils;
 
 import com.yann.customerservice.domain.vo.CartID;
-import com.yann.customerservice.domain.vo.CustomerID;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
