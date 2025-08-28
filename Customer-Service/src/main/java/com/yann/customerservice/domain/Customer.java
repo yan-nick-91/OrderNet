@@ -1,7 +1,6 @@
 package com.yann.customerservice.domain;
 
 import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
-import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
 import com.yann.customerservice.domain.vo.OrderID;
@@ -21,11 +20,11 @@ public class Customer {
     private String lastname;
     private Email email;
 
+    @Relationship(type = "HAS_CART", direction = Relationship.Direction.OUTGOING)
+    private Cart cart;
+
     @Relationship(type = "RESIDENT_AT", direction = Relationship.Direction.OUTGOING)
     private Address address;
-
-    @Relationship(type = "HAS_PRODUCT", direction = Relationship.Direction.OUTGOING)
-    private Set<ProductRelation> productsRelations = new HashSet<>();
 
     private Set<OrderID> orderIDS = new HashSet<>();
 
@@ -38,6 +37,7 @@ public class Customer {
         this.lastname = lastname;
         this.email = email;
         this.address = address;
+        this.cart = new Cart();
     }
 
     public void checkIfCustomersEmailIsPersisted(List<Customer> existingCustomers, String emailToCheck) {
@@ -49,17 +49,6 @@ public class Customer {
                          .ifPresent(emailValue -> {
                              throw new CustomerAlreadyExistsException("Email already registered: " + emailToCheck);
                          });
-    }
-
-    public void addNewProductToCart(Product product, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalProductQuantityException("Quantity must be greater than 0");
-        }
-        productsRelations.add(new ProductRelation(product, ProductRelationType.IN_CART, quantity));
-    }
-
-    public void removeProduct(Product product) {
-        this.productsRelations.removeIf(relation -> relation.getProduct().equals(product));
     }
 
     public CustomerID getId() {
@@ -86,12 +75,12 @@ public class Customer {
         this.address = address;
     }
 
-    public Set<ProductRelation> getProductsRelations() {
-        return productsRelations;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setProductsRelations(Set<ProductRelation> productsRelations) {
-        this.productsRelations = productsRelations;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Set<OrderID> getOrderIDS() {
