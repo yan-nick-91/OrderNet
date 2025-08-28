@@ -10,7 +10,7 @@ import com.yann.customerservice.domain.exceptions.CustomerNotFoundException;
 import com.yann.customerservice.domain.utils.CreateIDFactory;
 import com.yann.customerservice.domain.vo.CartID;
 import com.yann.customerservice.domain.vo.CustomerID;
-import com.yann.customerservice.infrastructure.events.InventoryClientRPC;
+import com.yann.customerservice.infrastructure.rpc.InventoryClientRPC;
 import com.yann.customerservice.infrastructure.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 

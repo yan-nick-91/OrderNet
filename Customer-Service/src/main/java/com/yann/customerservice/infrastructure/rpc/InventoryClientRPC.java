@@ -1,4 +1,4 @@
-package com.yann.customerservice.infrastructure.events;
+package com.yann.customerservice.infrastructure.rpc;
 
 import com.yann.customerservice.application.dto.ProductCustomerResponseDTO;
 import org.springframework.stereotype.Service;
