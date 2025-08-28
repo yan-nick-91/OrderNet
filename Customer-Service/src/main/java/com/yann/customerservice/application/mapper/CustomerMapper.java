@@ -27,6 +27,6 @@ public class CustomerMapper {
     public static CustomerResponseDTO toCustomerResponseDTO(Customer customer) {
         return new CustomerResponseDTO(customer.getId(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail(),
-                customer.getAddress(), customer.getProductsRelations());
+                customer.getAddress(), customer.getCart());
     }
 }
