@@ -13,6 +13,8 @@ public class Neo4JConfig {
     @Bean
     public Neo4jConversions neo4jConversions() {
         return new Neo4jConversions(List.of(
+                new CartIDReader(),
+                new CartIDWriter(),
                 new CustomerIDReader(),
                 new CustomerIDWriter(),
                 new EmailReader(),
