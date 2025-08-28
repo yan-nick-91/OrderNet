@@ -15,7 +15,7 @@ public class Cart {
     private CartID cartID;
 
     @Relationship(type = "HAS_PRODUCT", direction = Relationship.Direction.OUTGOING)
-    private List<ProductRelation> products = new ArrayList<>();
+    private final List<ProductRelation> products = new ArrayList<>();
 
     public Cart() {
     }
