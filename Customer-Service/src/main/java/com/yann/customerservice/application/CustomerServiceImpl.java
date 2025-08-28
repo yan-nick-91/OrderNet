@@ -62,8 +62,9 @@ class CustomerServiceImpl implements CustomerService {
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
-    public CustomerResponseDTO addProductToCustomer(String customerId, CustomerProductRequestDTO productRequestDTO) {
-        CustomerID customerID = customerIDFactory.set(customerId);
+    public CustomerResponseDTO addProductToCustomer(
+            String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
         Customer customer = customerRepository.findById(customerID)
                                               .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 

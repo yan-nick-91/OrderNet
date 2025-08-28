@@ -17,7 +17,7 @@ public interface CustomerService {
     CustomerResponseDTO findCustomerById(String customerIDAsString);
 
     CustomerResponseDTO addProductToCustomer(
-            String customerId, CustomerProductRequestDTO customerProductRequestDTO);
+            String customerIDAsString, CustomerProductRequestDTO customerProductRequestDTO);
 
     List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString);
 }

@@ -32,13 +32,12 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/{customerIdAsString}/products")
+    @PostMapping("/{customerIDAsString}/products")
     public ResponseEntity<Object> addProductToCustomerByItsID(
-            @PathVariable String customerIdAsString,
-            @RequestBody CustomerProductRequestDTO customerProductRequestDTO) {
+            @PathVariable String customerIDAsString, @RequestBody CustomerProductRequestDTO customerProductRequestDTO) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    customerService.addProductToCustomer(customerIdAsString, customerProductRequestDTO));
+                    customerService.addProductToCustomer(customerIDAsString, customerProductRequestDTO));
         } catch (CustomerNotFoundException | HttpClientErrorException.NotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (ProductUnavailableException e) {
@@ -62,8 +61,7 @@ public class CustomerController {
     @GetMapping("/{customerIDAsString}")
     public ResponseEntity<Object> findCustomerByID(@PathVariable String customerIDAsString) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    customerService.findCustomerById(customerIDAsString));
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.findCustomerById(customerIDAsString));
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -74,8 +72,7 @@ public class CustomerController {
     @GetMapping("/{customerIDAsString}/products")
     public ResponseEntity<Object> findProductsByCustomerID(@PathVariable String customerIDAsString) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    customerService.getCustomersProductsList(customerIDAsString));
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomersProductsList(customerIDAsString));
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
