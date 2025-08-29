@@ -1,8 +1,11 @@
 package com.yann.customerservice.application.mapper;
 
+import com.yann.customerservice.application.dto.AddressDTO;
+import com.yann.customerservice.application.dto.CartDTO;
 import com.yann.customerservice.application.dto.CustomerRequestDTO;
 import com.yann.customerservice.application.dto.CustomerResponseDTO;
 import com.yann.customerservice.domain.Address;
+import com.yann.customerservice.domain.Cart;
 import com.yann.customerservice.domain.Customer;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
@@ -25,8 +28,20 @@ public class CustomerMapper {
     }
 
     public static CustomerResponseDTO toCustomerResponseDTO(Customer customer) {
-        return new CustomerResponseDTO(customer.getId(), customer.getFirstname(),
-                customer.getLastname(), customer.getEmail(),
-                customer.getAddress(), customer.getCart());
+        AddressDTO address = toAddressDTO(customer.getAddress());
+        CartDTO cart = toCartDTO(customer.getCart());
+        return new CustomerResponseDTO(customer.getId().value(), customer.getFirstname(),
+                customer.getLastname(), customer.getEmail().value(),
+                address, cart);
+    }
+
+    // helpers
+    private static AddressDTO toAddressDTO(Address address) {
+        return new AddressDTO(address.getZipcode(), address.getStreetName(),
+                address.getStreetNumber().value(), address.getCity(), address.getCountry());
+    }
+
+    private static CartDTO toCartDTO(Cart cart) {
+        return new CartDTO(cart.getCartID().value(), cart.getProducts(), cart.getTotalPrice());
     }
 }
