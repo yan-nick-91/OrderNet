@@ -1,6 +1,7 @@
 package com.yann.customerservice.domain;
 
 import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
+import com.yann.customerservice.domain.exceptions.ProductAlreadyInitializedInCartException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
 import com.yann.customerservice.domain.vo.OrderID;
@@ -49,6 +50,26 @@ public class Customer {
                          .ifPresent(emailValue -> {
                              throw new CustomerAlreadyExistsException("Email already registered: " + emailToCheck);
                          });
+    }
+
+    public void checkIfProductIsNotInCustomerItsCart(
+            Customer existingCustomer, Cart cart, String productName) {
+        if (cart.getProducts().isEmpty()) {
+            return;
+        }
+
+        existingCustomer.getCart()
+                        .getProducts()
+                        .stream()
+                        .map(ProductRelation::getProduct)
+                        .filter(product -> product.getProductName().equalsIgnoreCase(productName))
+                        .findAny()
+                        .ifPresent(product -> {
+                            throw new ProductAlreadyInitializedInCartException(
+                                    "Product " + product.getProductName() +
+                                            " already in cart. Use increasing or decreasing to adjust the " +
+                                            "product quantity.");
+                        });
     }
 
     public CustomerID getId() {
