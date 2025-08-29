@@ -16,6 +16,7 @@ public class Cart {
 
     @Relationship(type = "HAS_PRODUCT", direction = Relationship.Direction.OUTGOING)
     private List<ProductRelation> products = new ArrayList<>();
+    private double totalPrice;
 
     public Cart() {
     }
@@ -45,5 +46,13 @@ public class Cart {
 
     public List<ProductRelation> getProducts() {
         return products;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
