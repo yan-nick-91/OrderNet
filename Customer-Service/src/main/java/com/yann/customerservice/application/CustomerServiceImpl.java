@@ -93,19 +93,10 @@ class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findById(customerID)
                                               .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
-        ProductRelation productRelation = customer.getCart()
-                                                  .getProducts()
-                                                  .stream()
-                                                  .filter(pr -> pr.getProduct()
-                                                                  .getProductName()
-                                                                  .equals(adjustProductQuantityRequestDTO
-                                                                          .productName()))
-                                                  .findAny()
-                                                  .orElseThrow(() ->
-                                                          new ProductNotFoundException("Product not found"));
-
-        productRelation.checkTypeForAdjustmentQuantity(
-                adjustProductQuantityRequestDTO.adjustmentType(), adjustProductQuantityRequestDTO.quantity());
+        customer.getCart().adjustProductQuantity(
+                adjustProductQuantityRequestDTO.productName(),
+                adjustProductQuantityRequestDTO.adjustmentType(),
+                adjustProductQuantityRequestDTO.quantity());
 
         CartPriceCalculator cartPriceCalculator = new CartPriceCalculator();
         double totalPrice = cartPriceCalculator.calculateTotalPriceInCart(customer.getCart());

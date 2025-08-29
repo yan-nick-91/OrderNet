@@ -65,7 +65,7 @@ public class ProductRelation {
         }
 
         this.quantity -= newQuantity;
-        if (this.quantity <= 0) {
+        if (this.quantity < 0) {
             this.quantity += newQuantity;
             throw new IllegalProductQuantityException("Cannot decrease quantity below 0");
         }
