@@ -1,9 +1,6 @@
 package com.yann.customerservice.application;
 
-import com.yann.customerservice.application.dto.CustomerProductRequestDTO;
-import com.yann.customerservice.application.dto.CustomerRequestDTO;
-import com.yann.customerservice.application.dto.CustomerResponseDTO;
-import com.yann.customerservice.application.dto.ProductCustomerResponseDTO;
+import com.yann.customerservice.application.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +13,13 @@ public interface CustomerService {
 
     CustomerResponseDTO findCustomerById(String customerIDAsString);
 
-    CustomerResponseDTO addProductToCustomer(
+    CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO customerProductRequestDTO);
 
+    CustomerResponseDTO adjustQuantityOfExistingProductInCart(
+            String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO);
+
     List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString);
+
+    void deleteCustomer(String customerIDAsString);
 }
