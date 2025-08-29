@@ -1,5 +1,6 @@
 package com.yann.customerservice.domain;
 
+import com.yann.customerservice.domain.exceptions.IllegalAdjustmentTypeException;
 import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -39,17 +40,34 @@ public class ProductRelation {
         return quantity;
     }
 
-    public void increaseQuantity(int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalProductQuantityException("Quantity must be greater than 0");
+    public void checkTypeForAdjustmentQuantity(String adjustmentType, int quantity) {
+        AdjustmentType type = AdjustmentType.valueOf(adjustmentType.toUpperCase());
+
+        switch (type) {
+            case INCREASE -> increaseQuantity(quantity);
+            case DECREASE -> decreaseQuantity(quantity);
+            default -> throw new IllegalAdjustmentTypeException(
+                    "Adjustment type must be increase or decrease"
+            );
         }
-        this.quantity += quantity;
     }
 
-    public void decreaseQuantity(int quantity) {
-        if (quantity <= 0) {
+    private void increaseQuantity(int newQuantity) {
+        if (newQuantity <= 0) {
             throw new IllegalProductQuantityException("Quantity must be greater than 0");
         }
-        this.quantity -= quantity;
+        this.quantity += newQuantity;
+    }
+
+    private void decreaseQuantity(int newQuantity) {
+        if (newQuantity <= 0) {
+            throw new IllegalProductQuantityException("Quantity must be greater than 0");
+        }
+
+        this.quantity -= newQuantity;
+        if (this.quantity < 0) {
+            this.quantity += newQuantity;
+            throw new IllegalProductQuantityException("Cannot decrease quantity below 0");
+        }
     }
 }

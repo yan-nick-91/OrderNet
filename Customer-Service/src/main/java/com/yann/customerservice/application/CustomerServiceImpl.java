@@ -3,9 +3,7 @@ package com.yann.customerservice.application;
 import com.yann.customerservice.application.dto.*;
 import com.yann.customerservice.application.mapper.CustomerMapper;
 import com.yann.customerservice.application.mapper.ProductMapper;
-import com.yann.customerservice.domain.Cart;
-import com.yann.customerservice.domain.Customer;
-import com.yann.customerservice.domain.Product;
+import com.yann.customerservice.domain.*;
 import com.yann.customerservice.domain.exceptions.CustomerNotFoundException;
 import com.yann.customerservice.domain.utils.CreateIDFactory;
 import com.yann.customerservice.domain.vo.CartID;
@@ -62,17 +60,46 @@ class CustomerServiceImpl implements CustomerService {
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
-    public CustomerResponseDTO addProductToCustomer(
+    public CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
+
         CustomerID customerID = customerIDFactory.set(customerIDAsString);
         Customer customer = customerRepository.findById(customerID)
                                               .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
+        Cart cart = customer.getCart();
+        customer.checkIfProductIsNotInCustomerItsCart(customer, cart, productRequestDTO.name());
+
+        // If a product is not added to cart, send an RPC request can proceed
         ProductCustomerResponseDTO productCustomerResponseDTO =
                 inventoryClientRPC.requestProduct(productRequestDTO.name());
 
         Product product = ProductMapper.toProduct(productCustomerResponseDTO);
         customer.getCart().addNewProductToCart(product, productRequestDTO.quantity());
+
+        CartPriceCalculator cartPriceCalculator = new CartPriceCalculator();
+        double totalPrice = cartPriceCalculator.calculateTotalPriceInCart(customer.getCart());
+        customer.getCart().setTotalPrice(totalPrice);
+
+        customerRepository.save(customer);
+        return CustomerMapper.toCustomerResponseDTO(customer);
+    }
+
+    @Override
+    public CustomerResponseDTO adjustQuantityOfExistingProductInCart(
+            String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+
+        customer.getCart().adjustProductQuantity(
+                adjustProductQuantityRequestDTO.productName(),
+                adjustProductQuantityRequestDTO.adjustmentType(),
+                adjustProductQuantityRequestDTO.quantity());
+
+        CartPriceCalculator cartPriceCalculator = new CartPriceCalculator();
+        double totalPrice = cartPriceCalculator.calculateTotalPriceInCart(customer.getCart());
+        customer.getCart().setTotalPrice(totalPrice);
 
         customerRepository.save(customer);
         return CustomerMapper.toCustomerResponseDTO(customer);
@@ -91,5 +118,11 @@ class CustomerServiceImpl implements CustomerService {
                        .stream()
                        .map(p -> ProductMapper.toProductCustomerResponseDTO(p.getProduct()))
                        .toList();
+    }
+
+    @Override
+    public void deleteCustomer(String customerIDAsString) {
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        customerRepository.deleteById(customerID);
     }
 }
