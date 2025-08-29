@@ -5,7 +5,6 @@ import com.yann.customerservice.application.mapper.CustomerMapper;
 import com.yann.customerservice.application.mapper.ProductMapper;
 import com.yann.customerservice.domain.*;
 import com.yann.customerservice.domain.exceptions.CustomerNotFoundException;
-import com.yann.customerservice.domain.exceptions.ProductNotFoundException;
 import com.yann.customerservice.domain.utils.CreateIDFactory;
 import com.yann.customerservice.domain.vo.CartID;
 import com.yann.customerservice.domain.vo.CustomerID;
