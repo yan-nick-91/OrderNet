@@ -20,7 +20,7 @@ public class ProductRelation {
     private final Product product;
 
     public ProductRelation(Product product, ProductRelationType productRelationType, int quantity) {
-        if (quantity <= 0) {
+        if (quantity < 0) {
             throw new IllegalProductQuantityException("Quantity must be greater than 0");
         }
         this.product = product;
