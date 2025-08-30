@@ -36,3 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/Customer-Service_legacy/
+/Customer-Service_legacy/**

@@ -1,4 +1,4 @@
 package com.yann.inventoryservice.application.dto;
 
-public record StockAdjustmentRequestDTO(String productID, int quantity) {
+public record StockAdjustmentRequestDTO(int quantity) {
 }

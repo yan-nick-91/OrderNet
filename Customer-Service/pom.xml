@@ -11,7 +11,7 @@
 
     <artifactId>Customer-Service</artifactId>
     <name>Customer-Service</name>
-    <description>Customer microservice using Neo4J</description>
+    <description>Customer microservice using Neo4j</description>
 
     <dependencies>
         <dependency>

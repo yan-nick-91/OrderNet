@@ -1,18 +1,11 @@
 package com.yann.customerservice.application.dto;
 
-import com.yann.customerservice.domain.Address;
-import com.yann.customerservice.domain.ProductRelation;
-import com.yann.customerservice.domain.vo.CustomerID;
-import com.yann.customerservice.domain.vo.Email;
-
-import java.util.Set;
-
 public record CustomerResponseDTO(
-        CustomerID customerID,
+        String customerID,
         String firstName,
         String lastName,
-        Email email,
-        Address address,
-        Set<ProductRelation> products
+        String email,
+        AddressDTO address,
+        CartDTO cart
 ) {
 }

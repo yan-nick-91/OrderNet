@@ -2,16 +2,14 @@ package com.yann.inventoryservice.presentation;
 
 import com.yann.inventoryservice.application.InventoryService;
 import com.yann.inventoryservice.application.dto.ProductRequestDTO;
-import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
-import com.yann.inventoryservice.domain.exception.IllegalQuantityUpdateException;
-import com.yann.inventoryservice.domain.exception.OutOfStockException;
-import com.yann.inventoryservice.domain.exception.ProductNotFoundException;
+import com.yann.inventoryservice.application.dto.StockUpdateRequestDTO;
+import com.yann.inventoryservice.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/inventories")
 public class InventoryController {
     private final InventoryService inventoryService;
 
@@ -21,12 +19,20 @@ public class InventoryController {
 
     @PostMapping
     public ResponseEntity<Object> addProductToInventory(@RequestBody ProductRequestDTO productRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(inventoryService.addProduct(productRequestDTO));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(inventoryService.addProduct(productRequestDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping
     public ResponseEntity<Object> getAllProducts() {
-        return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getAllProducts());
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getAllProducts());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
@@ -56,4 +62,42 @@ public class InventoryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{productName}")
+    public ResponseEntity<Object> getProductByProductName(@PathVariable("productName") String productName) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getProductByName(productName));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/customer/{productName}")
+    public ResponseEntity<Object> getProductByName(@PathVariable("productName") String productName) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body(inventoryService.getProductForCustomerByName(productName));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (RequestedAmountUnavailableException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateProductById(@PathVariable("id") String id,
+                                                    @RequestBody StockUpdateRequestDTO stockUpdateRequestDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(inventoryService.updateProduct(id, stockUpdateRequestDTO));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
+

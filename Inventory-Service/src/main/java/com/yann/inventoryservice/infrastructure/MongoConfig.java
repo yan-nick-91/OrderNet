@@ -2,8 +2,7 @@ package com.yann.inventoryservice.infrastructure;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.yann.inventoryservice.infrastructure.converters.ProductIDReader;
-import com.yann.inventoryservice.infrastructure.converters.ProductIDWriter;
+import com.yann.inventoryservice.infrastructure.converters.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -27,6 +26,10 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Override
     public MongoCustomConversions customConversions() {
         return new MongoCustomConversions(List.of(
+                new CustomerIDReader(),
+                new CustomerIDReader(),
+                new MaxQuantityReader(),
+                new MaxQuantityWriter(),
                 new ProductIDReader(),
                 new ProductIDWriter()
         ));
