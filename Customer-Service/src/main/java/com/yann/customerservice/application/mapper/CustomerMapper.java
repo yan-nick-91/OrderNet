@@ -35,6 +35,14 @@ public class CustomerMapper {
                 address, cart);
     }
 
+    public static CustomerResponseDTO toCustomerResponseDTO(Customer customer, Cart cart) {
+        AddressDTO address = toAddressDTO(customer.getAddress());
+        CartDTO newCart = toCartDTO(cart);
+        return new CustomerResponseDTO(customer.getId().value(), customer.getFirstname(),
+                customer.getLastname(), customer.getEmail().value(),
+                address, newCart);
+    }
+
     // helpers
     private static AddressDTO toAddressDTO(Address address) {
         return new AddressDTO(address.getZipcode(), address.getStreetName(),
