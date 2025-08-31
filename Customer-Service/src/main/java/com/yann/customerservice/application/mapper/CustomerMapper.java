@@ -1,14 +1,10 @@
 package com.yann.customerservice.application.mapper;
 
-import com.yann.customerservice.application.dto.AddressDTO;
-import com.yann.customerservice.application.dto.CartDTO;
-import com.yann.customerservice.application.dto.CustomerRequestDTO;
-import com.yann.customerservice.application.dto.CustomerResponseDTO;
-import com.yann.customerservice.domain.Address;
-import com.yann.customerservice.domain.Cart;
-import com.yann.customerservice.domain.Customer;
+import com.yann.customerservice.application.dto.*;
+import com.yann.customerservice.domain.*;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
+import com.yann.customerservice.domain.vo.OrderID;
 import com.yann.customerservice.domain.vo.StreetNumber;
 
 public class CustomerMapper {
@@ -33,6 +29,16 @@ public class CustomerMapper {
         return new CustomerResponseDTO(customer.getId().value(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail().value(),
                 address, cart);
+    }
+
+    public static Order toOrder(OrderID orderID, Customer customer) {
+        return new Order(orderID, customer);
+    }
+
+    public static PaymentResponseDTO toPaymentResponseDTO(Order order) {
+        CustomerResponseDTO customer = toCustomerResponseDTO(order.getCustomer());
+        return new PaymentResponseDTO(order.getOrderID().value(),
+                order.getOrderDate().toString(), customer);
     }
 
     // helpers
