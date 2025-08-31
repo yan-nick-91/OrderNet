@@ -4,14 +4,11 @@ import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException
 import com.yann.customerservice.domain.exceptions.ProductAlreadyInitializedInCartException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
-import com.yann.customerservice.domain.vo.OrderID;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Node("Customer")
 public class Customer {
@@ -26,8 +23,6 @@ public class Customer {
 
     @Relationship(type = "RESIDENT_AT", direction = Relationship.Direction.OUTGOING)
     private Address address;
-
-    private Set<OrderID> orderIDS = new HashSet<>();
 
     public Customer() {
     }
@@ -102,13 +97,5 @@ public class Customer {
 
     public void setCart(Cart cart) {
         this.cart = cart;
-    }
-
-    public Set<OrderID> getOrderIDS() {
-        return orderIDS;
-    }
-
-    public void setOrderIDS(Set<OrderID> orderIDS) {
-        this.orderIDS = orderIDS;
     }
 }
