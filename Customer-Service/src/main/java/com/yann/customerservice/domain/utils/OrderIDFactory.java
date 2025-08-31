@@ -1,6 +1,6 @@
 package com.yann.customerservice.domain.utils;
 
-import com.yann.customerservice.domain.vo.CartID;
+import com.yann.customerservice.domain.vo.OrderID;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -8,15 +8,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
-class CartIDFactory implements CreateIDFactory<CartID> {
+class OrderIDFactory implements CreateIDFactory<OrderID> {
     @Override
-    public CartID create() {
+    public OrderID create() {
         String dateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        return new CartID(String.format("CART-ID-%s-%s", dateFormat, UUID.randomUUID()));
+        return new OrderID(String.format("ORD-ID-%s-%s", dateFormat, UUID.randomUUID()));
     }
 
     @Override
-    public CartID set(String id) {
-        return new CartID(id);
+    public OrderID set(String id) {
+        return new OrderID(id);
     }
 }

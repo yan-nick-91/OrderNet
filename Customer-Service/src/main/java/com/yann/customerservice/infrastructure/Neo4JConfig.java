@@ -19,6 +19,8 @@ public class Neo4JConfig {
                 new CustomerIDWriter(),
                 new EmailReader(),
                 new EmailWriter(),
+                new OrderIDReader(),
+                new OrderIDWriter(),
                 new ProductIDReader(),
                 new ProductIDWriter(),
                 new StreetNumberReader(),

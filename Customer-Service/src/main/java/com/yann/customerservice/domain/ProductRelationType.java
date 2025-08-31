@@ -2,6 +2,6 @@ package com.yann.customerservice.domain;
 
 public enum ProductRelationType {
     IN_CART,
-    PENDING_PAYMENT,
-    PURCHASED,
+    PAYMENT_CONFIRMED,
+    ORDER_BEEN_DELIVERED,
 }

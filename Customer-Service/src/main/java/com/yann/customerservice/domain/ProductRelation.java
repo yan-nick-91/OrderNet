@@ -13,7 +13,7 @@ public class ProductRelation {
     @GeneratedValue
     private Long id;
 
-    private final ProductRelationType productRelationType;
+    private ProductRelationType productRelationType;
     private int quantity;
 
     @TargetNode
@@ -30,6 +30,10 @@ public class ProductRelation {
 
     public ProductRelationType getProductRelationType() {
         return productRelationType;
+    }
+
+    public void setProductRelationType(ProductRelationType productRelationType) {
+        this.productRelationType = productRelationType;
     }
 
     public Product getProduct() {
