@@ -4,6 +4,7 @@ import com.yann.customerservice.application.CustomerService;
 import com.yann.customerservice.application.dto.AdjustProductQuantityRequestDTO;
 import com.yann.customerservice.application.dto.CustomerProductRequestDTO;
 import com.yann.customerservice.application.dto.CustomerRequestDTO;
+import com.yann.customerservice.application.dto.PaymentRequestDTO;
 import com.yann.customerservice.domain.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,21 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(e.getMessage());
         } catch (HttpClientErrorException.Conflict e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{customerIDAsString}/payment")
+    public ResponseEntity<Object> sendPaymentToOrdersByCustomerID(
+            @PathVariable String customerIDAsString, @RequestBody PaymentRequestDTO paymentRequestDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    customerService.sendPaymentToOrders(customerIDAsString, paymentRequestDTO));
+        } catch (InsufficientPaymentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
