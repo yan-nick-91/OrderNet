@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
-public class CustomerIDFactory implements CreateIDFactory<CustomerID> {
+class CustomerIDFactory implements CreateIDFactory<CustomerID> {
     @Override
     public CustomerID create() {
         String dateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
