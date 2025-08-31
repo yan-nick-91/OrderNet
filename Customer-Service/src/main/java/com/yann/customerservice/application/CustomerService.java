@@ -19,6 +19,8 @@ public interface CustomerService {
     CustomerResponseDTO adjustQuantityOfExistingProductInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO);
 
+    PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO);
+
     List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString);
 
     void deleteCustomer(String customerIDAsString);
