@@ -1,6 +1,7 @@
 package com.yann.customerservice.domain;
 
 import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
+import com.yann.customerservice.domain.exceptions.IllegalProductRelationException;
 import com.yann.customerservice.domain.exceptions.ProductNotFoundException;
 import com.yann.customerservice.domain.vo.CartID;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -51,6 +52,18 @@ public class Cart {
 
     public void removeProduct(Product product) {
         this.products.removeIf(relation -> relation.getProduct().equals(product));
+    }
+
+    public void markProductRelationTypeToPending() {
+        products.forEach(pr -> {
+            if(pr.getProductRelationType() == ProductRelationType.IN_CART) {
+                pr.setProductRelationType(ProductRelationType.PAYMENT_CONFIRMED);
+            } else {
+                throw new IllegalProductRelationException(
+                        "All products must be IN_CART to proceed with payment"
+                );
+            }
+        });
     }
 
     public CartID getCartID() {
