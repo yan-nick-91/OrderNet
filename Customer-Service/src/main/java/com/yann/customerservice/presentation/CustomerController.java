@@ -55,7 +55,7 @@ public class CustomerController {
     public ResponseEntity<Object> sendPaymentToOrdersByCustomerID(
             @PathVariable String customerIDAsString, @RequestBody PaymentRequestDTO paymentRequestDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(
+            return ResponseEntity.status(HttpStatus.CREATED).body(
                     customerService.sendPaymentToOrders(customerIDAsString, paymentRequestDTO));
         } catch (InsufficientPaymentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
