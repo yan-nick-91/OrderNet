@@ -1,16 +1,11 @@
 package com.yann.ordersservice.application.dto;
 
-import com.yann.ordersservice.domain.vo.CustomerID;
-import com.yann.ordersservice.domain.vo.OrderID;
-
-import java.util.List;
-
-
 public record CustomerResponseDTO(
-        CustomerID customerID,
+        String customerID,
         String firstname,
         String lastname,
+        String email,
         AddressDTO address,
-        List<OrderID> orderIds
+        CartDTO cart
 ) {
 }

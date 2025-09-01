@@ -11,6 +11,9 @@ public class ProductMapper {
     }
 
     public static ProductCustomerResponseDTO toProductCustomerResponseDTO(Product product) {
-        return new ProductCustomerResponseDTO(product.getId(), product.getProductName(), product.getPrice());
+        return new ProductCustomerResponseDTO(
+                product.getProductID(),
+                product.getProductName(),
+                product.getPrice());
     }
 }

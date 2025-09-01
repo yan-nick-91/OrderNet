@@ -1,7 +1,7 @@
 package com.yann.customerservice.application.dto;
 
 public record CustomerProductResponseDTO(
-        String ProductID,
+        String productID,
         String name,
         double price
 ) {

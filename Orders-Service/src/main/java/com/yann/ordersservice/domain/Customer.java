@@ -2,45 +2,35 @@ package com.yann.ordersservice.domain;
 
 import com.yann.ordersservice.domain.vo.CustomerID;
 import com.yann.ordersservice.domain.vo.Email;
-import com.yann.ordersservice.domain.vo.OrderID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Document(collection = "customers")
 public class Customer {
     @Id
-    private CustomerID id;
+    private CustomerID customerID;
     private String firstname;
     private String lastname;
     private Email email;
     private Address address;
+    private Cart cart;
 
-    private List<OrderID> orderIDS;
+    private Customer() {
+    }
 
-    private Customer() {}
-
-    public Customer(CustomerID id, String firstname,
+    public Customer(CustomerID customerID, String firstname,
                     String lastname, Email email,
-                    Address address) {
-        this.id = id;
+                    Address address, Cart cart) {
+        this.customerID = customerID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.address = address;
+        this.cart = cart;
     }
 
-    public void addOrderID(OrderID orderID) {
-        orderIDS.add(orderID);
-    }
-
-    public void removeOrderID(OrderID orderID) {
-        orderIDS.remove(orderID);
-    }
-
-    public CustomerID getId() {
-        return id;
+    public CustomerID getCustomerID() {
+        return customerID;
     }
 
     public String getFirstname() {
@@ -59,7 +49,7 @@ public class Customer {
         return address;
     }
 
-    public List<OrderID> getOrderIDS() {
-        return orderIDS;
+    public Cart getCart() {
+        return cart;
     }
 }

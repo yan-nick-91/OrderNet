@@ -1,4 +1,4 @@
-package com.yann.customerservice.application.dto;
+package com.yann.ordersservice.application.dto;
 
 public record PaymentResponseDTO(
         String orderID,

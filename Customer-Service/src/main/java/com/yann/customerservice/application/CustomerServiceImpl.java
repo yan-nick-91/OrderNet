@@ -10,6 +10,7 @@ import com.yann.customerservice.domain.vo.CartID;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.OrderID;
 import com.yann.customerservice.infrastructure.events.CustomerEventPublisher;
+import com.yann.customerservice.infrastructure.repository.ProductRepository;
 import com.yann.customerservice.infrastructure.rpc.InventoryClientRPC;
 import com.yann.customerservice.infrastructure.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,19 @@ class CustomerServiceImpl implements CustomerService {
     private final CreateIDFactory<CartID> cartIDFactory;
     private final CreateIDFactory<OrderID> orderIDFactory;
     private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
     private final InventoryClientRPC inventoryClientRPC;
     private final CustomerEventPublisher customerEventPublisher;
 
-    public CustomerServiceImpl(CreateIDFactory<CustomerID> customerIDFactory, CreateIDFactory<CartID> cartIDFactory, CreateIDFactory<OrderID> orderIDFactory,
-                               CustomerRepository customerRepository, InventoryClientRPC inventoryClientRPC, CustomerEventPublisher customerEventPublisher) {
+    public CustomerServiceImpl(CreateIDFactory<CustomerID> customerIDFactory, CreateIDFactory<CartID> cartIDFactory,
+                               CreateIDFactory<OrderID> orderIDFactory, CustomerRepository customerRepository,
+                               ProductRepository productRepository, InventoryClientRPC inventoryClientRPC,
+                               CustomerEventPublisher customerEventPublisher) {
         this.customerIDFactory = customerIDFactory;
         this.cartIDFactory = cartIDFactory;
         this.orderIDFactory = orderIDFactory;
         this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
         this.inventoryClientRPC = inventoryClientRPC;
         this.customerEventPublisher = customerEventPublisher;
     }
@@ -49,7 +54,8 @@ class CustomerServiceImpl implements CustomerService {
         customer.setCart(cart);
 
         customerRepository.save(customer);
-        return CustomerMapper.toCustomerResponseDTO(customer);
+        cart.removeZeroQuantityProducts();
+        return CustomerMapper.toCustomerResponseDTO(customer, cart);
     }
 
     @Override
@@ -60,18 +66,24 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO findCustomerById(String customerIDAsString) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
     public CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
+
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
         Cart cart = customer.getCart();
         customer.checkIfProductIsNotInCustomerItsCart(customer, cart, productRequestDTO.name());
 
-        // If a product is not added to cart, send an RPC request can proceed
+        // If a product is not added to the cart, proceed to send an RPC request to inventory-service
+        // to get the product, following to add the response to the cart
         ProductCustomerResponseDTO productCustomerResponseDTO =
                 inventoryClientRPC.requestProduct(productRequestDTO.name());
 
@@ -89,9 +101,13 @@ class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponseDTO adjustQuantityOfExistingProductInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 
-        customer.getCart().adjustProductQuantity(
+        Cart cart = customer.getCart();
+
+        cart.adjustProductQuantity(
                 adjustProductQuantityRequestDTO.productName(),
                 adjustProductQuantityRequestDTO.adjustmentType(),
                 adjustProductQuantityRequestDTO.quantity());
@@ -100,8 +116,15 @@ class CustomerServiceImpl implements CustomerService {
         double totalPrice = cartPriceCalculator.calculateTotalPriceInCart(customer.getCart());
         customer.getCart().setTotalPrice(totalPrice);
 
+        cart.getProducts()
+            .stream()
+            .filter(pr -> pr.getQuantity() == 0)
+            .map(pr -> pr.getProduct().getProductID())
+            .forEach(productRepository::deleteById);
+
         customerRepository.save(customer);
-        return CustomerMapper.toCustomerResponseDTO(customer);
+        cart.removeZeroQuantityProducts();
+        return CustomerMapper.toCustomerResponseDTO(customer, cart);
     }
 
     @Override
@@ -119,7 +142,7 @@ class CustomerServiceImpl implements CustomerService {
         cart.markProductRelationTypeToPending();
 
         // 2. If payment matches the total price, an Order class should be instantiated where its ID will be mentioned.
-        OrderID orderID =  orderIDFactory.create();
+        OrderID orderID = orderIDFactory.create();
         Order order = CustomerMapper.toOrder(orderID, customer);
 
 
@@ -136,9 +159,14 @@ class CustomerServiceImpl implements CustomerService {
         return paymentResponseDTO;
     }
 
+
     @Override
     public List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
+        CustomerID customerID = customerIDFactory.set(customerIDAsString);
+        Customer customer = customerRepository.findById(customerID)
+                                              .orElseThrow(() ->
+                                                      new CustomerNotFoundException(
+                                                              "Customer not found or invalid ID"));
 
         return customer.getCart()
                        .getProducts()

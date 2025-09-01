@@ -5,64 +5,57 @@ import com.yann.ordersservice.domain.vo.Sequence;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Document(collection = "orders")
 public class Order {
     @Id
-    private OrderID id;
+    private OrderID orderID;
     private Sequence sequence;
-    private Date date;
-    private OrderState state = OrderState.NONE;
+    private Instant date;
+    private OrderState state;
 
-    private final List<Product> products = new ArrayList<>();
-    private double totalPrice;
+    private Customer customer;
 
     public Order() {
     }
 
-    public Order(OrderID id) {
-        this.id = id;
+    public Order(OrderID orderID, String orderDateAsString, Customer customer) {
+        this.orderID = orderID;
         this.sequence = new Sequence();
-        this.date = new Date();
-        this.state = OrderState.RESERVED;
+        this.date = parseDate(orderDateAsString);
+        this.customer = customer;
+        this.state = OrderState.PAID;
     }
 
-    public void calculateTotalPrice(List<Product> products) {
-        totalPrice = products.stream()
-                             .mapToDouble(product -> product.getPrice() * product.getQuantity())
-                             .sum();
+    private Instant parseDate(String orderDateAsString) {
+        try {
+            return Instant.parse(orderDateAsString);
+        }  catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format: " + orderDateAsString, e);
+        }
     }
 
-
-
-    public OrderID getId() {
-        return id;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void addProduct(Product product) {
-        this.products.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        this.products.remove(product);
+    public OrderID getOrderID() {
+        return orderID;
     }
 
     public Sequence getSequence() {
         return sequence;
     }
 
-    public Date getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public OrderState getState() {
+        return state;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 }

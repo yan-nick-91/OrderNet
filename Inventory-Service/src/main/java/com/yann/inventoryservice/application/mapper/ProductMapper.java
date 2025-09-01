@@ -25,21 +25,21 @@ public class ProductMapper {
     }
 
     public static ProductResponseDTO toProductRequestDTO(Product product) {
-        return new ProductResponseDTO(product.getId(), product.getName(),
+        return new ProductResponseDTO(product.getProductID(), product.getName(),
                 product.getPrice(), product.getAvailableQuantity(), product.getMaxQuantity());
     }
 
     public static ProductCustomerResponseDTO toProductCustomerResponseDTO(Product product) {
-        return new ProductCustomerResponseDTO(product.getId(), product.getName(), product.getPrice());
+        return new ProductCustomerResponseDTO(product.getProductID(), product.getName(), product.getPrice());
     }
 
     public static StockResponseDTO toStockResponseDTO(Product product) {
-        return new StockResponseDTO(product.getId(), product.getName(),
+        return new StockResponseDTO(product.getProductID(), product.getName(),
                 product.getAvailableQuantity(), product.checkAvailability());
     }
 
     public static StockUpdateResponseDTO toStockUpdateResponse(Product product) {
-        return new StockUpdateResponseDTO(product.getId(), product.getName(),
+        return new StockUpdateResponseDTO(product.getProductID(), product.getName(),
                 product.getPrice(), product.getMaxQuantity());
     }
 }

@@ -4,5 +4,6 @@ public record ProductRequestDTO(
         String name,
         double price,
         int quantity,
-        int maxQuantity) {
+        int maxQuantity
+) {
 }
