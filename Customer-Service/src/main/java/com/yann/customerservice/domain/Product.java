@@ -7,21 +7,21 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node("Product")
 public class Product {
     @Id
-    private ProductID id;
+    private ProductID productID;
     private String productName;
     private double price;
 
     public Product() {
     }
 
-    public Product(ProductID id, String productName, double price) {
-        this.id = id;
+    public Product(ProductID productID, String productName, double price) {
+        this.productID = productID;
         this.productName = productName;
         this.price = price;
     }
 
-    public ProductID getId() {
-        return id;
+    public ProductID getProductID() {
+        return productID;
     }
 
     public String getProductName() {

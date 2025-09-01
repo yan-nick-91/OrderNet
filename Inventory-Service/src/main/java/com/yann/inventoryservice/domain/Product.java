@@ -13,7 +13,7 @@ import java.util.Set;
 @Document(collection = "products")
 public class Product {
     @Id
-    private ProductID id;
+    private ProductID productID;
     private String name;
     private double price;
     private int availableQuantity;
@@ -22,7 +22,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(ProductID id, String name, double price, int initialQuantity, MaxQuantity maxQuantity) {
+    public Product(ProductID productID, String name, double price, int initialQuantity, MaxQuantity maxQuantity) {
         if (name == null || name.isBlank()) {
             throw new IllegaInitInventoryException("Name cannot be null or empty");
         }
@@ -35,7 +35,7 @@ public class Product {
             throw new IllegaInitInventoryException("Initial quantity cannot be greater than max quantity");
         }
 
-        this.id = id;
+        this.productID = productID;
         this.name = name;
         this.price = price;
         this.availableQuantity = initialQuantity;
@@ -100,8 +100,8 @@ public class Product {
         this.maxQuantity = new MaxQuantity(newMaxQuantity);
     }
 
-    public ProductID getId() {
-        return id;
+    public ProductID getProductID() {
+        return productID;
     }
 
     public String getName() {
