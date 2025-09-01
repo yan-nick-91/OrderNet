@@ -1,8 +1,8 @@
 package com.yann.ordersservice.domain;
 
 import com.yann.ordersservice.domain.vo.StreetNumber;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.neo4j.core.schema.Id;
 
 @Document("Address")
 public class Address {
