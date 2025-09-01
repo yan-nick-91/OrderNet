@@ -1,5 +1,6 @@
 package com.yann.customerservice.domain;
 
+import com.yann.customerservice.domain.exceptions.IllegalAdjustmentTypeException;
 import com.yann.customerservice.domain.exceptions.IllegalProductQuantityException;
 import com.yann.customerservice.domain.exceptions.IllegalProductRelationException;
 import com.yann.customerservice.domain.exceptions.ProductNotFoundException;
@@ -38,20 +39,19 @@ public class Cart {
         ProductRelation productRelation = products.stream()
                                                   .filter(pr -> pr.getProduct()
                                                                   .getProductName()
-                                                                  .equals(productName))
+                                                                  .equalsIgnoreCase(productName))
                                                   .findAny()
-                                                  .orElseThrow(() ->
-                                                          new ProductNotFoundException("Product not found"));
-
+                                                  .orElseThrow(() -> new ProductNotFoundException("Product not found"));
         productRelation.checkTypeForAdjustmentQuantity(adjustmentType, quantity);
 
-        if (productRelation.getQuantity() == 0) {
-            removeProduct(productRelation.getProduct());
+        if (productRelation.getQuantity() < 0) {
+            throw new IllegalAdjustmentTypeException(
+                    "Cannot decrease quantity lower than zero. either increase or remove product form cart");
         }
     }
 
-    public void removeProduct(Product product) {
-        this.products.removeIf(relation -> relation.getProduct().equals(product));
+    public void removeZeroQuantityProducts() {
+        this.products.removeIf(pr -> pr.getQuantity() == 0);
     }
 
     public void markProductRelationTypeToPending() {
