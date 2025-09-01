@@ -8,6 +8,9 @@ public class Product {
     private double price;
     private int quantity;
 
+    public Product() {
+    }
+
     public Product(ProductID productID, String productName, double price, int quantity) {
         if (price <= 0) {
             throw new IllegalArgumentException("Price must be greater than 0");
