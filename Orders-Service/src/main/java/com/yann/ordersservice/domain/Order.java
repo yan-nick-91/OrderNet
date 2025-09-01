@@ -19,7 +19,6 @@ public class Order {
     private OrderState state;
 
     private Customer customer;
-    private final List<Product> products = new ArrayList<>();
 
     public Order() {
     }
@@ -58,9 +57,5 @@ public class Order {
 
     public Customer getCustomer() {
         return customer;
-    }
-
-    public List<Product> getProducts() {
-        return products;
     }
 }
