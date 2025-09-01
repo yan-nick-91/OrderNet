@@ -13,7 +13,7 @@ import java.util.List;
 @Node("Customer")
 public class Customer {
     @Id
-    private CustomerID id;
+    private CustomerID customerID;
     private String firstname;
     private String lastname;
     private Email email;
@@ -27,8 +27,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(CustomerID id, String firstname, String lastname, Email email, Address address) {
-        this.id = id;
+    public Customer(CustomerID customerID, String firstname, String lastname, Email email, Address address) {
+        this.customerID = customerID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -67,8 +67,8 @@ public class Customer {
                         });
     }
 
-    public CustomerID getId() {
-        return id;
+    public CustomerID getCustomerID() {
+        return customerID;
     }
 
     public String getFirstname() {
