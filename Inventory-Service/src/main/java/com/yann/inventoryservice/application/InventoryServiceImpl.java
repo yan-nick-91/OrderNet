@@ -58,7 +58,7 @@ class InventoryServiceImpl implements InventoryService {
     public StockResponseDTO getStockPercentageByProductId(String productId) {
         Product product = checkProductIdForProduct(productId);
         String percentage = product.checkAvailability();
-        return new StockResponseDTO(product.getId(), product.getName(),
+        return new StockResponseDTO(product.getProductID(), product.getName(),
                 product.getAvailableQuantity(), percentage);
     }
 
