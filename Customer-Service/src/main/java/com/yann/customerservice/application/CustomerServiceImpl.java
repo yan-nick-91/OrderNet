@@ -82,7 +82,8 @@ class CustomerServiceImpl implements CustomerService {
         Cart cart = customer.getCart();
         customer.checkIfProductIsNotInCustomerItsCart(customer, cart, productRequestDTO.name());
 
-        // If a product is not added to cart, send an RPC request can proceed
+        // If a product is not added to the cart, proceed to send an RPC request to inventory-service
+        // to get the product, following to add the response to the cart
         ProductCustomerResponseDTO productCustomerResponseDTO =
                 inventoryClientRPC.requestProduct(productRequestDTO.name());
 
