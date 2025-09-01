@@ -122,7 +122,8 @@ class CustomerServiceImpl implements CustomerService {
             .forEach(productRepository::deleteById);
 
         customerRepository.save(customer);
-        return CustomerMapper.toCustomerResponseDTO(customer);
+        cart.removeZeroQuantityProducts();
+        return CustomerMapper.toCustomerResponseDTO(customer, cart);
     }
 
     @Override
