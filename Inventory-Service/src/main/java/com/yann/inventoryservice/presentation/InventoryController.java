@@ -74,7 +74,7 @@ public class InventoryController {
         }
     }
 
-    @GetMapping("customer/{productName}")
+    @GetMapping("/customer/{productName}")
     public ResponseEntity<Object> getProductByName(@PathVariable("productName") String productName) {
         try {
             return ResponseEntity.status(HttpStatus.OK)
