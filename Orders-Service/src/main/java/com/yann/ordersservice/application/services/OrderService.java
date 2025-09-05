@@ -8,6 +8,10 @@ import java.util.List;
 public interface OrderService {
     void saveIncomingOrderFromCustomer(PaymentResponseDTO paymentResponseDTO);
 
+    OrdersResponseDTO getNewestOrder();
+
+    OrdersResponseDTO getOldestOrder();
+
     List<OrdersResponseDTO> getAllOrders();
 
     OrdersResponseDTO getOrderById(String orderIDAsString);
