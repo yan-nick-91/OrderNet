@@ -18,7 +18,7 @@ public class CartID {
         String formatted = String.format("%s-%s", PREFIX, DATE_FORMAT);
 
         if (!value.matches(formatted + "-[0-9a-fA-F\\-]{36}")) {
-            throw new IllegalArgumentException("Invalid CustomerID format: " + value);
+            throw new IllegalArgumentException("Invalid CartID format: " + value);
         }
 
         this.value = value;
