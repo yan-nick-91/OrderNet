@@ -1,14 +1,11 @@
 package com.yann.customerservice.domain;
 
-import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
 import com.yann.customerservice.domain.exceptions.ProductAlreadyInitializedInCartException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.List;
 
 @Node("Customer")
 public class Customer {
@@ -34,17 +31,6 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.cart = new Cart();
-    }
-
-    public void checkIfCustomersEmailIsPersisted(List<Customer> existingCustomers, String emailToCheck) {
-        existingCustomers.stream()
-                         .map(Customer::getEmail)
-                         .map(Email::value)
-                         .filter(emailValue -> emailValue.equals(emailToCheck))
-                         .findAny()
-                         .ifPresent(emailValue -> {
-                             throw new CustomerAlreadyExistsException("Email already registered: " + emailToCheck);
-                         });
     }
 
     public void checkIfProductIsNotInCustomerItsCart(
