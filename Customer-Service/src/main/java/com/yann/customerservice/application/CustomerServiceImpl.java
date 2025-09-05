@@ -4,10 +4,12 @@ import com.yann.customerservice.application.dto.*;
 import com.yann.customerservice.application.mapper.CustomerMapper;
 import com.yann.customerservice.application.mapper.ProductMapper;
 import com.yann.customerservice.domain.*;
+import com.yann.customerservice.domain.exceptions.CustomerAlreadyExistsException;
 import com.yann.customerservice.domain.exceptions.CustomerNotFoundException;
 import com.yann.customerservice.domain.utils.CreateIDFactory;
 import com.yann.customerservice.domain.vo.CartID;
 import com.yann.customerservice.domain.vo.CustomerID;
+import com.yann.customerservice.domain.vo.Email;
 import com.yann.customerservice.domain.vo.OrderID;
 import com.yann.customerservice.infrastructure.events.CustomerEventPublisher;
 import com.yann.customerservice.infrastructure.repository.ProductRepository;
@@ -42,9 +44,12 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequestDTO) {
-        List<Customer> existingCustomers = customerRepository.findAll();
-        existingCustomers.forEach(customer ->
-                customer.checkIfCustomersEmailIsPersisted(existingCustomers, customerRequestDTO.email()));
+        Email email = new Email(customerRequestDTO.email());
+        customerRepository.findByEmail(email)
+                          .ifPresent(c -> {
+                              throw new CustomerAlreadyExistsException(
+                                      "Email already exists: " + customerRequestDTO.email());
+                          });
 
         CustomerID customerID = customerIDFactory.create();
         Customer customer = CustomerMapper.toCustomer(customerID, customerRequestDTO);
@@ -54,8 +59,7 @@ class CustomerServiceImpl implements CustomerService {
         customer.setCart(cart);
 
         customerRepository.save(customer);
-        cart.removeZeroQuantityProducts();
-        return CustomerMapper.toCustomerResponseDTO(customer, cart);
+        return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
     @Override
