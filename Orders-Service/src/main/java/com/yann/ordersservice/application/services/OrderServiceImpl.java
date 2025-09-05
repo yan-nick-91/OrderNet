@@ -31,6 +31,18 @@ class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrdersResponseDTO getNewestOrder() {
+        Order order = orderRepository.findNewestOrder();
+        return OrderMapper.toOrdersResponseDTO(order);
+    }
+
+    @Override
+    public OrdersResponseDTO getOldestOrder() {
+        Order order = orderRepository.findOldestOrder();
+        return OrderMapper.toOrdersResponseDTO(order);
+    }
+
+    @Override
     public List<OrdersResponseDTO> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(OrderMapper::toOrdersResponseDTO).toList();
