@@ -22,7 +22,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(ProductID productID, String name, double price, int initialQuantity, MaxQuantity maxQuantity) {
+    public Product(ProductID productID, String name,
+                   double price, int initialQuantity,
+                   MaxQuantity maxQuantity) {
+
         if (name == null || name.isBlank()) {
             throw new IllegaInitInventoryException("Name cannot be null or empty");
         }
