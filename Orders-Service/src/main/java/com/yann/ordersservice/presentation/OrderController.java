@@ -27,14 +27,34 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/{customerIDAsString}")
-    public ResponseEntity<Object> getOrder(@PathVariable String customerIDAsString) {
+    @GetMapping("/newest")
+    public ResponseEntity<Object> getNewestOrder() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrderById(customerIDAsString));
+            return ResponseEntity.status(HttpStatus.OK).body(orderService.getNewestOrder());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/oldest")
+    public ResponseEntity<Object> getOldestOrder() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(orderService.getOldestOrder());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
+    @GetMapping("/{orderIDAsString}")
+    public ResponseEntity<Object> getOrder(@PathVariable String orderIDAsString) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrderById(orderIDAsString));
         } catch (OrderNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
 }
