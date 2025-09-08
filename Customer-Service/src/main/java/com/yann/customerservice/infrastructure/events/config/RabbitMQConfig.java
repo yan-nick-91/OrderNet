@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    public static final String EXCHANGE_NAME = "order-exchange";
-    public static final String QUEUE_NAME = "customer-events-queue";
-    public static final String ROUTING_KEY = "customer-events";
+    public static final String CUSTOMER_TO_ORDERS_EXCHANGE_NAME = "customer-to-orders-exchange";
+    public static final String CUSTOMER_TO_ORDERS_QUEUE_NAME = "customer-to-orders-queue";
+    public static final String CUSTOMER_TO_ORDERS_ROUTING_KEY = "customer-to-orders-events";
 
     @Bean
     public DirectExchange orderExchange() {
-        return new DirectExchange(EXCHANGE_NAME);
+        return new DirectExchange(CUSTOMER_TO_ORDERS_EXCHANGE_NAME);
     }
 
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE_NAME);
+        return new Queue(CUSTOMER_TO_ORDERS_QUEUE_NAME);
     }
 
     @Bean
@@ -28,6 +28,6 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(queue)
                 .to(orderExchange)
-                .with(ROUTING_KEY);
+                .with(CUSTOMER_TO_ORDERS_ROUTING_KEY);
     }
 }
