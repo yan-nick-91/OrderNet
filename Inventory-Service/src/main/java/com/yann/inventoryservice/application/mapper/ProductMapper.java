@@ -1,9 +1,8 @@
 package com.yann.inventoryservice.application.mapper;
 
 import com.yann.inventoryservice.application.dto.*;
-import com.yann.inventoryservice.domain.Product;
-import com.yann.inventoryservice.domain.vo.MaxQuantity;
-import com.yann.inventoryservice.domain.vo.ProductID;
+import com.yann.inventoryservice.domain.*;
+import com.yann.inventoryservice.domain.vo.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +29,8 @@ public class ProductMapper {
     }
 
     public static ProductCustomerResponseDTO toProductCustomerResponseDTO(Product product) {
-        return new ProductCustomerResponseDTO(product.getProductID(), product.getName(), product.getPrice());
+        return new ProductCustomerResponseDTO(product.getProductID(),
+                product.getName(), product.getPrice());
     }
 
     public static StockResponseDTO toStockResponseDTO(Product product) {
