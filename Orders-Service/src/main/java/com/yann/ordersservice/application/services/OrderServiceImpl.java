@@ -1,13 +1,14 @@
 package com.yann.ordersservice.application.services;
 
+import com.yann.ordersservice.application.dto.OrderToInventoryRequestDTO;
 import com.yann.ordersservice.application.dto.OrdersResponseDTO;
 import com.yann.ordersservice.application.dto.PaymentResponseDTO;
 import com.yann.ordersservice.application.mapper.OrderMapper;
 import com.yann.ordersservice.domain.Order;
-import com.yann.ordersservice.domain.Product;
 import com.yann.ordersservice.domain.exceptions.OrderNotFound;
 import com.yann.ordersservice.domain.utils.CreateIDFactory;
 import com.yann.ordersservice.domain.vo.OrderID;
+import com.yann.ordersservice.infrastructure.events.publisher.OrderEventPublisher;
 import com.yann.ordersservice.infrastructure.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,13 @@ import java.util.List;
 @Service
 class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final OrderEventPublisher orderEventPublisher;
     private final CreateIDFactory<OrderID> orderIDFactory;
 
-    public OrderServiceImpl(OrderRepository orderRepository, CreateIDFactory<OrderID> orderIDFactory) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderEventPublisher orderEventPublisher,
+                            CreateIDFactory<OrderID> orderIDFactory) {
         this.orderRepository = orderRepository;
+        this.orderEventPublisher = orderEventPublisher;
         this.orderIDFactory = orderIDFactory;
     }
 
@@ -50,9 +54,23 @@ class OrderServiceImpl implements OrderService {
 
     @Override
     public OrdersResponseDTO getOrderById(String orderIDAsString) {
-        OrderID orderID = orderIDFactory.set(orderIDAsString);
-        Order order = orderRepository.findById(orderID)
-                                     .orElseThrow(() -> new OrderNotFound("Order not found"));
+        Order order = getOrderByOrderID(orderIDAsString);
         return OrderMapper.toOrdersResponseDTO(order);
+    }
+
+    @Override
+    public OrderToInventoryRequestDTO sendOrderToInventory(
+            String orderIDAsString) {
+        Order order = getOrderByOrderID(orderIDAsString);
+        OrderToInventoryRequestDTO orderToInventoryRequestDTO = OrderMapper.toOrderToInventoryRequestDTO(order);
+        orderEventPublisher.sendOrderToInventory(orderToInventoryRequestDTO);
+        return orderToInventoryRequestDTO;
+    }
+
+    // Helpers
+    private Order getOrderByOrderID(String orderIDAsString) {
+        OrderID orderID = orderIDFactory.set(orderIDAsString);
+        return orderRepository.findById(orderID)
+                                     .orElseThrow(() -> new OrderNotFound("Order not found"));
     }
 }

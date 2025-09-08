@@ -1,5 +1,6 @@
 package com.yann.ordersservice.application.services;
 
+import com.yann.ordersservice.application.dto.OrderToInventoryRequestDTO;
 import com.yann.ordersservice.application.dto.OrdersResponseDTO;
 import com.yann.ordersservice.application.dto.PaymentResponseDTO;
 
@@ -15,4 +16,6 @@ public interface OrderService {
     List<OrdersResponseDTO> getAllOrders();
 
     OrdersResponseDTO getOrderById(String orderIDAsString);
+
+    OrderToInventoryRequestDTO sendOrderToInventory(String orderIDAsString);
 }
