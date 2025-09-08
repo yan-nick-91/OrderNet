@@ -24,8 +24,8 @@ class CustomerEventPublisherImpl implements CustomerEventPublisher {
         try {
             String message = objectMapper.writeValueAsString(paymentResponseDTO);
             rabbitTemplate.convertAndSend(
-                    RabbitMQConfig.EXCHANGE_NAME,
-                    RabbitMQConfig.ROUTING_KEY,
+                    RabbitMQConfig.CUSTOMER_TO_ORDERS_EXCHANGE_NAME,
+                    RabbitMQConfig.CUSTOMER_TO_ORDERS_ROUTING_KEY,
                     message);
             log.info("Customer event published: {}", message);
         } catch (JsonProcessingException e) {
