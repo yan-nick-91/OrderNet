@@ -1,11 +1,17 @@
 package com.yann.inventoryservice.application;
 
 import com.yann.inventoryservice.application.dto.*;
+import com.yann.inventoryservice.application.mapper.OrderMapper;
 import com.yann.inventoryservice.application.mapper.ProductMapper;
+import com.yann.inventoryservice.domain.Order;
 import com.yann.inventoryservice.domain.Product;
+import com.yann.inventoryservice.domain.exception.OrderNotFoundException;
 import com.yann.inventoryservice.domain.exception.ProductNotFoundException;
 import com.yann.inventoryservice.domain.utils.CreateIDFactory;
+import com.yann.inventoryservice.domain.utils.IDFactory;
+import com.yann.inventoryservice.domain.vo.OrderID;
 import com.yann.inventoryservice.domain.vo.ProductID;
+import com.yann.inventoryservice.infrastructure.repository.OrderRepository;
 import com.yann.inventoryservice.infrastructure.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +20,16 @@ import java.util.List;
 @Service
 class InventoryServiceImpl implements InventoryService {
     private final ProductsRepository productsRepository;
+    private final OrderRepository orderRepository;
     private final CreateIDFactory<ProductID> productIDFactory;
+    private final IDFactory<OrderID> orderIDFactory;
 
-    public InventoryServiceImpl(ProductsRepository productsRepository, CreateIDFactory<ProductID> productIDFactory) {
+    public InventoryServiceImpl(ProductsRepository productsRepository, OrderRepository orderRepository,
+                                CreateIDFactory<ProductID> productIDFactory, IDFactory<OrderID> orderIDFactory) {
         this.productsRepository = productsRepository;
+        this.orderRepository = orderRepository;
         this.productIDFactory = productIDFactory;
+        this.orderIDFactory = orderIDFactory;
     }
 
     @Override
@@ -52,6 +63,25 @@ class InventoryServiceImpl implements InventoryService {
     public ProductCustomerResponseDTO getProductForCustomerByName(String productName) {
         Product product = checkProductNameForProduct(productName);
         return ProductMapper.toProductCustomerResponseDTO(product);
+    }
+
+    @Override
+    public void receivingOrder(OrderToInventoryRequestDTO orderToInventoryRequestDTO) {
+        OrderID orderID = orderIDFactory.set(orderToInventoryRequestDTO.OrderID());
+        ProductID productID = productIDFactory.set(orderToInventoryRequestDTO.ProductID());
+        Order order = OrderMapper.toProductOrder(orderID, productID, orderToInventoryRequestDTO);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public List<ProductOrderResponseDTO> getAllProductOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(OrderMapper::toProductOrderResponse).toList();
+    }
+
+    @Override
+    public ProductCustomerResponseDTO sendPickedUpProductToCustomer(String orderIDAsString) {
+        return null;
     }
 
     @Override
@@ -96,6 +126,7 @@ class InventoryServiceImpl implements InventoryService {
     @Override
     public void deleteProduct(String productId) {
         Product product = checkProductIdForProduct(productId);
+        // product cannot be deleted if there is still an order for this
         productsRepository.delete(product);
     }
 

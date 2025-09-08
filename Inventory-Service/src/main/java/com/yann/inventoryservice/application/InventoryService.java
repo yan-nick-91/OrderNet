@@ -17,6 +17,12 @@ public interface InventoryService {
 
     ProductCustomerResponseDTO getProductForCustomerByName(String productName);
 
+    void receivingOrder(OrderToInventoryRequestDTO orderToInventoryRequestDTO);
+
+    List<ProductOrderResponseDTO> getAllProductOrders();
+
+    ProductCustomerResponseDTO sendPickedUpProductToCustomer(String orderIDAsString);
+
     StockResponseDTO getStockPercentageByProductId(String productId);
 
     List<StockResponseDTO> getAllStockPercentage();
