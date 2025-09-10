@@ -76,6 +76,8 @@ services:
       - "27018:27017"
     networks:
       - backend-network
+    volumes:
+      - ./Inventory-Service/data/db:/data/db
 
   inventory-service:
     build:
@@ -92,3 +94,7 @@ services:
 
 networks:
   backend-network:
+
+volumes:
+  inventory_data:
+    name: inventory_data
