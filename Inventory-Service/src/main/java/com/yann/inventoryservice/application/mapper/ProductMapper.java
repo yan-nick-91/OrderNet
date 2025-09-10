@@ -13,33 +13,46 @@ public class ProductMapper {
 
     public static Product toProduct(ProductRequestDTO productRequestDTO) {
         ProductID productID = new ProductID(String.format("PROD-ID-%s-%s", dateFormat, UUID.randomUUID()));
-        return new Product(productID, productRequestDTO.name(), productRequestDTO.price(),
+        ProductName productName = toProductName(productRequestDTO.name());
+        ProductPrice productPrice = toProductPrice(productRequestDTO.price());
+        return new Product(productID, productName, productPrice,
                 productRequestDTO.quantity(), new MaxQuantity(productRequestDTO.maxQuantity()));
     }
 
     public static Product toUpdateProduct(Product product, StockUpdateRequestDTO stockUpdateRequestDTO) {
-        product.setName(stockUpdateRequestDTO.name());
-        product.setPrice(stockUpdateRequestDTO.price());
+        ProductName productName = toProductName(stockUpdateRequestDTO.name());
+        ProductPrice productPrice = toProductPrice(stockUpdateRequestDTO.price());
+        product.setName(productName);
+        product.setPrice(productPrice);
         return product;
     }
 
     public static ProductResponseDTO toProductRequestDTO(Product product) {
-        return new ProductResponseDTO(product.getProductID(), product.getName(),
-                product.getPrice(), product.getAvailableQuantity(), product.getMaxQuantity());
+        return new ProductResponseDTO(product.getProductID(), product.getName().value(),
+                product.getPrice().value(), product.getAvailableQuantity(), product.getMaxQuantity());
     }
 
     public static ProductCustomerResponseDTO toProductCustomerResponseDTO(Product product) {
         return new ProductCustomerResponseDTO(product.getProductID(),
-                product.getName(), product.getPrice());
+                product.getName().value(), product.getPrice().value());
     }
 
     public static StockResponseDTO toStockResponseDTO(Product product) {
-        return new StockResponseDTO(product.getProductID(), product.getName(),
+        return new StockResponseDTO(product.getProductID(), product.getName().value(),
                 product.getAvailableQuantity(), product.checkAvailability());
     }
 
     public static StockUpdateResponseDTO toStockUpdateResponse(Product product) {
-        return new StockUpdateResponseDTO(product.getProductID(), product.getName(),
-                product.getPrice(), product.getMaxQuantity());
+        return new StockUpdateResponseDTO(product.getProductID(), product.getName().value(),
+                product.getPrice().value(), product.getMaxQuantity());
+    }
+
+    // Helpers
+    private static ProductName toProductName(String productNameAsString) {
+        return new ProductName(productNameAsString);
+    }
+
+    private static ProductPrice toProductPrice(Double productPriceAsDouble) {
+        return new ProductPrice(productPriceAsDouble);
     }
 }
