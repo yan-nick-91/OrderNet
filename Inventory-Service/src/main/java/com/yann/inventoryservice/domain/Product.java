@@ -3,36 +3,28 @@ package com.yann.inventoryservice.domain;
 import com.yann.inventoryservice.domain.exception.*;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
 import com.yann.inventoryservice.domain.vo.ProductID;
+import com.yann.inventoryservice.domain.vo.ProductName;
+import com.yann.inventoryservice.domain.vo.ProductPrice;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Document(collection = "products")
 public class Product {
     @Id
     private ProductID productID;
-    private String name;
-    private double price;
+    private ProductName name;
+    private ProductPrice price;
     private int availableQuantity;
     private MaxQuantity maxQuantity;
 
     public Product() {
     }
 
-    public Product(ProductID productID, String name,
-                   double price, int initialQuantity,
+    public Product(ProductID productID, ProductName name,
+                   ProductPrice price, int initialQuantity,
                    MaxQuantity maxQuantity) {
-
-        if (name == null || name.isBlank()) {
-            throw new IllegaInitInventoryException("Name cannot be null or empty");
-        }
-
-        if (price <= 0.0) {
-            throw new IllegaInitInventoryException("Price cannot be less than or equal to 0.0");
-        }
 
         if (initialQuantity > maxQuantity.value()) {
             throw new IllegaInitInventoryException("Initial quantity cannot be greater than max quantity");
@@ -89,13 +81,14 @@ public class Product {
     }
 
     public void checkIfProductIsAlreadyInitialized(List<Product> products) {
-        Set<String> seenNames = new HashSet<>();
+        boolean productNameExists = products.stream()
+                                       .map(Product::getName)
+                                       .anyMatch(existingName -> existingName.equals(getName()));
 
-        boolean hasDuplicate = products.stream().map(Product::getName)
-                                       .anyMatch(name -> !seenNames.add(name));
-
-        if (hasDuplicate) {
-            throw new IllegalInventoryUpdateException("Duplicate product found and therefor not added");
+        if (productNameExists) {
+            throw new IllegalInventoryUpdateException(
+                    "Cannot add product: '" + this.name + "' is already in inventory."
+            );
         }
     }
 
@@ -107,25 +100,19 @@ public class Product {
         return productID;
     }
 
-    public String getName() {
+    public ProductName getName() {
         return name;
     }
 
-    public void setName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalInventoryUpdateException("Name cannot be null or empty");
-        }
+    public void setName(ProductName name) {
         this.name = name;
     }
 
-    public double getPrice() {
+    public ProductPrice getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        if (price <= 0.0) {
-            throw new IllegalInventoryUpdateException("Price cannot be less than or equal to 0.0");
-        }
+    public void setPrice(ProductPrice price) {
         this.price = price;
     }
 
