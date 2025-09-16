@@ -1,6 +1,6 @@
 package com.yann.ordersservice.application.services;
 
-import com.yann.ordersservice.application.dto.OrderToInventoryRequestDTO;
+import com.yann.ordersservice.application.dto.OrderToInventoryDTO;
 import com.yann.ordersservice.application.dto.OrdersResponseDTO;
 import com.yann.ordersservice.application.dto.PaymentResponseDTO;
 import com.yann.ordersservice.application.mapper.OrderMapper;
@@ -59,12 +59,12 @@ class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderToInventoryRequestDTO sendOrderToInventory(
+    public OrderToInventoryDTO sendOrderToInventory(
             String orderIDAsString) {
         Order order = getOrderByOrderID(orderIDAsString);
-        OrderToInventoryRequestDTO orderToInventoryRequestDTO = OrderMapper.toOrderToInventoryRequestDTO(order);
-        orderEventPublisher.sendOrderToInventory(orderToInventoryRequestDTO);
-        return orderToInventoryRequestDTO;
+        OrderToInventoryDTO orderToInventoryDTO = OrderMapper.toOrderToInventoryRequestDTO(order);
+        orderEventPublisher.sendOrderToInventory(orderToInventoryDTO);
+        return orderToInventoryDTO;
     }
 
     // Helpers
