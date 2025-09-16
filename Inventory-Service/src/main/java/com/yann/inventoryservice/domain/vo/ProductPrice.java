@@ -6,7 +6,7 @@ import com.yann.inventoryservice.domain.exception.IllegaInitInventoryException;
 import java.util.Objects;
 
 public class ProductPrice {
-    private Double value;
+    private final Double value;
 
     public ProductPrice(Double value) {
         if (value <= 0.0) {

@@ -8,7 +8,7 @@ import java.util.Objects;
 public class OrderID {
     private static final String PREFIX = "ORD-ID";
     private static final String DATE_FORMAT = "\\d{8}";
-    private String value;
+    private final String value;
 
     public OrderID(String value) {
         if (value == null || value.isBlank()) {
