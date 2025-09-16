@@ -26,10 +26,9 @@ public class OrderMapper {
                 customer.getLastname(), customer.getEmail().value(), address, cart);
     }
 
-    public static OrderToInventoryRequestDTO toOrderToInventoryRequestDTO(Order order) {
-        CustomerDTO customer = toCustomerDTO(order.getCustomer());
+    public static OrderToInventoryDTO toOrderToInventoryDTO(Order order) {
         List<ProductOrderDTO> productOrders = toProductOrderDTOS(order.getCustomer().getCart());
-        return new OrderToInventoryRequestDTO(order.getOrderID().value(), customer, productOrders);
+        return new OrderToInventoryDTO(order.getOrderID().value(), productOrders);
     }
 
     // Helpers
