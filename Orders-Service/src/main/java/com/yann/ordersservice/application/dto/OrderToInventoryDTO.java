@@ -2,9 +2,8 @@ package com.yann.ordersservice.application.dto;
 
 import java.util.List;
 
-public record OrderToInventoryRequestDTO(
+public record OrderToInventoryDTO(
         String OrderID,
-        CustomerDTO customerDTO,
         List<ProductOrderDTO> productOrderDTO
 ) {
 }
