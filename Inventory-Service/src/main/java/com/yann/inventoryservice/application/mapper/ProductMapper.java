@@ -38,8 +38,10 @@ public class ProductMapper {
     }
 
     public static StockResponseDTO toStockResponseDTO(Product product) {
+        ProductAvailability productAvailability = new ProductAvailability();
+
         return new StockResponseDTO(product.getProductID(), product.getName().value(),
-                product.getAvailableQuantity(), product.checkAvailability());
+                product.getAvailableQuantity(), productAvailability.checkAvailability(product));
     }
 
     public static StockUpdateResponseDTO toStockUpdateResponse(Product product) {
