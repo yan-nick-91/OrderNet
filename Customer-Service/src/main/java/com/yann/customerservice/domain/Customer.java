@@ -1,6 +1,5 @@
 package com.yann.customerservice.domain;
 
-import com.yann.customerservice.domain.exceptions.ProductAlreadyInitializedInCartException;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -31,26 +30,6 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.cart = new Cart();
-    }
-
-    public void checkIfProductIsNotInCustomerItsCart(
-            Customer existingCustomer, Cart cart, String productName) {
-        if (cart.getProducts().isEmpty()) {
-            return;
-        }
-
-        existingCustomer.getCart()
-                        .getProducts()
-                        .stream()
-                        .map(ProductRelation::getProduct)
-                        .filter(product -> product.getProductName().equalsIgnoreCase(productName))
-                        .findAny()
-                        .ifPresent(product -> {
-                            throw new ProductAlreadyInitializedInCartException(
-                                    "Product " + product.getProductName() +
-                                            " already in cart. Use increasing or decreasing to adjust the " +
-                                            "product quantity.");
-                        });
     }
 
     public CustomerID getCustomerID() {
