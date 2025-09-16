@@ -26,15 +26,21 @@ public class Order {
         this.sequence = new Sequence();
         this.date = parseDate(orderDateAsString);
         this.customer = customer;
-        this.state = OrderState.PAID;
+        this.state = orderStateSetToPaid(customer);
     }
 
     private Instant parseDate(String orderDateAsString) {
         try {
             return Instant.parse(orderDateAsString);
-        }  catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date format: " + orderDateAsString, e);
         }
+    }
+
+    private OrderState orderStateSetToPaid(Customer customer) {
+        OrderStateValidator orderStateValidator = new OrderStateValidator();
+        orderStateValidator.orderStateIsPaid(this.orderID, customer);
+        return OrderState.PAID;
     }
 
     public OrderID getOrderID() {
