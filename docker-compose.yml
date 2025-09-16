@@ -52,6 +52,8 @@ services:
       NEO4J_AUTH: neo4j/test1234 # the auth should be changed (even better be hidden)
     networks:
       - backend-network
+    volumes:
+      - ./Customer-Service/data/db:/data/dn
 
   customer-service:
     build:
@@ -98,3 +100,5 @@ networks:
 volumes:
   inventory_data:
     name: inventory_data
+  customer_data:
+    name: customer_data
