@@ -62,7 +62,7 @@ class OrderServiceImpl implements OrderService {
     public OrderToInventoryDTO sendOrderToInventory(
             String orderIDAsString) {
         Order order = getOrderByOrderID(orderIDAsString);
-        OrderToInventoryDTO orderToInventoryDTO = OrderMapper.toOrderToInventoryRequestDTO(order);
+        OrderToInventoryDTO orderToInventoryDTO = OrderMapper.toOrderToInventoryDTO(order);
         orderEventPublisher.sendOrderToInventory(orderToInventoryDTO);
         return orderToInventoryDTO;
     }
