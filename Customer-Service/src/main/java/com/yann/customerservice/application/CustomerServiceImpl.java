@@ -70,21 +70,17 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO findCustomerById(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
     public CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
-
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         Cart cart = customer.getCart();
-        customer.checkIfProductIsNotInCustomerItsCart(customer, cart, productRequestDTO.name());
+        CustomerCartValidator customerCartValidator = new CustomerCartValidator();
+        customerCartValidator.checkIfCartHasProduct(customer, cart, productRequestDTO.name());
 
         // If a product is not added to the cart, proceed to send an RPC request to inventory-service
         // to get the product, following to add the response to the cart
@@ -103,11 +99,9 @@ class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponseDTO adjustQuantityOfExistingProductInCart(
+    public CustomerResponseDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         Cart cart = customer.getCart();
 
@@ -133,7 +127,7 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         // TODO
         // 1. Before sending an event message, it should be checked if the
@@ -141,7 +135,7 @@ class CustomerServiceImpl implements CustomerService {
         Cart cart = customer.getCart();
 
         CartPaymentChecker cartPaymentChecker = new CartPaymentChecker();
-        cartPaymentChecker.checkIfPaymentMathesCartTotalPrice(paymentRequestDTO.totalPrice(), cart);
+        cartPaymentChecker.verifyPaymentWithTotalPrice(paymentRequestDTO.totalPrice(), cart);
 
         cart.markProductRelationTypeToPending();
 
@@ -166,11 +160,7 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() ->
-                                                      new CustomerNotFoundException(
-                                                              "Customer not found or invalid ID"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         return customer.getCart()
                        .getProducts()
@@ -180,13 +170,13 @@ class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        customerRepository.deleteById(customerID);
+    public void removeCustomer(String customerIDAsString) {
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
+        customerRepository.deleteById(customer.getCustomerID());
     }
 
     // Helpers
-    private Customer checkForExistingCustomerID(String customerIDAsString) {
+    private Customer findCustomerByIDOrThrow(String customerIDAsString) {
         CustomerID customerID = customerIDFactory.set(customerIDAsString);
         return customerRepository.findById(customerID)
                                  .orElseThrow(() ->

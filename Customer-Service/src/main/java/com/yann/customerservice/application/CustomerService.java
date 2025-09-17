@@ -16,12 +16,12 @@ public interface CustomerService {
     CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO customerProductRequestDTO);
 
-    CustomerResponseDTO adjustQuantityOfExistingProductInCart(
+    CustomerResponseDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO);
 
     PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO);
 
     List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString);
 
-    void deleteCustomer(String customerIDAsString);
+    void removeCustomer(String customerIDAsString);
 }

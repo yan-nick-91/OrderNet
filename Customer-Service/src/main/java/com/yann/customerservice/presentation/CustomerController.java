@@ -104,7 +104,7 @@ public class CustomerController {
             @RequestBody AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
-                                 .body(customerService.adjustQuantityOfExistingProductInCart(
+                                 .body(customerService.updateProductQuantityInCart(
                                          customerIDAsString, adjustProductQuantityRequestDTO));
         } catch (IllegalProductQuantityException | IllegalAdjustmentTypeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -118,7 +118,7 @@ public class CustomerController {
     @DeleteMapping("/{customerIDAsString}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable String customerIDAsString) {
         try {
-            customerService.deleteCustomer(customerIDAsString);
+            customerService.removeCustomer(customerIDAsString);
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
                                  .body("Customer " + customerIDAsString + " deleted successfully");
         } catch (CustomerNotFoundException e) {
