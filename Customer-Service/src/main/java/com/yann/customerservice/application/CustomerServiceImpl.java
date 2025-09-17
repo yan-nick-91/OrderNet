@@ -102,7 +102,6 @@ class CustomerServiceImpl implements CustomerService {
     public CustomerResponseDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
-
         Cart cart = customer.getCart();
 
         cart.adjustProductQuantity(
@@ -128,32 +127,17 @@ class CustomerServiceImpl implements CustomerService {
     @Override
     public PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
-
-        // TODO
-        // 1. Before sending an event message, it should be checked if the
-        // payment matches the total price in the cart of customer
         Cart cart = customer.getCart();
 
         CartPaymentChecker cartPaymentChecker = new CartPaymentChecker();
         cartPaymentChecker.verifyPaymentWithTotalPrice(paymentRequestDTO.totalPrice(), cart);
-
         cart.markProductRelationTypeToPending();
 
-        // 2. If payment matches the total price, an Order class should be instantiated where its ID will be mentioned.
         OrderID orderID = orderIDFactory.create();
         Order order = CustomerMapper.toOrder(orderID, customer);
 
-
-        // 3. A mapper should be created
-        // with the Customer, Cart, ProductIDs (ID should be mentioned) and Order
         PaymentResponseDTO paymentResponseDTO = CustomerMapper.toPaymentResponseDTO(order);
-
-        // 4. If mapper is done, this can be sent
         customerEventPublisher.publishCustomerEvent(paymentResponseDTO);
-
-
-        // 5. If sending the message to RabbitMQ is successful, the user should be informed
-
         return paymentResponseDTO;
     }
 
