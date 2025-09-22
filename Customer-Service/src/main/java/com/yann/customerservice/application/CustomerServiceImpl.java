@@ -70,21 +70,17 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO findCustomerById(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
     public CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
-
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         Cart cart = customer.getCart();
-        customer.checkIfProductIsNotInCustomerItsCart(customer, cart, productRequestDTO.name());
+        CustomerCartValidator customerCartValidator = new CustomerCartValidator();
+        customerCartValidator.checkIfCartHasProduct(customer, cart, productRequestDTO.name());
 
         // If a product is not added to the cart, proceed to send an RPC request to inventory-service
         // to get the product, following to add the response to the cart
@@ -103,12 +99,9 @@ class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponseDTO adjustQuantityOfExistingProductInCart(
+    public CustomerResponseDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         Cart cart = customer.getCart();
 
         cart.adjustProductQuantity(
@@ -133,44 +126,25 @@ class CustomerServiceImpl implements CustomerService {
 
     @Override
     public PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO) {
-        Customer customer = checkForExistingCustomerID(customerIDAsString);
-
-        // TODO
-        // 1. Before sending an event message, it should be checked if the
-        // payment matches the total price in the cart of customer
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         Cart cart = customer.getCart();
 
         CartPaymentChecker cartPaymentChecker = new CartPaymentChecker();
-        cartPaymentChecker.checkIfPaymentMathesCartTotalPrice(paymentRequestDTO.totalPrice(), cart);
-
+        cartPaymentChecker.verifyPaymentWithTotalPrice(paymentRequestDTO.totalPrice(), cart);
         cart.markProductRelationTypeToPending();
 
-        // 2. If payment matches the total price, an Order class should be instantiated where its ID will be mentioned.
         OrderID orderID = orderIDFactory.create();
         Order order = CustomerMapper.toOrder(orderID, customer);
 
-
-        // 3. A mapper should be created
-        // with the Customer, Cart, ProductIDs (ID should be mentioned) and Order
         PaymentResponseDTO paymentResponseDTO = CustomerMapper.toPaymentResponseDTO(order);
-
-        // 4. If mapper is done, this can be sent
         customerEventPublisher.publishCustomerEvent(paymentResponseDTO);
-
-
-        // 5. If sending the message to RabbitMQ is successful, the user should be informed
-
         return paymentResponseDTO;
     }
 
 
     @Override
     public List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        Customer customer = customerRepository.findById(customerID)
-                                              .orElseThrow(() ->
-                                                      new CustomerNotFoundException(
-                                                              "Customer not found or invalid ID"));
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
         return customer.getCart()
                        .getProducts()
@@ -180,13 +154,13 @@ class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(String customerIDAsString) {
-        CustomerID customerID = customerIDFactory.set(customerIDAsString);
-        customerRepository.deleteById(customerID);
+    public void removeCustomer(String customerIDAsString) {
+        Customer customer = findCustomerByIDOrThrow(customerIDAsString);
+        customerRepository.deleteById(customer.getCustomerID());
     }
 
     // Helpers
-    private Customer checkForExistingCustomerID(String customerIDAsString) {
+    private Customer findCustomerByIDOrThrow(String customerIDAsString) {
         CustomerID customerID = customerIDFactory.set(customerIDAsString);
         return customerRepository.findById(customerID)
                                  .orElseThrow(() ->

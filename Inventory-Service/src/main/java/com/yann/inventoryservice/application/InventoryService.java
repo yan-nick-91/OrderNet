@@ -11,21 +11,33 @@ public interface InventoryService {
 
     List<ProductResponseDTO> getAllProducts();
 
-    ProductResponseDTO getProductById(String productId);
+    ProductResponseDTO getProductById(String productIDAsString);
 
     ProductResponseDTO getProductByName(String productName);
 
     ProductCustomerResponseDTO getProductForCustomerByName(String productName);
 
-    StockResponseDTO getStockPercentageByProductId(String productId);
+    void receivingOrder(OrderToInventoryRequestDTO orderToInventoryRequestDTO);
+
+    List<ProductOrderResponseDTO> getAllProductOrders();
+
+    ProductCustomerResponseDTO sendPickedUpProductToCustomer(String orderIDAsString);
+
+    StockResponseDTO getStockPercentageByProductId(String productIDAsString);
 
     List<StockResponseDTO> getAllStockPercentage();
 
-    StockResponseDTO increaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
+    StockResponseDTO increaseStockQuantityOfProduct(
+            String productIDAsString, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
 
-    StockResponseDTO decreaseStockWithProducts(String productId, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
+    StockResponseDTO decreaseStockQuantityOfProduct(
+            String productIDAsString, StockAdjustmentRequestDTO stockAdjustmentRequestDTO);
 
-    StockUpdateResponseDTO updateProduct(String productId, StockUpdateRequestDTO stockUpdateRequestDTO);
+    StockUpdateResponseDTO updateProductGeneral(
+            String productIDAsString, StockUpdateRequestDTO stockUpdateRequestDTO);
 
-    void deleteProduct(String productId);
+    StockUpdateResponseDTO updateStockMaxQuantityOfProduct(
+            String productIDAsString, ProductQuantityDTO productRequestDTO);
+
+    void removeProduct(String productIDAsString);
 }

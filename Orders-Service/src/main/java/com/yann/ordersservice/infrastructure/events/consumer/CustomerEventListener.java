@@ -1,4 +1,4 @@
-package com.yann.ordersservice.infrastructure.events;
+package com.yann.ordersservice.infrastructure.events.consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +20,7 @@ public class CustomerEventListener {
         this.orderService = orderService;
     }
 
-    @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQConfig.CUSTOMER_TO_ORDERS_QUEUE_NAME)
     public void receiveCustomerPayment(String message) {
         try {
             PaymentResponseDTO paymentResponseDTO = objectMapper.readValue(message, PaymentResponseDTO.class);

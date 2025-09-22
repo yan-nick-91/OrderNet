@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Objects;
 
-public class ProductID {
-    private static final String PREFIX = "PROD-ID";
+public class OrderID {
+    private static final String PREFIX = "ORD-ID";
     private static final String DATE_FORMAT = "\\d{8}";
     private final String value;
 
-    public ProductID(String value) {
+    public OrderID(String value) {
         if (value == null || value.isBlank()) {
             throw new NullPointerException("value is null or empty");
         }
@@ -18,8 +18,9 @@ public class ProductID {
         String formatted = String.format("%s-%s", PREFIX, DATE_FORMAT);
 
         if (!value.matches(formatted + "-[0-9a-fA-F\\-]{36}")) {
-            throw new IllegalArgumentException("Invalid ProductID format: " + value);
+            throw new IllegalArgumentException("Invalid OrderID format: " + value);
         }
+
         this.value = value;
     }
 
@@ -29,16 +30,16 @@ public class ProductID {
     }
 
     @JsonCreator
-    public static ProductID fromString(String value) {
-        return new ProductID(value);
+    public static OrderID fromString(String value) {
+        return new OrderID(value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductID productID = (ProductID) o;
-        return Objects.equals(value, productID.value);
+        OrderID orderID = (OrderID) o;
+        return Objects.equals(value, orderID.value);
     }
 
     @Override
@@ -51,4 +52,3 @@ public class ProductID {
         return value;
     }
 }
-

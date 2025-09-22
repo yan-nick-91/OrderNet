@@ -5,6 +5,7 @@ import com.yann.ordersservice.domain.*;
 import com.yann.ordersservice.domain.vo.*;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderMapper {
     public static Order toOrder(OrderID orderID, PaymentResponseDTO paymentResponseDTO) {
@@ -21,9 +22,13 @@ public class OrderMapper {
     public static CustomerResponseDTO toCustomerResponseDTO(Customer customer) {
         AddressDTO address = toAddressDTO(customer.getAddress());
         CartDTO cart = toCartDTO(customer.getCart());
-
         return new CustomerResponseDTO(customer.getCustomerID().value(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail().value(), address, cart);
+    }
+
+    public static OrderToInventoryDTO toOrderToInventoryDTO(Order order) {
+        List<ProductOrderDTO> productOrders = toProductOrderDTOS(order.getCustomer().getCart());
+        return new OrderToInventoryDTO(order.getOrderID().value(), productOrders);
     }
 
     // Helpers
@@ -36,6 +41,12 @@ public class OrderMapper {
                 paymentResponseDTO.customer().lastname(),
                 new Email(paymentResponseDTO.customer().email()),
                 address, cart);
+    }
+
+    private static CustomerDTO toCustomerDTO(Customer customer) {
+        AddressDTO address = toAddressDTO(customer.getAddress());
+        return new CustomerDTO(customer.getCustomerID().value(), customer.getFirstname(),
+                customer.getLastname(), customer.getEmail().value(), address);
     }
 
     private static Address toAddress(AddressDTO addressDTO) {
@@ -58,5 +69,15 @@ public class OrderMapper {
     private static CartDTO toCartDTO(Cart cart) {
         return new CartDTO(cart.getCartID().value(),
                 cart.getProducts(), cart.getTotalPrice());
+    }
+
+    private static List<ProductOrderDTO> toProductOrderDTOS(Cart cart) {
+        return cart.getProducts()
+                   .stream()
+                   .map(pr -> new ProductOrderDTO(
+                           pr.getProduct().getProductID().value(),
+                           pr.getProduct().getProductName(),
+                           pr.getQuantity())).toList();
+
     }
 }

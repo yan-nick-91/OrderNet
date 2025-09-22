@@ -30,8 +30,12 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
                 new CustomerIDReader(),
                 new MaxQuantityReader(),
                 new MaxQuantityWriter(),
+                new OrderIDReader(),
+                new OrderIDWriter(),
                 new ProductIDReader(),
-                new ProductIDWriter()
+                new ProductIDWriter(),
+                new StreetNumberReader(),
+                new StreetNumberWriter()
         ));
     }
 

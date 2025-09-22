@@ -4,21 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
-public class ProductID {
-    private static final String PREFIX = "PROD-ID";
-    private static final String DATE_FORMAT = "\\d{8}";
+public class StreetNumber {
+    private final static Pattern STREETNUMBER_PATTERN = Pattern.compile("^[1-9][0-9]*[A-Za-z]?$");
     private final String value;
 
-    public ProductID(String value) {
+    public StreetNumber(String value) {
         if (value == null || value.isBlank()) {
-            throw new NullPointerException("value is null or empty");
+            throw new IllegalArgumentException("StreetNumber value is null or empty");
         }
 
-        String formatted = String.format("%s-%s", PREFIX, DATE_FORMAT);
-
-        if (!value.matches(formatted + "-[0-9a-fA-F\\-]{36}")) {
-            throw new IllegalArgumentException("Invalid ProductID format: " + value);
+        if (!value.matches(STREETNUMBER_PATTERN.pattern())) {
+            throw new IllegalArgumentException("StreetNumber value is invalid");
         }
         this.value = value;
     }
@@ -29,16 +27,16 @@ public class ProductID {
     }
 
     @JsonCreator
-    public static ProductID fromString(String value) {
-        return new ProductID(value);
+    public static StreetNumber fromString(String value) {
+        return new StreetNumber(value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductID productID = (ProductID) o;
-        return Objects.equals(value, productID.value);
+        StreetNumber that = (StreetNumber) o;
+        return Objects.equals(value, that.value);
     }
 
     @Override
@@ -51,4 +49,3 @@ public class ProductID {
         return value;
     }
 }
-

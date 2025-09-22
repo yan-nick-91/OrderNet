@@ -92,7 +92,8 @@ public class InventoryController {
     public ResponseEntity<Object> updateProductById(@PathVariable("id") String id,
                                                     @RequestBody StockUpdateRequestDTO stockUpdateRequestDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(inventoryService.updateProduct(id, stockUpdateRequestDTO));
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body(inventoryService.updateProductGeneral(id, stockUpdateRequestDTO));
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
