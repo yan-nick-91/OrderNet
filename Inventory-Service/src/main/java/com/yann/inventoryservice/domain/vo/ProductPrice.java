@@ -1,7 +1,7 @@
 package com.yann.inventoryservice.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.yann.inventoryservice.domain.exception.IllegaInitInventoryException;
+import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ public class ProductPrice {
 
     public ProductPrice(Double value) {
         if (value <= 0.0) {
-            throw new IllegaInitInventoryException("Price cannot be less than or equal to 0.0");
+            throw new IllegalInitInventoryException("Price cannot be less than or equal to 0.0");
         }
         this.value = value;
     }
