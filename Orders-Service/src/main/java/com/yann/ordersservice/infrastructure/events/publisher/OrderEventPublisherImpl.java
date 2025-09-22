@@ -1,7 +1,7 @@
 package com.yann.ordersservice.infrastructure.events.publisher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yann.ordersservice.application.dto.OrderToInventoryRequestDTO;
+import com.yann.ordersservice.application.dto.OrderToInventoryDTO;
 import com.yann.ordersservice.infrastructure.events.config.RabbitMQConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +19,14 @@ class OrderEventPublisherImpl implements OrderEventPublisher {
     }
 
     @Override
-    public void sendOrderToInventory(OrderToInventoryRequestDTO orderToInventoryRequestDTO) {
+    public void sendOrderToInventory(OrderToInventoryDTO orderToInventoryDTO) {
         try {
-            String message = objectMapper.writeValueAsString(orderToInventoryRequestDTO);
+            String message = objectMapper.writeValueAsString(orderToInventoryDTO);
             rabbitTemplate.convertAndSend(
                     RabbitMQConfig.ORDER_TO_INVENTORY_EXCHANGE_NAME,
                     RabbitMQConfig.ORDER_TO_INVENTORY_ROUTING_KEY,
                     message);
-            log.info("Message sent from order to inventory. OrderID: {}", orderToInventoryRequestDTO.OrderID());
+            log.info("Message sent from order to inventory. OrderID: {}", orderToInventoryDTO.OrderID());
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e);
