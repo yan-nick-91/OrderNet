@@ -8,16 +8,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("Order")
 public class Order {
     @Id
-    OrderID orderID;
-    ProductID productID;
-    int quantity;
-    Customer customer;
-    ProductState productState;
+    private OrderID orderID;
+    private ProductID productID;
+    private int quantity;
+    private Customer customer;
+    private ProductState productState;
 
     public Order() {
     }
 
-    public Order(OrderID orderID, ProductID productID, int quantity, Customer customer, ProductState productState) {
+    public Order(OrderID orderID, ProductID productID, int quantity,
+                 Customer customer, ProductState productState) {
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
