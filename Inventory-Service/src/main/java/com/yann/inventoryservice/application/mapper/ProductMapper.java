@@ -41,7 +41,7 @@ public class ProductMapper {
         ProductAvailability productAvailability = new ProductAvailability();
 
         return new StockResponseDTO(product.getProductID(), product.getName().value(),
-                product.getAvailableQuantity(), productAvailability.checkAvailability(product));
+                product.getAvailableQuantity(), productAvailability.displayAvailability(product));
     }
 
     public static StockUpdateResponseDTO toStockUpdateResponse(Product product) {
