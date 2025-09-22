@@ -2,7 +2,7 @@ package com.yann.inventoryservice.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.yann.inventoryservice.domain.exception.IllegaInitInventoryException;
+import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ public class ProductName {
 
     public ProductName(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegaInitInventoryException("Name cannot be null or empty");
+            throw new IllegalInitInventoryException("Name cannot be null or empty");
         }
         this.value = value;
     }
