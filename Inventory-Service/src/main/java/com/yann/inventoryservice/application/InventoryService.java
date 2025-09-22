@@ -38,6 +38,6 @@ public interface InventoryService {
 
     StockUpdateResponseDTO updateStockMaxQuantityOfProduct(
             String productIDAsString, ProductQuantityDTO productRequestDTO);
-;
+
     void removeProduct(String productIDAsString);
 }
