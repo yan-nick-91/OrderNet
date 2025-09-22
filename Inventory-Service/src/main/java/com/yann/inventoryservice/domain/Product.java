@@ -8,8 +8,6 @@ import com.yann.inventoryservice.domain.vo.ProductPrice;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document(collection = "products")
 public class Product {
     @Id
@@ -27,7 +25,7 @@ public class Product {
                    MaxQuantity maxQuantity) {
 
         if (initialQuantity > maxQuantity.value()) {
-            throw new IllegaInitInventoryException("Initial quantity cannot be greater than max quantity");
+            throw new IllegalInitInventoryException("Initial quantity cannot be greater than max quantity");
         }
 
         this.productID = productID;
@@ -58,18 +56,6 @@ public class Product {
         }
         this.availableQuantity -= quantity;
     }
-
-//    public void checkIfProductIsAlreadyInitialized(List<Product> products) {
-//        boolean productNameExists = products.stream()
-//                                       .map(Product::getName)
-//                                       .anyMatch(existingName -> existingName.equals(getName()));
-//
-//        if (productNameExists) {
-//            throw new IllegalInventoryUpdateException(
-//                    "Cannot add product: '" + this.name + "' is already in inventory."
-//            );
-//        }
-//    }
 
     public void updateMaxQuantity(int newMaxQuantity) {
         this.maxQuantity = new MaxQuantity(newMaxQuantity);
