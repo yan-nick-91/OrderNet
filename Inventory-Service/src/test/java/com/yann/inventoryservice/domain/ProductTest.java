@@ -1,9 +1,7 @@
 package com.yann.inventoryservice.domain;
 
 import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
-import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
 import com.yann.inventoryservice.domain.utils.CreateIDFactory;
-import com.yann.inventoryservice.domain.utils.IDFactory;
 import com.yann.inventoryservice.domain.utils.ProductIDFactory;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
 import com.yann.inventoryservice.domain.vo.ProductID;
