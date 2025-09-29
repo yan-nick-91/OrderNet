@@ -8,6 +8,7 @@ import com.yann.inventoryservice.domain.vo.ProductID;
 import com.yann.inventoryservice.domain.vo.ProductName;
 import com.yann.inventoryservice.domain.vo.ProductPrice;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +21,19 @@ class ProductTest {
     void setUp() {
         this.productIDFactory = new ProductIDFactory();
     }
+
+    @Test
+    @DisplayName("Empty Constructor For Product Should Initializes With Nulls")
+    void EmptyConstructorForCustomerShouldInitializesWithNulls() {
+        Product product = new Product();
+
+        assertNull(product.getProductID());
+        assertNull(product.getName());
+        assertNull(product.getPrice());
+        assertNull(product.getPrice());
+        assertNull(product.getMaxQuantity());
+    }
+
 
     @Test
     void shouldInstantiateProductWithValidInitialQuantity() {
