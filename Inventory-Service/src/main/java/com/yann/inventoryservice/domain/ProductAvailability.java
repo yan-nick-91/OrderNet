@@ -17,7 +17,7 @@ public class ProductAvailability {
         if (percentage <= 50.0) {
             return String.format("Product is low: %.2f%%.", percentage);
         }
-        return String.format("Product in stock: %.2f%%", percentage);
+        return String.format("Product in stock: %.2f%%.", percentage);
     }
 
     public void verifyIfProductIsInStock(Product newProduct, List<Product> products) {
