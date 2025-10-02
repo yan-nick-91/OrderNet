@@ -40,21 +40,24 @@ public class Product {
             throw new IllegalQuantityUpdateException("Quantity to increase must be greater than zero");
         }
 
+        this.availableQuantity += quantity;
+
         if (availableQuantity > maxQuantity.value()) {
+            this.availableQuantity -= quantity;
             throw new IllegalQuantityUpdateException("Quantity to increase exceeds maximum quantity");
         }
-        this.availableQuantity += quantity;
     }
 
     public void decreaseQuantity(int quantity) {
         if (quantity <= 0) {
-            throw new IllegalQuantityUpdateException("Quantity to reduce must be greater than zero");
+            throw new IllegalQuantityUpdateException("Quantity to decrease must be greater than zero");
         }
+
+        this.availableQuantity -= quantity;
 
         if (quantity > availableQuantity) {
             throw new OutOfStockException("Product is out of stock. Please refill");
         }
-        this.availableQuantity -= quantity;
     }
 
     public void updateMaxQuantity(int newMaxQuantity) {
