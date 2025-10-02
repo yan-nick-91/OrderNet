@@ -63,7 +63,7 @@ public class InventoryController {
         }
     }
 
-    @GetMapping("/{productName}")
+    @GetMapping("/product/{productName}")
     public ResponseEntity<Object> getProductByProductName(@PathVariable("productName") String productName) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getProductByName(productName));
