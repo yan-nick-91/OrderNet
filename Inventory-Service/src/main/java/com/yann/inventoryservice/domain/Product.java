@@ -55,8 +55,10 @@ public class Product {
 
         this.availableQuantity -= quantity;
 
-        if (quantity > availableQuantity) {
-            throw new OutOfStockException("Product is out of stock. Please refill");
+        if (availableQuantity < 0) {
+            this.availableQuantity += quantity;
+            throw new OutOfStockException("Not able to decrease quantity by amount of " +
+                    quantity + ". Current stock: " + availableQuantity);
         }
     }
 
