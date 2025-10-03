@@ -106,6 +106,7 @@ class InventoryServiceImpl implements InventoryService {
             String productIDAsString, StockAdjustmentRequestDTO stockAdjustmentRequestDTO) {
         Product product = findProductByItsIDAsStringOrThrow(productIDAsString);
         product.increaseQuantity(stockAdjustmentRequestDTO.quantity());
+        productsRepository.save(product);
         return ProductMapper.toStockResponseDTO(product);
     }
 
@@ -114,6 +115,7 @@ class InventoryServiceImpl implements InventoryService {
             String productIDAsString, StockAdjustmentRequestDTO stockAdjustmentRequestDTO) {
         Product product = findProductByItsIDAsStringOrThrow(productIDAsString);
         product.decreaseQuantity(stockAdjustmentRequestDTO.quantity());
+        productsRepository.save(product);
         return ProductMapper.toStockResponseDTO(product);
     }
 
