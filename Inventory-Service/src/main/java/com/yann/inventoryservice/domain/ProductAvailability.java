@@ -3,7 +3,6 @@ package com.yann.inventoryservice.domain;
 import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
 import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
 import com.yann.inventoryservice.domain.exception.IllegalProductAvailabilityException;
-import com.yann.inventoryservice.domain.exception.OutOfStockException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,10 +42,6 @@ public class ProductAvailability {
 
         if (availableQuantity < 0) {
             throw new IllegalProductAvailabilityException("The available quantity cannot be less than 0");
-        }
-
-        if (availableQuantity == 0) {
-            throw new OutOfStockException("The available quantity cannot be zero");
         }
     }
 
