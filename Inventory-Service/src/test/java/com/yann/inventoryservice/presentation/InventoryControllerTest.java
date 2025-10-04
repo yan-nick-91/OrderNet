@@ -6,6 +6,7 @@ import com.yann.inventoryservice.application.dto.ProductRequestDTO;
 import com.yann.inventoryservice.application.dto.ProductResponseDTO;
 import com.yann.inventoryservice.application.dto.StockResponseDTO;
 import com.yann.inventoryservice.domain.Product;
+import com.yann.inventoryservice.domain.exception.ProductNotFoundException;
 import com.yann.inventoryservice.domain.utils.IDFactory;
 import com.yann.inventoryservice.domain.utils.ProductIDFactory;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
@@ -25,10 +26,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @ExtendWith(MockitoExtension.class)
 class InventoryControllerTest {
@@ -53,7 +53,8 @@ class InventoryControllerTest {
     @DisplayName("Should Add Product Successfully")
     void shouldAddProductSuccessfully() throws Exception {
         ProductRequestDTO productRequestDTO = new ProductRequestDTO(
-                "Laptop", 799.99, 80, 100);
+                "Laptop", 799.99, 80, 100
+        );
 
         this.productIDFactory = new ProductIDFactory();
 
@@ -86,7 +87,7 @@ class InventoryControllerTest {
 
         mockMvc.perform(post("/api/inventories")
                        .contentType(MediaType.APPLICATION_JSON)
-               .content(requestJson))
+                       .content(requestJson))
                .andExpect(status().isInternalServerError());
     }
 
@@ -121,9 +122,35 @@ class InventoryControllerTest {
         when(inventoryService.getProductById(productIDAsString)).thenReturn(productResponseDTO);
 
         mockMvc.perform(get("/api/inventories/" + productIDAsString)
-                .contentType(MediaType.APPLICATION_JSON))
+                       .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().json(objectMapper.writeValueAsString(productResponseDTO)));
+    }
+
+    @Test
+    void shouldReturnNotFound() throws Exception {
+        String productID = "PROD-ID-20250926-123e4567-e89b-12d3-a456-426614174000";
+
+        when(inventoryService.getProductById(productID))
+                .thenThrow(new ProductNotFoundException("Product not found"));
+
+        mockMvc.perform(get("/api/inventories/" + productID)
+                       .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isNotFound())
+               .andExpect(content().string("Product not found"));
+    }
+
+    @Test
+    void shouldReturnConflict() throws Exception {
+        String productIDAsString = "PROT-ID-20250926-123e4567-e89b-12d3-a456-426614174000";
+
+        when(inventoryService.getProductById(productIDAsString))
+                .thenThrow(new IllegalArgumentException("Invalid ProductID format: " + productIDAsString));
+
+        mockMvc.perform(get("/api/inventories/" + productIDAsString)
+                       .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isBadRequest())
+               .andExpect(content().string("Invalid ProductID format: " + productIDAsString));
     }
 
     @Test
@@ -138,7 +165,7 @@ class InventoryControllerTest {
 
         when(inventoryService.getProductByName(productName)).thenReturn(productResponseDTO);
         mockMvc.perform(get("/api/inventories/product/" + productName)
-                .contentType(MediaType.APPLICATION_JSON))
+                       .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().json(objectMapper.writeValueAsString(productResponseDTO)));
     }
@@ -158,7 +185,7 @@ class InventoryControllerTest {
 
         when(inventoryService.getStockPercentageByProductId(productIDAsString)).thenReturn(stockResponseDTO);
         mockMvc.perform(get("/api/inventories/" + productID + "/available")
-                .contentType(MediaType.APPLICATION_JSON))
+                       .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().json(objectMapper.writeValueAsString(stockResponseDTO)));
     }
