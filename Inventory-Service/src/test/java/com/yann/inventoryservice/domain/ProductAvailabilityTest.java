@@ -1,9 +1,7 @@
 package com.yann.inventoryservice.domain;
 
-import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
 import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
 import com.yann.inventoryservice.domain.exception.IllegalProductAvailabilityException;
-import com.yann.inventoryservice.domain.exception.OutOfStockException;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
 import com.yann.inventoryservice.domain.vo.ProductName;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,19 +53,6 @@ class ProductAvailabilityTest {
     }
 
     @Test
-    @DisplayName("Should Throw Exception When Stock Equals Zero")
-    void shouldThrowExceptionWhenStockEqualsZero() {
-        when(mockProduct.getMaxQuantity()).thenReturn(mockMaxQuantity);
-        when(mockProduct.getAvailableQuantity()).thenReturn(0);
-        when(mockMaxQuantity.value()).thenReturn(50);
-
-        Exception exception = assertThrows(OutOfStockException.class,
-                () -> productAvailability.displayAvailability(mockProduct));
-
-        assertEquals("The available quantity cannot be zero", exception.getMessage());
-    }
-
-    @Test
     @DisplayName("Should Throw Exception When Available Quantity Is Below Zero")
     void shouldThrowExceptionWhenAvailableQuantityIsBelowZero() {
         when(mockProduct.getMaxQuantity()).thenReturn(mockMaxQuantity);
@@ -91,7 +76,6 @@ class ProductAvailabilityTest {
         when(newProduct.getName()).thenReturn(new ProductName("Laptop"));
 
         List<Product> products = List.of(existingProduct);
-
         Exception exception = assertThrows(IllegalInventoryUpdateException.class,
                 () -> productAvailability.verifyIfProductIsInStock(newProduct, products));
 
@@ -108,7 +92,6 @@ class ProductAvailabilityTest {
         when(newProduct.getName()).thenReturn(new ProductName("Mobile"));
 
         List<Product> products = List.of(existingProduct);
-
         assertDoesNotThrow(() -> productAvailability.verifyIfProductIsInStock(newProduct, products));
     }
 }

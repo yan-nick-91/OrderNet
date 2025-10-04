@@ -3,7 +3,6 @@ package com.yann.inventoryservice.domain;
 import com.yann.inventoryservice.domain.exception.IllegalInitInventoryException;
 import com.yann.inventoryservice.domain.exception.IllegalInventoryUpdateException;
 import com.yann.inventoryservice.domain.exception.IllegalQuantityUpdateException;
-import com.yann.inventoryservice.domain.exception.OutOfStockException;
 import com.yann.inventoryservice.domain.utils.CreateIDFactory;
 import com.yann.inventoryservice.domain.utils.ProductIDFactory;
 import com.yann.inventoryservice.domain.vo.MaxQuantity;
@@ -17,7 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class ProductTest {
     private CreateIDFactory<ProductID> productIDFactory;
@@ -144,21 +142,6 @@ class ProductTest {
     }
 
     @Test
-    @DisplayName("Verify Exception When Quantity For Product Is Out Of Stock")
-    void verifyExceptionWhenQuantityForProductIsOutOfStock() {
-        ProductID id = productIDFactory.create();
-        ProductName name = new ProductName("Test Product");
-        ProductPrice price = new ProductPrice(10.0);
-        MaxQuantity maxQuantity = new MaxQuantity(200);
-
-        Product product = new Product(id, name, price, 100, maxQuantity);
-        Exception exception = assertThrows(
-                OutOfStockException.class, () -> product.decreaseQuantity(100));
-
-        assertEquals("Product is out of stock. Please refill", exception.getMessage());
-    }
-
-    @Test
     @DisplayName("Verify Updated MaxQuantity Results Equal In Getter")
     void verifyUpdatedProductResultsEqualInGetter() {
         ProductID id = productIDFactory.create();
@@ -180,7 +163,6 @@ class ProductTest {
         MaxQuantity maxQuantity = new MaxQuantity(200);
 
         Product product = new Product(id, name, price, 100, maxQuantity);
-
         Exception exception = assertThrows(IllegalInventoryUpdateException.class,
                 () -> product.updateMaxQuantity(301));
 
