@@ -2,6 +2,7 @@ package com.yann.inventoryservice.presentation;
 
 import com.yann.inventoryservice.application.InventoryService;
 import com.yann.inventoryservice.application.dto.ProductRequestDTO;
+import com.yann.inventoryservice.application.dto.StockAdjustmentRequestDTO;
 import com.yann.inventoryservice.application.dto.StockUpdateRequestDTO;
 import com.yann.inventoryservice.domain.exception.*;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class InventoryController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (IllegalInventoryUpdateException | IllegalQuantityUpdateException e) {
+        } catch (IllegalArgumentException | IllegalInventoryUpdateException | IllegalQuantityUpdateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -63,7 +64,7 @@ public class InventoryController {
         }
     }
 
-    @GetMapping("/{productName}")
+    @GetMapping("/product/{productName}")
     public ResponseEntity<Object> getProductByProductName(@PathVariable("productName") String productName) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inventoryService.getProductByName(productName));
@@ -89,13 +90,50 @@ public class InventoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProductById(@PathVariable("id") String id,
-                                                    @RequestBody StockUpdateRequestDTO stockUpdateRequestDTO) {
+    public ResponseEntity<Object> updateProductById(
+            @PathVariable("id") String id,
+            @RequestBody StockUpdateRequestDTO stockUpdateRequestDTO) {
         try {
             return ResponseEntity.status(HttpStatus.OK)
                                  .body(inventoryService.updateProductGeneral(id, stockUpdateRequestDTO));
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/quantity/decrease")
+    public ResponseEntity<Object> decreaseQuantityOfProductsById(
+            @PathVariable("id") String id,
+            @RequestBody StockAdjustmentRequestDTO adjustmentRequestDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body(inventoryService.decreaseStockQuantityOfProduct(id, adjustmentRequestDTO));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalQuantityUpdateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (OutOfStockException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/quantity/increase")
+    public ResponseEntity<Object> increaseQuantityOfProductsById(
+            @PathVariable("id") String id,
+            @RequestBody StockAdjustmentRequestDTO adjustmentRequestDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                                 .body(inventoryService.increaseStockQuantityOfProduct(id, adjustmentRequestDTO));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalQuantityUpdateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (OutOfStockException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
