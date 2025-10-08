@@ -7,7 +7,7 @@ inventory:
 
 spring:
   application:
-    name: Network-Service
+    name: Shop-Service
   neo4j:
     uri: bolt://neo4j:7687
     authentication:
