@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Customer-Service</module>
+        <module>Shop-Service</module>
         <module>Inventory-Service</module>
         <module>Orders-Service</module>
     </modules>

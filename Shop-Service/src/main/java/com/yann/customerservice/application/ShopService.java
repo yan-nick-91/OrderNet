@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface CustomerService {
+public interface ShopService {
     CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequestDTO);
 
     List<CustomerResponseDTO> getAllCustomers();
