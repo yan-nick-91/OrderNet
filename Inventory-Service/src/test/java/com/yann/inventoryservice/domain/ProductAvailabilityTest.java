@@ -38,7 +38,7 @@ class ProductAvailabilityTest {
         when(mockMaxQuantity.value()).thenReturn(50);
 
         String result = productAvailability.displayAvailability(mockProduct);
-        assertEquals("Product in stock: 80.00%.", result);
+        assertEquals("Product in stock: 80,00%.", result);
     }
 
     @Test
@@ -49,7 +49,7 @@ class ProductAvailabilityTest {
         when(mockMaxQuantity.value()).thenReturn(50);
 
         String result = productAvailability.displayAvailability(mockProduct);
-        assertEquals("Product is low: 50.00%.", result);
+        assertEquals("Product is low: 50,00%.", result);
     }
 
     @Test
