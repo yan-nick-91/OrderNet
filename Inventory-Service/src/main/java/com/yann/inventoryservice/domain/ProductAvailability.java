@@ -6,6 +6,7 @@ import com.yann.inventoryservice.domain.exception.IllegalProductAvailabilityExce
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class ProductAvailability {
@@ -14,9 +15,9 @@ public class ProductAvailability {
         double percentage = calculateAvailabilityPercentage(product);
 
         if (percentage <= 50.0) {
-            return String.format("Product is low: %.2f%%.", percentage);
+            return String.format(Locale.GERMANY,"Product is low: %.2f%%.", percentage);
         }
-        return String.format("Product in stock: %.2f%%.", percentage);
+        return String.format(Locale.GERMANY,"Product in stock: %.2f%%.", percentage);
     }
 
     public void verifyIfProductIsInStock(Product newProduct, List<Product> products) {

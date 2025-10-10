@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-class CustomerServiceImpl implements CustomerService {
+class ShopServiceImpl implements ShopService {
     private final CreateIDFactory<CustomerID> customerIDFactory;
     private final CreateIDFactory<CartID> cartIDFactory;
     private final CreateIDFactory<OrderID> orderIDFactory;
@@ -29,10 +29,10 @@ class CustomerServiceImpl implements CustomerService {
     private final InventoryClientRPC inventoryClientRPC;
     private final CustomerEventPublisher customerEventPublisher;
 
-    public CustomerServiceImpl(CreateIDFactory<CustomerID> customerIDFactory, CreateIDFactory<CartID> cartIDFactory,
-                               CreateIDFactory<OrderID> orderIDFactory, CustomerRepository customerRepository,
-                               ProductRepository productRepository, InventoryClientRPC inventoryClientRPC,
-                               CustomerEventPublisher customerEventPublisher) {
+    public ShopServiceImpl(CreateIDFactory<CustomerID> customerIDFactory, CreateIDFactory<CartID> cartIDFactory,
+                           CreateIDFactory<OrderID> orderIDFactory, CustomerRepository customerRepository,
+                           ProductRepository productRepository, InventoryClientRPC inventoryClientRPC,
+                           CustomerEventPublisher customerEventPublisher) {
         this.customerIDFactory = customerIDFactory;
         this.cartIDFactory = cartIDFactory;
         this.orderIDFactory = orderIDFactory;

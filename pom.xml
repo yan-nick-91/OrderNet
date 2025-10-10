@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Customer-Service</module>
         <module>Inventory-Service</module>
         <module>Orders-Service</module>
+        <module>Shop-Service</module>
     </modules>
 
     <properties>
@@ -38,6 +38,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.18.3</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
