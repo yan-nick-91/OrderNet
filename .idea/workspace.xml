@@ -4,12 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Updated .idea" />
+    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Updated .idea">
+      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/CatalogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPCImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/ShopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/ShopController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="343DWB91wzrSbSYdZz5cs7hYbhC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -17,7 +44,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "refactor/081025"
+    "Docker.docker-compose.yml.shop-service: Compose Deployment.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feat/04102025",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -84,7 +120,30 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.shop-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="shop-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml.shop-service: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="" />
@@ -157,6 +216,7 @@
       <workItem from="1759963880992" duration="449000" />
       <workItem from="1760090055220" duration="1930000" />
       <workItem from="1760092054561" duration="1564000" />
+      <workItem from="1760433395631" duration="1392000" />
     </task>
     <task id="LOCAL-00210" summary="Implemented renamed method">
       <option name="closed" value="true" />
@@ -552,6 +612,9 @@
     </task>
     <option name="localTasksCounter" value="259" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
