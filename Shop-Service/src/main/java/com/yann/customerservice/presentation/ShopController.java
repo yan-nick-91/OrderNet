@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api/shop/customers")
 public class ShopController {
     private final ShopService shopService;
 
