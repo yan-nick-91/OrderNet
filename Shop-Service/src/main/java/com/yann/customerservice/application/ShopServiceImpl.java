@@ -77,6 +77,7 @@ class ShopServiceImpl implements ShopService {
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
+    @Override
     public CustomerResponseDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
