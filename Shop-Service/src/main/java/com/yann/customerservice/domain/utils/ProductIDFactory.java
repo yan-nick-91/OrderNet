@@ -4,7 +4,7 @@ import com.yann.customerservice.domain.vo.ProductID;
 import org.springframework.stereotype.Component;
 
 @Component
-class ProductIDFactory implements IDFactory<ProductID> {
+public class ProductIDFactory implements IDFactory<ProductID> {
     @Override
     public ProductID set(String id) {
         return new ProductID(id);
