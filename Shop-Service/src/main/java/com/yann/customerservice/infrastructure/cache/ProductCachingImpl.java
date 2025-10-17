@@ -22,23 +22,15 @@ class ProductCachingImpl implements ProductCaching {
     }
 
     @PostConstruct
-    public void initializeCache() {
+    private void initializeCache() {
         LOG.info("Initializing cache on application startup");
         refreshCacheForAllProducts();
     }
 
-    @Scheduled(fixedRateString = "${cache.refresh.interval}") // 10 min in milliseconds
-    public void scheduledCacheRefresh() {
+    @Scheduled(fixedRateString = "${cache.refresh.interval}") // 5 min in milliseconds
+    private void scheduledCacheRefresh() {
         LOG.info("Cache refresh started");
         refreshCacheForAllProducts();
-    }
-
-    public void saveProductsInCache(List<ProductCustomerResponseDTO> products) {
-        LOG.info("Saving products in cache");
-        if (products.isEmpty()) {
-            cachedProducts = products;
-        }
-        LOG.info("Process saving products in cache");
     }
 
     public List<ProductCustomerResponseDTO> getCachedProducts() {
