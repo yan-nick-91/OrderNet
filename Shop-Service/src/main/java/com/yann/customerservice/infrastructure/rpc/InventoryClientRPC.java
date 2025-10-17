@@ -1,9 +1,10 @@
 package com.yann.customerservice.infrastructure.rpc;
 
 import com.yann.customerservice.application.dto.ProductCustomerResponseDTO;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 public interface InventoryClientRPC {
     ProductCustomerResponseDTO requestProduct(String productName);
+    List<ProductCustomerResponseDTO> requestAllProducts();
 }

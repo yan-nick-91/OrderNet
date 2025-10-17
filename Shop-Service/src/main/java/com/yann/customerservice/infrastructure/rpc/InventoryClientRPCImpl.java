@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 class InventoryClientRPCImpl implements InventoryClientRPC {
     private final RestTemplate restTemplate;
@@ -35,6 +38,24 @@ class InventoryClientRPCImpl implements InventoryClientRPC {
         } catch (ProductUnavailableException |
                  HttpClientErrorException.NotFound |
                  HttpClientErrorException.Conflict e) {
+            throw e;
+        } catch (HttpClientErrorException e) {
+            throw new InventoryServiceException("Inventory service error: " + e.getStatusCode());
+        } catch (Exception e) {
+            throw new InventoryServiceException("Unexpected error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<ProductCustomerResponseDTO> requestAllProducts() {
+        try {
+            ProductCustomerResponseDTO[] reply =
+                    restTemplate.getForObject(inventoryServiceUrl, ProductCustomerResponseDTO[].class);
+            if (reply == null) {
+                throw new ProductUnavailableException("Inventory service unavailable, try again later");
+            }
+            return Arrays.asList(reply);
+        } catch (ProductUnavailableException | HttpClientErrorException.NotFound e) {
             throw e;
         } catch (HttpClientErrorException e) {
             throw new InventoryServiceException("Inventory service error: " + e.getStatusCode());
