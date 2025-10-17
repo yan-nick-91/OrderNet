@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Updated InventoryClientRPC to get all products">
-      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/CatalogController.java" afterDir="false" />
+    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Added property to set interval">
+      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPCImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/application/ShopServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPCImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/InventoryClientRPCImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/ShopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/presentation/ShopController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,37 +29,52 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;yan-nick-91&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/yan-nick-91/OrderNet.git&quot;,
+    &quot;accountId&quot;: &quot;6696a8bb-aa72-4d2b-926d-7a9da19c180b&quot;
+  }
+}</component>
   <component name="JvmLoggingSettingsStorage">
     <option name="loggerId" value="Slf4j" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="343DWB91wzrSbSYdZz5cs7hYbhC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.shop-service: Compose Deployment.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feat/14102025",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.inventory-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mongodb_inventory: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.shop-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/14102025&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Docker.docker-compose.yml.shop-service: Compose Deployment">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Inventory-Service" />
       <method v="2">
@@ -127,7 +139,48 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.inventory-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="inventory-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.mongodb_inventory: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongodb_inventory" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.neo4j: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="neo4j" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="docker-compose.yml.shop-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
@@ -146,6 +199,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Docker.docker-compose.yml.shop-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.neo4j: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.inventory-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.mongodb_inventory: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -223,6 +279,10 @@
       <workItem from="1760090055220" duration="1930000" />
       <workItem from="1760092054561" duration="1564000" />
       <workItem from="1760433395631" duration="6615000" />
+      <workItem from="1760568415449" duration="2169000" />
+      <workItem from="1760598212682" duration="1616000" />
+      <workItem from="1760608580787" duration="4815000" />
+      <workItem from="1760692948512" duration="630000" />
     </task>
     <task id="LOCAL-00213" summary="Fixed typo of exceptions">
       <option name="closed" value="true" />
@@ -650,5 +710,8 @@
     <MESSAGE value="Init CatalogController" />
     <MESSAGE value="Updated InventoryClientRPC to get all products" />
     <option name="LAST_COMMIT_MESSAGE" value="Updated InventoryClientRPC to get all products" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OrderNet$vo_in_Shop_Service.ic" NAME="vo in Shop-Service Coverage Results" MODIFIED="1760539301859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
