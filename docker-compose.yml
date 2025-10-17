@@ -53,7 +53,7 @@ services:
     networks:
       - backend-network
     volumes:
-      - ./Shop-Service/data/db:/data/dn
+      - ./Shop-Service/data/db:/data/db
 
   shop-service:
     build:
