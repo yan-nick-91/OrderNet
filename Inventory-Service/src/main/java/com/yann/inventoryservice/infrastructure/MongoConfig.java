@@ -5,12 +5,14 @@ import com.mongodb.client.MongoClients;
 import com.yann.inventoryservice.infrastructure.converters.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 import java.util.List;
 
 @Configuration
+@Profile("!test")
 public class MongoConfig extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.database}")
     private String database;
@@ -30,8 +32,12 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
                 new CustomerIDReader(),
                 new MaxQuantityReader(),
                 new MaxQuantityWriter(),
+                new OrderIDReader(),
+                new OrderIDWriter(),
                 new ProductIDReader(),
-                new ProductIDWriter()
+                new ProductIDWriter(),
+                new StreetNumberReader(),
+                new StreetNumberWriter()
         ));
     }
 

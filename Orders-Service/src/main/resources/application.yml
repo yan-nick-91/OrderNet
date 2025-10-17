@@ -2,7 +2,7 @@ server:
   port: 8081
 
 base:
-  uri: mongodb://mongodb:27017
+  uri: mongodb://mongodb_orders:27017
 
 spring:
   application:
@@ -12,6 +12,12 @@ spring:
     mongodb:
       database: orders
       uri: ${base.uri}/${spring.data.mongodb.database}
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    stream:
+      username: guest
+      password: guest
 
 logging:
   level:

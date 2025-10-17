@@ -1,12 +1,16 @@
 services:
+# RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - backend-network
 
 # Orders
   mongodb_orders:
@@ -14,44 +18,58 @@ services:
     container_name: "mongodb_orders"
     ports:
       - "27017:27017"
+    networks:
+      - backend-network
 
   orders-service:
     build:
       context: Orders-Service
     environment:
-      MONGO_URI: mongodb://mongo:27017
-      RABBITMQ_URI: amqp:guest:guest@rabbitmq:5672
+      MONGO_URI: mongodb://mongodb_orders:27017/orders
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
     depends_on:
       - mongodb_orders
-#      - rabbitmq
+      - rabbitmq
     ports:
       - "8081:8081"
     links:
       - mongodb_orders
+    networks:
+      - backend-network
 
-#  Customer
+  #  Shop
   neo4j:
     image: neo4j:5.23
-    container_name: neo4j_db_customer
+    container_name: neo4j_db_shop
     restart: always
     ports:
       - "7474:7474"
       - "7687:7687"
     environment:
       NEO4J_AUTH: neo4j/test1234 # the auth should be changed (even better be hidden)
+    networks:
+      - backend-network
+    volumes:
+      - ./Shop-Service/data/db:/data/db
 
-  customer-service:
+  shop-service:
     build:
-      context: Customer-Service
+      context: Shop-Service
     environment:
       NEO4J_URI: bolt://neo4j:7687
       NEO4J_USERNAME: neo4j
       NEO4J_PASSWORD: test1234
     depends_on:
       - neo4j
-#      - rabbitmq
+      - rabbitmq
+      - inventory-service
     ports:
       - "8082:8082"
+    networks:
+      - backend-network
 
 # Inventory
   mongodb_inventory:
@@ -59,6 +77,10 @@ services:
     container_name: mongo_inventory
     ports:
       - "27018:27017"
+    networks:
+      - backend-network
+    volumes:
+      - ./Inventory-Service/data/db:/data/db
 
   inventory-service:
     build:
@@ -70,3 +92,14 @@ services:
 #      - rabbitmq
     links:
       - mongodb_inventory
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+
+volumes:
+  inventory_data:
+    name: inventory_data
+  shop_data:
+    name: shop_data

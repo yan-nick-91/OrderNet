@@ -26,6 +26,8 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Override
     public MongoCustomConversions customConversions() {
         return new MongoCustomConversions(List.of(
+                new CartIDReader(),
+                new CartIDWriter(),
                 new CustomerIDReader(),
                 new CustomerIDWriter(),
                 new EmailReader(),

@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Added property to set interval">
+      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPCImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;yan-nick-91&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/yan-nick-91/OrderNet.git&quot;,
+    &quot;accountId&quot;: &quot;6696a8bb-aa72-4d2b-926d-7a9da19c180b&quot;
+  }
+}</component>
+  <component name="JvmLoggingSettingsStorage">
+    <option name="loggerId" value="Slf4j" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="343DWB91wzrSbSYdZz5cs7hYbhC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.inventory-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mongodb_inventory: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.shop-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/14102025&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Docker.docker-compose.yml.shop-service: Compose Deployment">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Inventory-Service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Inventory-Service" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Inventory-Service" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="Inventory-Service" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="Inventory-Service" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.inventory-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="inventory-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.mongodb_inventory: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongodb_inventory" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.neo4j: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="neo4j" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.shop-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="shop-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml.shop-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.neo4j: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.inventory-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.mongodb_inventory: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="" />
+      <created>1755778598078</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1755778598078</updated>
+      <workItem from="1755778599411" duration="1693000" />
+      <workItem from="1755806580029" duration="11788000" />
+      <workItem from="1755819281701" duration="157000" />
+      <workItem from="1755864208246" duration="9451000" />
+      <workItem from="1755972787710" duration="3322000" />
+      <workItem from="1756073777766" duration="1670000" />
+      <workItem from="1756116344670" duration="14592000" />
+      <workItem from="1756149021658" duration="9178000" />
+      <workItem from="1756193533278" duration="20593000" />
+      <workItem from="1756244125120" duration="18207000" />
+      <workItem from="1756334015836" duration="6054000" />
+      <workItem from="1756382224460" duration="15129000" />
+      <workItem from="1756462196910" duration="20369000" />
+      <workItem from="1756577076802" duration="9812000" />
+      <workItem from="1756648919534" duration="18307000" />
+      <workItem from="1756730176964" duration="5410000" />
+      <workItem from="1756735928268" duration="6923000" />
+      <workItem from="1756754449584" duration="3885000" />
+      <workItem from="1756763991469" duration="6777000" />
+      <workItem from="1756854945275" duration="2392000" />
+      <workItem from="1756857663421" duration="1317000" />
+      <workItem from="1756931751217" duration="8730000" />
+      <workItem from="1756980940679" duration="2215000" />
+      <workItem from="1757001367637" duration="157000" />
+      <workItem from="1757010541312" duration="2379000" />
+      <workItem from="1757081876830" duration="5234000" />
+      <workItem from="1757111906490" duration="4378000" />
+      <workItem from="1757188273347" duration="943000" />
+      <workItem from="1757257083839" duration="1251000" />
+      <workItem from="1757278150989" duration="5806000" />
+      <workItem from="1757334359516" duration="12270000" />
+      <workItem from="1757406211610" duration="593000" />
+      <workItem from="1757412893147" duration="7526000" />
+      <workItem from="1757435457373" duration="2082000" />
+      <workItem from="1757532576079" duration="3285000" />
+      <workItem from="1757605966409" duration="1880000" />
+      <workItem from="1757672701251" duration="7036000" />
+      <workItem from="1757886001606" duration="1184000" />
+      <workItem from="1757950036597" duration="1936000" />
+      <workItem from="1757972123667" duration="507000" />
+      <workItem from="1758034815468" duration="1078000" />
+      <workItem from="1758062003549" duration="2711000" />
+      <workItem from="1758122373883" duration="2412000" />
+      <workItem from="1758150027925" duration="2135000" />
+      <workItem from="1758294688195" duration="109000" />
+      <workItem from="1758569962230" duration="3154000" />
+      <workItem from="1758886000631" duration="11468000" />
+      <workItem from="1759072582016" duration="2037000" />
+      <workItem from="1759182240082" duration="2824000" />
+      <workItem from="1759185969316" duration="4532000" />
+      <workItem from="1759349599771" duration="6749000" />
+      <workItem from="1759388097551" duration="1228000" />
+      <workItem from="1759399768498" duration="14473000" />
+      <workItem from="1759441635002" duration="8721000" />
+      <workItem from="1759487296261" duration="8882000" />
+      <workItem from="1759512824449" duration="4032000" />
+      <workItem from="1759522950404" duration="2369000" />
+      <workItem from="1759610956971" duration="6454000" />
+      <workItem from="1759845083607" duration="2407000" />
+      <workItem from="1759918715995" duration="15686000" />
+      <workItem from="1759963104874" duration="81000" />
+      <workItem from="1759963201132" duration="642000" />
+      <workItem from="1759963880992" duration="449000" />
+      <workItem from="1760090055220" duration="1930000" />
+      <workItem from="1760092054561" duration="1564000" />
+      <workItem from="1760433395631" duration="6615000" />
+      <workItem from="1760568415449" duration="2169000" />
+      <workItem from="1760598212682" duration="1616000" />
+      <workItem from="1760608580787" duration="4815000" />
+      <workItem from="1760692948512" duration="630000" />
+    </task>
+    <task id="LOCAL-00213" summary="Fixed typo of exceptions">
+      <option name="closed" value="true" />
+      <created>1758574702067</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1758574702068</updated>
+    </task>
+    <task id="LOCAL-00214" summary="Implemented fixed typo">
+      <option name="closed" value="true" />
+      <created>1758574825712</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1758574825712</updated>
+    </task>
+    <task id="LOCAL-00215" summary="Added the missing accessible types to fields">
+      <option name="closed" value="true" />
+      <created>1758574852646</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1758574852646</updated>
+    </task>
+    <task id="LOCAL-00216" summary="Removed unused comments and imports">
+      <option name="closed" value="true" />
+      <created>1758574890248</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1758574890248</updated>
+    </task>
+    <task id="LOCAL-00217" summary="Added method sendOrderToInventory">
+      <option name="closed" value="true" />
+      <created>1758574982752</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1758574982752</updated>
+    </task>
+    <task id="LOCAL-00218" summary="Added method sendOrderToInventory for rabbitmq">
+      <option name="closed" value="true" />
+      <created>1758575049290</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1758575049290</updated>
+    </task>
+    <task id="LOCAL-00219" summary="Updated Class ProductAvailability&#10;&#10;- Added new method&#10;&#10;- Renamed names of method">
+      <option name="closed" value="true" />
+      <created>1758575245827</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1758575245827</updated>
+    </task>
+    <task id="LOCAL-00220" summary="Implemented fixed typo">
+      <option name="closed" value="true" />
+      <created>1758575268764</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1758575268764</updated>
+    </task>
+    <task id="LOCAL-00221" summary="Implemented renamed method">
+      <option name="closed" value="true" />
+      <created>1758575295968</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1758575295968</updated>
+    </task>
+    <task id="LOCAL-00222" summary="Removed unused semicolon">
+      <option name="closed" value="true" />
+      <created>1758575353082</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1758575353082</updated>
+    </task>
+    <task id="LOCAL-00223" summary="Set up the first testcase for Inventory Service">
+      <option name="closed" value="true" />
+      <created>1758905506226</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1758905506227</updated>
+    </task>
+    <task id="LOCAL-00224" summary="Removed unused import">
+      <option name="closed" value="true" />
+      <created>1758905545325</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1758905545325</updated>
+    </task>
+    <task id="LOCAL-00225" summary="Initiating domain tests">
+      <option name="closed" value="true" />
+      <created>1759190121815</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190121816</updated>
+    </task>
+    <task id="LOCAL-00226" summary="Initiating test for vo ProductName">
+      <option name="closed" value="true" />
+      <created>1759190148359</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190148359</updated>
+    </task>
+    <task id="LOCAL-00227" summary="Initiating test for vo ProductPrice">
+      <option name="closed" value="true" />
+      <created>1759190160206</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190160206</updated>
+    </task>
+    <task id="LOCAL-00228" summary="Initiating test for vo StreetNumber">
+      <option name="closed" value="true" />
+      <created>1759190184062</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190184062</updated>
+    </task>
+    <task id="LOCAL-00229" summary="Updated testcase to verify empty constructor">
+      <option name="closed" value="true" />
+      <created>1759190229218</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190229218</updated>
+    </task>
+    <task id="LOCAL-00230" summary="Made change in exception message">
+      <option name="closed" value="true" />
+      <created>1759190266300</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1759190266301</updated>
+    </task>
+    <task id="LOCAL-00231" summary="Init testcase for ProductAvailability">
+      <option name="closed" value="true" />
+      <created>1759424694457</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424694458</updated>
+    </task>
+    <task id="LOCAL-00232" summary="Fix bug in increase and decrease quantity method">
+      <option name="closed" value="true" />
+      <created>1759424759222</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424759222</updated>
+    </task>
+    <task id="LOCAL-00233" summary="Fixed typo in the exception message">
+      <option name="closed" value="true" />
+      <created>1759424793626</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424793626</updated>
+    </task>
+    <task id="LOCAL-00234" summary="Fixed the ambiguous issue with endpoint">
+      <option name="closed" value="true" />
+      <created>1759424834401</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424834401</updated>
+    </task>
+    <task id="LOCAL-00235" summary="Init tastcase InventoryControllerTest">
+      <option name="closed" value="true" />
+      <created>1759424859127</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424859127</updated>
+    </task>
+    <task id="LOCAL-00236" summary="Added new method to test the value method in VO">
+      <option name="closed" value="true" />
+      <created>1759424956542</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424956542</updated>
+    </task>
+    <task id="LOCAL-00237" summary="Added multiple methods to test class Product">
+      <option name="closed" value="true" />
+      <created>1759424988140</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1759424988140</updated>
+    </task>
+    <task id="LOCAL-00238" summary="Added dependencies for testcontainers">
+      <option name="closed" value="true" />
+      <created>1759523527813</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1759523527814</updated>
+    </task>
+    <task id="LOCAL-00239" summary="Set annotation to ignore the tests">
+      <option name="closed" value="true" />
+      <created>1759523563338</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1759523563338</updated>
+    </task>
+    <task id="LOCAL-00240" summary="Added method to adjust the quantity of product">
+      <option name="closed" value="true" />
+      <created>1759523835415</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1759523835415</updated>
+    </task>
+    <task id="LOCAL-00241" summary="Fixed bug with the quantity adjustment methods">
+      <option name="closed" value="true" />
+      <created>1759524014241</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1759524014241</updated>
+    </task>
+    <task id="LOCAL-00242" summary="Fixed bug for decreaseQuantity method">
+      <option name="closed" value="true" />
+      <created>1759524075235</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1759524075235</updated>
+    </task>
+    <task id="LOCAL-00243" summary="Taken out if condition">
+      <option name="closed" value="true" />
+      <created>1759524108533</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1759524108533</updated>
+    </task>
+    <task id="LOCAL-00244" summary="Init application-test.yml">
+      <option name="closed" value="true" />
+      <created>1759524607787</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1759524607787</updated>
+    </task>
+    <task id="LOCAL-00245" summary="Init GetProductByIDIntegrationTest">
+      <option name="closed" value="true" />
+      <created>1759524624527</created>
+      <option name="number" value="00245" />
+      <option name="presentableId" value="LOCAL-00245" />
+      <option name="project" value="LOCAL" />
+      <updated>1759524624527</updated>
+    </task>
+    <task id="LOCAL-00246" summary="Added new testcase to check the responses">
+      <option name="closed" value="true" />
+      <created>1759611057452</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1759611057453</updated>
+    </task>
+    <task id="LOCAL-00247" summary="Removed testcases for product(availability)">
+      <option name="closed" value="true" />
+      <created>1759611171298</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1759611171298</updated>
+    </task>
+    <task id="LOCAL-00248" summary="Removed testcases for product(availability)">
+      <option name="closed" value="true" />
+      <created>1759960312173</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1759960312175</updated>
+    </task>
+    <task id="LOCAL-00249" summary="Set aside testcase temporarily to pick up later">
+      <option name="closed" value="true" />
+      <created>1759960391815</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1759960391815</updated>
+    </task>
+    <task id="LOCAL-00250" summary="Set aside testcase temporarily to pick up later">
+      <option name="closed" value="true" />
+      <created>1759960431172</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1759960431172</updated>
+    </task>
+    <task id="LOCAL-00251" summary="Updated name which dir should be ignored">
+      <option name="closed" value="true" />
+      <created>1759961454542</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1759961454542</updated>
+    </task>
+    <task id="LOCAL-00252" summary="Renamed module Customer-Service to Shop-Service">
+      <option name="closed" value="true" />
+      <created>1759961517573</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1759961517573</updated>
+    </task>
+    <task id="LOCAL-00253" summary="Changed from Network-Service to Shop-Service">
+      <option name="closed" value="true" />
+      <created>1759961887882</created>
+      <option name="number" value="00253" />
+      <option name="presentableId" value="LOCAL-00253" />
+      <option name="project" value="LOCAL" />
+      <updated>1759961887882</updated>
+    </task>
+    <task id="LOCAL-00254" summary="Renamed container_name, volume, context for shop">
+      <option name="closed" value="true" />
+      <created>1759961986093</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1759961986094</updated>
+    </task>
+    <task id="LOCAL-00255" summary="Bugfix: forced decimal in String Format to display as Locale.GERMANY">
+      <option name="closed" value="true" />
+      <created>1760091194329</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1760091194330</updated>
+    </task>
+    <task id="LOCAL-00256" summary="Bugfix: forced decimal format in Locale.GERMANY">
+      <option name="closed" value="true" />
+      <created>1760091643970</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1760091643970</updated>
+    </task>
+    <task id="LOCAL-00257" summary="Added dependency artifactId testcontainer">
+      <option name="closed" value="true" />
+      <created>1760092776170</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1760092776171</updated>
+    </task>
+    <task id="LOCAL-00258" summary="Updated .idea">
+      <option name="closed" value="true" />
+      <created>1760092995351</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1760092995351</updated>
+    </task>
+    <task id="LOCAL-00259" summary="Updated .idea">
+      <option name="closed" value="true" />
+      <created>1760450883509</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1760450883510</updated>
+    </task>
+    <task id="LOCAL-00260" summary="Init CatalogController">
+      <option name="closed" value="true" />
+      <created>1760450913761</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1760450913761</updated>
+    </task>
+    <task id="LOCAL-00261" summary="Updated InventoryClientRPC to get all products">
+      <option name="closed" value="true" />
+      <created>1760451048047</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1760451048047</updated>
+    </task>
+    <option name="localTasksCounter" value="262" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="refactor/081025" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated .idea" />
+    <MESSAGE value="Init CatalogController" />
+    <MESSAGE value="Updated InventoryClientRPC to get all products" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated InventoryClientRPC to get all products" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OrderNet$vo_in_Shop_Service.ic" NAME="vo in Shop-Service Coverage Results" MODIFIED="1760539301859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>

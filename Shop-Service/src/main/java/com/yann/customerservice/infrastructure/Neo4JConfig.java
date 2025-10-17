@@ -1,0 +1,30 @@
+package com.yann.customerservice.infrastructure;
+
+import com.yann.customerservice.infrastructure.converters.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.neo4j.core.convert.Neo4jConversions;
+
+import java.util.List;
+
+@Configuration
+public class Neo4JConfig {
+
+    @Bean
+    public Neo4jConversions neo4jConversions() {
+        return new Neo4jConversions(List.of(
+                new CartIDReader(),
+                new CartIDWriter(),
+                new CustomerIDReader(),
+                new CustomerIDWriter(),
+                new EmailReader(),
+                new EmailWriter(),
+                new OrderIDReader(),
+                new OrderIDWriter(),
+                new ProductIDReader(),
+                new ProductIDWriter(),
+                new StreetNumberReader(),
+                new StreetNumberWriter()
+        ));
+    }
+}

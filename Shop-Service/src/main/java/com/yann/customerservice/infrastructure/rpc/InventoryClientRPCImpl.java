@@ -1,0 +1,66 @@
+package com.yann.customerservice.infrastructure.rpc;
+
+import com.yann.customerservice.application.dto.ProductCustomerResponseDTO;
+import com.yann.customerservice.domain.exceptions.InventoryServiceException;
+import com.yann.customerservice.domain.exceptions.ProductUnavailableException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+class InventoryClientRPCImpl implements InventoryClientRPC {
+    private final RestTemplate restTemplate;
+    private final String inventoryServiceUrl;
+
+    public InventoryClientRPCImpl(RestTemplateBuilder builder,
+                                  @Value("${inventory.service.url}") String inventoryServiceUrl) {
+        this.restTemplate = builder.build();
+        this.inventoryServiceUrl = inventoryServiceUrl;
+    }
+
+    @Override
+    public ProductCustomerResponseDTO requestProduct(String productName) {
+        try {
+            String url = String.format("%s/customer/%s", inventoryServiceUrl, productName);
+            // Send request to inventory service to get the product from inventory.
+            ProductCustomerResponseDTO reply = restTemplate.getForObject(url, ProductCustomerResponseDTO.class);
+
+            if (reply == null) {
+                // http status 503
+                throw new ProductUnavailableException("Inventory service unavailable, try again later");
+            }
+            return new ProductCustomerResponseDTO(reply.productID(), reply.name(), reply.price());
+        } catch (ProductUnavailableException |
+                 HttpClientErrorException.NotFound |
+                 HttpClientErrorException.Conflict e) {
+            throw e;
+        } catch (HttpClientErrorException e) {
+            throw new InventoryServiceException("Inventory service error: " + e.getStatusCode());
+        } catch (Exception e) {
+            throw new InventoryServiceException("Unexpected error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<ProductCustomerResponseDTO> requestAllProducts() {
+        try {
+            ProductCustomerResponseDTO[] reply =
+                    restTemplate.getForObject(inventoryServiceUrl, ProductCustomerResponseDTO[].class);
+            if (reply == null) {
+                throw new ProductUnavailableException("Inventory service unavailable, try again later");
+            }
+            return Arrays.asList(reply);
+        } catch (ProductUnavailableException | HttpClientErrorException.NotFound e) {
+            throw e;
+        } catch (HttpClientErrorException e) {
+            throw new InventoryServiceException("Inventory service error: " + e.getStatusCode());
+        } catch (Exception e) {
+            throw new InventoryServiceException("Unexpected error: " + e.getMessage());
+        }
+    }
+}
