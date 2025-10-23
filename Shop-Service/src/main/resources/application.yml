@@ -5,6 +5,10 @@ inventory:
   service:
     url: http://inventory-service:8083/api/inventories
 
+orders:
+  service:
+    url: http://orders-service:8081/api/orders
+
 cache:
   refresh:
     interval: 300000 # 5 min
