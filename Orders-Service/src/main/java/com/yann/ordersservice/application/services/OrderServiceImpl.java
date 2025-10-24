@@ -1,10 +1,9 @@
 package com.yann.ordersservice.application.services;
 
-import com.yann.ordersservice.application.dto.OrderToInventoryDTO;
-import com.yann.ordersservice.application.dto.OrdersResponseDTO;
-import com.yann.ordersservice.application.dto.PaymentResponseDTO;
+import com.yann.ordersservice.application.dto.*;
 import com.yann.ordersservice.application.mapper.OrderMapper;
 import com.yann.ordersservice.domain.Order;
+import com.yann.ordersservice.domain.PaymentValidator;
 import com.yann.ordersservice.domain.exceptions.OrderNotFound;
 import com.yann.ordersservice.domain.utils.CreateIDFactory;
 import com.yann.ordersservice.domain.vo.OrderID;
@@ -28,10 +27,14 @@ class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveIncomingOrderFromCustomer(PaymentResponseDTO paymentResponseDTO) {
-        OrderID orderID = orderIDFactory.set(paymentResponseDTO.orderID());
-        Order order = OrderMapper.toOrder(orderID, paymentResponseDTO);
+    public PaymentResponseDTO saveIncomingOrderFromCustomer(
+            String customerIDAsString, CustomerOrderDTO customerOrderDTO) {
+        PaymentValidator paymentValidator = new PaymentValidator();
+        paymentValidator.verifyOrdersPayment(customerOrderDTO);
+        OrderID orderID = orderIDFactory.create();
+        Order order = OrderMapper.toOrder(orderID, customerIDAsString, customerOrderDTO);
         orderRepository.save(order);
+        return new PaymentResponseDTO(orderID.value(), order.getDate().toString());
     }
 
     @Override
