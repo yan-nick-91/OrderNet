@@ -7,18 +7,18 @@ import java.util.List;
 
 @Service
 public interface ShopService {
-    CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequestDTO);
+    CustomerDetailDTO addCustomer(CustomerRequestDTO customerRequestDTO);
 
-    List<CustomerResponseDTO> getAllCustomers();
+    List<CustomerDetailDTO> getAllCustomers();
 
-    CustomerResponseDTO findCustomerById(String customerIDAsString);
+    CustomerDetailDTO findCustomerById(String customerIDAsString);
 
-    CustomerResponseDTO initializeProductToCart(
+    CustomerDetailDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO customerProductRequestDTO);
 
     List<ProductCustomerResponseDTO> RequestForCatalog();
 
-    CustomerResponseDTO updateProductQuantityInCart(
+    CustomerDetailDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO);
 
     PaymentResponseDTO sendPaymentToOrders(String customerIDAsString, PaymentRequestDTO paymentRequestDTO);

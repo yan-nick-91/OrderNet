@@ -1,13 +1,15 @@
 package com.yann.ordersservice.presentation;
 
+import com.yann.ordersservice.application.dto.CustomerOrderDTO;
 import com.yann.ordersservice.application.services.OrderService;
+import com.yann.ordersservice.domain.exceptions.InternalPaymentErrorException;
 import com.yann.ordersservice.domain.exceptions.OrderNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService orderService;
 
@@ -53,13 +55,24 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/{orderIDAsString}")
+    @PostMapping("/{orderIDAsString}/inventory")
     public ResponseEntity<Object> sendOrderToInventory(@PathVariable String orderIDAsString) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(orderService.sendOrderToInventory(orderIDAsString));
         } catch (OrderNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{customerIDAsString}")
+    public ResponseEntity<Object> saveCustomersOrder(@PathVariable String customerIDAsString,
+                                                     @RequestBody CustomerOrderDTO customerOrderDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    orderService.saveIncomingOrderFromCustomer(customerIDAsString, customerOrderDTO));
+        } catch (InternalPaymentErrorException | NullPointerException | IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

@@ -4,10 +4,8 @@ import com.yann.customerservice.application.dto.*;
 import com.yann.customerservice.domain.Address;
 import com.yann.customerservice.domain.Cart;
 import com.yann.customerservice.domain.Customer;
-import com.yann.customerservice.domain.Order;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
-import com.yann.customerservice.domain.vo.OrderID;
 import com.yann.customerservice.domain.vo.StreetNumber;
 
 public class CustomerMapper {
@@ -26,31 +24,28 @@ public class CustomerMapper {
         );
     }
 
-    public static CustomerResponseDTO toCustomerResponseDTO(Customer customer) {
+    public static CustomerDetailDTO toCustomerResponseDTO(Customer customer) {
         AddressDTO address = toAddressDTO(customer.getAddress());
         CartDTO cart = toCartDTO(customer.getCart());
-        return new CustomerResponseDTO(customer.getCustomerID().value(), customer.getFirstname(),
+        return new CustomerDetailDTO(customer.getCustomerID().value(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail().value(),
                 address, cart);
     }
 
-    public static CustomerResponseDTO toCustomerResponseDTO(Customer customer, Cart cart) {
+    public static CustomerDetailDTO toCustomerResponseDTO(Customer customer, Cart cart) {
         AddressDTO address = toAddressDTO(customer.getAddress());
         CartDTO newCart = toCartDTO(cart);
-        return new CustomerResponseDTO(customer.getCustomerID().value(), customer.getFirstname(),
+        return new CustomerDetailDTO(customer.getCustomerID().value(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail().value(),
                 address, newCart);
     }
 
-
-    public static Order toOrder(OrderID orderID, Customer customer) {
-        return new Order(orderID, customer);
-    }
-
-    public static PaymentResponseDTO toPaymentResponseDTO(Order order) {
-        CustomerResponseDTO customer = toCustomerResponseDTO(order.getCustomer());
-        return new PaymentResponseDTO(order.getOrderID().value(),
-                order.getOrderDate().toString(), customer);
+    public static CustomerOrderDTO toCustomerOrderDTO(Customer customer) {
+        AddressDTO address = toAddressDTO(customer.getAddress());
+        CartDTO cart = toCartDTO(customer.getCart());
+        return new CustomerOrderDTO(customer.getFirstname(),
+                customer.getLastname(), customer.getEmail().value(),
+                address, cart);
     }
 
     // Helpers

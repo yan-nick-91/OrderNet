@@ -8,21 +8,28 @@ import java.util.Date;
 import java.util.List;
 
 public class OrderMapper {
-    public static Order toOrder(OrderID orderID, PaymentResponseDTO paymentResponseDTO) {
-        Customer customer = toCustomer(paymentResponseDTO);
-        return new Order(orderID, paymentResponseDTO.orderDate(), customer);
+    public static Order toOrder(OrderID orderID, CustomerDetailDTO customerDetailDTO) {
+        Customer customer = toCustomer(customerDetailDTO);
+
+        return new Order(orderID, customer);
+    }
+
+    public static Order toOrder(OrderID orderID, String customerIDAsString, CustomerOrderDTO customerOrderDTO) {
+        Customer customer = toCustomer(customerIDAsString, customerOrderDTO);
+
+        return new Order(orderID, customer);
     }
 
     public static OrdersResponseDTO toOrdersResponseDTO(Order order) {
-        CustomerResponseDTO customer = toCustomerResponseDTO(order.getCustomer());
+        CustomerDetailDTO customer = toCustomerResponseDTO(order.getCustomer());
         return new OrdersResponseDTO(order.getOrderID(), order.getSequence(),
                 Date.from(order.getDate()), customer);
     }
 
-    public static CustomerResponseDTO toCustomerResponseDTO(Customer customer) {
+    public static CustomerDetailDTO toCustomerResponseDTO(Customer customer) {
         AddressDTO address = toAddressDTO(customer.getAddress());
         CartDTO cart = toCartDTO(customer.getCart());
-        return new CustomerResponseDTO(customer.getCustomerID().value(), customer.getFirstname(),
+        return new CustomerDetailDTO(customer.getCustomerID().value(), customer.getFirstname(),
                 customer.getLastname(), customer.getEmail().value(), address, cart);
     }
 
@@ -32,14 +39,25 @@ public class OrderMapper {
     }
 
     // Helpers
-    private static Customer toCustomer(PaymentResponseDTO paymentResponseDTO) {
-        Cart cart = toCart(paymentResponseDTO.customer().cart());
-        Address address = toAddress(paymentResponseDTO.customer().address());
-        CustomerID customerID = new CustomerID(paymentResponseDTO.customer().customerID());
+    private static Customer toCustomer(CustomerDetailDTO customerDetailDTO) {
+        Cart cart = toCart(customerDetailDTO.cart());
+        Address address = toAddress(customerDetailDTO.address());
+        CustomerID customerID = new CustomerID(customerDetailDTO.customerID());
 
-        return new Customer(customerID, paymentResponseDTO.customer().firstname(),
-                paymentResponseDTO.customer().lastname(),
-                new Email(paymentResponseDTO.customer().email()),
+        return new Customer(customerID, customerDetailDTO.firstname(),
+                customerDetailDTO.lastname(),
+                new Email(customerDetailDTO.email()),
+                address, cart);
+    }
+
+    private static Customer toCustomer(String customerIDAsString, CustomerOrderDTO customerOrderDTO) {
+        Cart cart = toCart(customerOrderDTO.cart());
+        Address address = toAddress(customerOrderDTO.address());
+        CustomerID customerID = new CustomerID(customerIDAsString);
+
+        return new Customer(customerID, customerOrderDTO.firstname(),
+                customerOrderDTO.lastname(),
+                new Email(customerOrderDTO.email()),
                 address, cart);
     }
 

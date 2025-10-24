@@ -1,7 +1,6 @@
-package com.yann.ordersservice.application.dto;
+package com.yann.customerservice.application.dto;
 
-public record CustomerResponseDTO(
-        String customerID,
+public record CustomerOrderDTO(
         String firstname,
         String lastname,
         String email,

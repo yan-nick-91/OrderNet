@@ -9,6 +9,6 @@ public record OrdersResponseDTO(
         OrderID orderID,
         Sequence sequence,
         Date date,
-        CustomerResponseDTO customerResponseDTO
+        CustomerDetailDTO customerDetailDTO
 ) {
 }

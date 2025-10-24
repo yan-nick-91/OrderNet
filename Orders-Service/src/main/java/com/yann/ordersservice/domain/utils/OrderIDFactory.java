@@ -3,13 +3,16 @@ package com.yann.ordersservice.domain.utils;
 import com.yann.ordersservice.domain.vo.OrderID;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
 public class OrderIDFactory implements CreateIDFactory<OrderID> {
     @Override
     public OrderID create() {
-        return new OrderID(UUID.randomUUID().toString());
+        String dateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        return new OrderID(String.format("ORD-ID-%s-%s", dateFormat, UUID.randomUUID()));
     }
 
     @Override

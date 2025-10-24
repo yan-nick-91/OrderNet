@@ -1,13 +1,11 @@
 package com.yann.ordersservice.application.services;
 
-import com.yann.ordersservice.application.dto.OrderToInventoryDTO;
-import com.yann.ordersservice.application.dto.OrdersResponseDTO;
-import com.yann.ordersservice.application.dto.PaymentResponseDTO;
+import com.yann.ordersservice.application.dto.*;
 
 import java.util.List;
 
 public interface OrderService {
-    void saveIncomingOrderFromCustomer(PaymentResponseDTO paymentResponseDTO);
+    PaymentResponseDTO saveIncomingOrderFromCustomer(String customerIDAsString, CustomerOrderDTO customerOrderDTO);
 
     OrdersResponseDTO getNewestOrder();
 
