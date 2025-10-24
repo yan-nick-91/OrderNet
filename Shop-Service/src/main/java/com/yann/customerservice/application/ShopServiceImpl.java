@@ -10,12 +10,10 @@ import com.yann.customerservice.domain.utils.CreateIDFactory;
 import com.yann.customerservice.domain.vo.CartID;
 import com.yann.customerservice.domain.vo.CustomerID;
 import com.yann.customerservice.domain.vo.Email;
-import com.yann.customerservice.domain.vo.OrderID;
 import com.yann.customerservice.infrastructure.cache.ProductCaching;
-import com.yann.customerservice.infrastructure.events.CustomerEventPublisher;
 import com.yann.customerservice.infrastructure.repository.ProductRepository;
-import com.yann.customerservice.infrastructure.rpc.InventoryClientRPC;
 import com.yann.customerservice.infrastructure.repository.CustomerRepository;
+import com.yann.customerservice.infrastructure.rpc.OrderClientRPC;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,29 +22,24 @@ import java.util.List;
 class ShopServiceImpl implements ShopService {
     private final CreateIDFactory<CustomerID> customerIDFactory;
     private final CreateIDFactory<CartID> cartIDFactory;
-    private final CreateIDFactory<OrderID> orderIDFactory;
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
     private final ProductCaching productCaching;
-    private final InventoryClientRPC inventoryClientRPC;
-    private final CustomerEventPublisher customerEventPublisher;
+    private final OrderClientRPC orderClientRPC;
 
     public ShopServiceImpl(CreateIDFactory<CustomerID> customerIDFactory, CreateIDFactory<CartID> cartIDFactory,
-                           CreateIDFactory<OrderID> orderIDFactory, CustomerRepository customerRepository,
-                           ProductRepository productRepository, ProductCaching productCaching,
-                           InventoryClientRPC inventoryClientRPC, CustomerEventPublisher customerEventPublisher) {
+                           CustomerRepository customerRepository, ProductRepository productRepository,
+                           ProductCaching productCaching, OrderClientRPC orderClientRPC) {
         this.customerIDFactory = customerIDFactory;
         this.cartIDFactory = cartIDFactory;
-        this.orderIDFactory = orderIDFactory;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.productCaching = productCaching;
-        this.inventoryClientRPC = inventoryClientRPC;
-        this.customerEventPublisher = customerEventPublisher;
+        this.orderClientRPC = orderClientRPC;
     }
 
     @Override
-    public CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequestDTO) {
+    public CustomerDetailDTO addCustomer(CustomerRequestDTO customerRequestDTO) {
         Email email = new Email(customerRequestDTO.email());
         customerRepository.findByEmail(email)
                           .ifPresent(c -> {
@@ -66,19 +59,19 @@ class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<CustomerResponseDTO> getAllCustomers() {
+    public List<CustomerDetailDTO> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         return customers.stream().map(CustomerMapper::toCustomerResponseDTO).toList();
     }
 
     @Override
-    public CustomerResponseDTO findCustomerById(String customerIDAsString) {
+    public CustomerDetailDTO findCustomerById(String customerIDAsString) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         return CustomerMapper.toCustomerResponseDTO(customer);
     }
 
     @Override
-    public CustomerResponseDTO initializeProductToCart(
+    public CustomerDetailDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO productRequestDTO) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
 
@@ -108,7 +101,7 @@ class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public CustomerResponseDTO updateProductQuantityInCart(
+    public CustomerDetailDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO) {
         Customer customer = findCustomerByIDOrThrow(customerIDAsString);
         Cart cart = customer.getCart();
@@ -122,6 +115,7 @@ class ShopServiceImpl implements ShopService {
         double totalPrice = cartPriceCalculator.calculateTotalPriceInCart(customer.getCart());
         customer.getCart().setTotalPrice(totalPrice);
 
+        // Remove product from db when quantity equals zero
         cart.getProducts()
             .stream()
             .filter(pr -> pr.getQuantity() == 0)
@@ -142,14 +136,9 @@ class ShopServiceImpl implements ShopService {
         cartPaymentChecker.verifyPaymentWithTotalPrice(paymentRequestDTO.totalPrice(), cart);
         cart.markProductRelationTypeToPending();
 
-        OrderID orderID = orderIDFactory.create();
-        Order order = CustomerMapper.toOrder(orderID, customer);
-
-        PaymentResponseDTO paymentResponseDTO = CustomerMapper.toPaymentResponseDTO(order);
-        customerEventPublisher.publishCustomerEvent(paymentResponseDTO);
-        return paymentResponseDTO;
+        CustomerOrderDTO customerOrderDTO = CustomerMapper.toCustomerOrderDTO(customer);
+        return orderClientRPC.sendOrderToOrdersService(customer.getCustomerID(), customerOrderDTO);
     }
-
 
     @Override
     public List<ProductCustomerResponseDTO> getCustomersProductsList(String customerIDAsString) {
