@@ -1,4 +1,17 @@
 services:
+# App Gateway
+  app-gateway:
+    build:
+      context: App-Gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - orders-service
+      - shop-service
+      - inventory-service
+    networks:
+      - backend-network
+
 # RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
