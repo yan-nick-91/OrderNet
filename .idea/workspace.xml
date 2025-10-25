@@ -4,14 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Added property to set interval">
-      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPC.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/rpc/OrderClientRPCImpl.java" afterDir="false" />
+    <list default="true" id="6346a30d-d38b-48dc-8742-dad465c263dc" name="Changes" comment="Renamed dir customerservice tot shopservice">
+      <change afterPath="$PROJECT_DIR$/App-Gateway/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/src/main/java/com/yann/appgateway/AppGatewayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App-Gateway/src/test/java/com/yann/appgateway/AppGatewayApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCaching.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/java/com/yann/customerservice/infrastructure/cache/ProductCachingImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Shop-Service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +31,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -57,24 +66,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.docker-compose.yml.inventory-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.mongodb_inventory: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.shop-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/14102025&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker-compose.yml.inventory-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.mongodb_inventory: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.neo4j: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.shop-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.AppGatewayApplication.executor": "Run",
+    "git-widget-placeholder": "feat/251025",
+    "jdk.selected.JAVA_MODULE": "21",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.shop-service: Compose Deployment">
+}]]></component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Inventory-Service" />
       <method v="2">
@@ -125,6 +155,41 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="AppGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="App-Gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yann.appgateway.AppGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InventoryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Inventory-Service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yann.inventoryservice.InventoryServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrdersServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Orders-Service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yann.ordersservice.OrdersServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopServiceApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Shop-Service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yann.customerservice.ShopServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Shop-Service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yann.shopservice.ShopServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
       <module name="Inventory-Service" />
       <option name="ENV_FILES" value="" />
@@ -141,6 +206,14 @@
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
       </deployment>
       <method v="2" />
     </configuration>
@@ -198,6 +271,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.shop-service: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.neo4j: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.inventory-service: Compose Deployment" />
@@ -283,14 +357,7 @@
       <workItem from="1760598212682" duration="1616000" />
       <workItem from="1760608580787" duration="4815000" />
       <workItem from="1760692948512" duration="630000" />
-    </task>
-    <task id="LOCAL-00213" summary="Fixed typo of exceptions">
-      <option name="closed" value="true" />
-      <created>1758574702067</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1758574702068</updated>
+      <workItem from="1761344008606" duration="5200000" />
     </task>
     <task id="LOCAL-00214" summary="Implemented fixed typo">
       <option name="closed" value="true" />
@@ -676,7 +743,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760451048047</updated>
     </task>
-    <option name="localTasksCounter" value="262" />
+    <task id="LOCAL-00262" summary="Renamed dir customerservice tot shopservice">
+      <option name="closed" value="true" />
+      <created>1761337781580</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1761337781580</updated>
+    </task>
+    <option name="localTasksCounter" value="263" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -709,7 +784,8 @@
     <MESSAGE value="Updated .idea" />
     <MESSAGE value="Init CatalogController" />
     <MESSAGE value="Updated InventoryClientRPC to get all products" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated InventoryClientRPC to get all products" />
+    <MESSAGE value="Renamed dir customerservice tot shopservice" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renamed dir customerservice tot shopservice" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/OrderNet$vo_in_Shop_Service.ic" NAME="vo in Shop-Service Coverage Results" MODIFIED="1760539301859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
