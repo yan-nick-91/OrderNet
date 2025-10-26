@@ -1,8 +1,8 @@
 server:
-  port: 8083
+  port: ${SERVER_PORT:8083}
 
 base:
-  uri: mongodb://mongodb_inventory:27017
+  uri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:admin}@mongodb_inventory:27017
 
 spring:
   application:
@@ -10,7 +10,7 @@ spring:
 
   data:
     mongodb:
-      database: inventories
+      database: ${DATABASE:inventories}
       uri: ${base.uri}/${spring.data.mongodb.database}
 
 logging:
