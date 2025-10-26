@@ -1,5 +1,5 @@
 services:
-# App Gateway
+  # App Gateway
   app-gateway:
     build:
       context: App-Gateway
@@ -12,7 +12,7 @@ services:
     networks:
       - backend-network
 
-# RabbitMQ
+  # RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -25,7 +25,7 @@ services:
     networks:
       - backend-network
 
-# Orders
+  # Orders
   mongodb_orders:
     image: mongo:latest
     container_name: "mongodb_orders"
@@ -84,15 +84,12 @@ services:
     networks:
       - backend-network
 
-# Inventory
+  # Inventory
   mongodb_inventory:
     image: mongo:latest
     container_name: mongo_inventory
     ports:
       - "27018:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     networks:
       - backend-network
     volumes:
@@ -102,15 +99,10 @@ services:
     build:
       context: Inventory-Service
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
-    environment:
-      MONGO_USER: ${MONGO_USER}
-      MONGO_PASSWORD: ${MONGO_PASSWORD}
-      DATABASE: ${DATABASE}
-      SERVER_PORT: ${SERVER_PORT}
+      - "8083:8083"
     depends_on:
       - mongodb_inventory
-#      - rabbitmq
+    #      - rabbitmq
     links:
       - mongodb_inventory
     networks:
