@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>App-Gateway</module>
         <module>Inventory-Service</module>
         <module>Orders-Service</module>
         <module>Shop-Service</module>

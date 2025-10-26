@@ -1,5 +1,18 @@
 services:
-# RabbitMQ
+  # App Gateway
+  app-gateway:
+    build:
+      context: App-Gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - orders-service
+      - shop-service
+      - inventory-service
+    networks:
+      - backend-network
+
+  # RabbitMQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -12,7 +25,7 @@ services:
     networks:
       - backend-network
 
-# Orders
+  # Orders
   mongodb_orders:
     image: mongo:latest
     container_name: "mongodb_orders"
@@ -71,7 +84,7 @@ services:
     networks:
       - backend-network
 
-# Inventory
+  # Inventory
   mongodb_inventory:
     image: mongo:latest
     container_name: mongo_inventory
@@ -89,7 +102,7 @@ services:
       - "8083:8083"
     depends_on:
       - mongodb_inventory
-#      - rabbitmq
+    #      - rabbitmq
     links:
       - mongodb_inventory
     networks:
