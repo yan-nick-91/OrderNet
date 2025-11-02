@@ -44,34 +44,15 @@ public class ProductRelation {
         return quantity;
     }
 
-    public void checkTypeForAdjustmentQuantity(String adjustmentType, int quantity) {
+    public void adjustProductQuantity(String adjustmentType, int newQuantity) {
         AdjustmentType type = AdjustmentType.valueOf(adjustmentType.toUpperCase());
-
+        ProductQuantityAdjuster productQuantityAdjuster = new ProductQuantityAdjuster();
         switch (type) {
-            case INCREASE -> increaseQuantity(quantity);
-            case DECREASE -> decreaseQuantity(quantity);
+            case INCREASE -> quantity = productQuantityAdjuster.increaseQuantity(quantity, newQuantity);
+            case DECREASE -> quantity = productQuantityAdjuster.decreaseQuantity(quantity, newQuantity);
             default -> throw new IllegalAdjustmentTypeException(
                     "Adjustment type must be increase or decrease"
             );
-        }
-    }
-
-    private void increaseQuantity(int newQuantity) {
-        if (newQuantity <= 0) {
-            throw new IllegalProductQuantityException("Quantity must be greater than 0");
-        }
-        this.quantity += newQuantity;
-    }
-
-    private void decreaseQuantity(int newQuantity) {
-        if (newQuantity <= 0) {
-            throw new IllegalProductQuantityException("Quantity must be greater than 0");
-        }
-
-        this.quantity -= newQuantity;
-        if (this.quantity < 0) {
-            this.quantity += newQuantity;
-            throw new IllegalProductQuantityException("Cannot decrease quantity below 0");
         }
     }
 }
