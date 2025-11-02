@@ -96,7 +96,7 @@ class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<ProductCustomerResponseDTO> RequestForCatalog() {
+    public List<ProductCustomerResponseDTO> requestForCatalog() {
         return productCaching.getCachedProducts();
     }
 

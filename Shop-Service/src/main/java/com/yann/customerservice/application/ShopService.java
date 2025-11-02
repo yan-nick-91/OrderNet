@@ -16,7 +16,7 @@ public interface ShopService {
     CustomerDetailDTO initializeProductToCart(
             String customerIDAsString, CustomerProductRequestDTO customerProductRequestDTO);
 
-    List<ProductCustomerResponseDTO> RequestForCatalog();
+    List<ProductCustomerResponseDTO> requestForCatalog();
 
     CustomerDetailDTO updateProductQuantityInCart(
             String customerIDAsString, AdjustProductQuantityRequestDTO adjustProductQuantityRequestDTO);
