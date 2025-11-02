@@ -1,6 +1,6 @@
 package com.yann.customerservice.domain;
 
-public enum AdjustmentType {
+enum AdjustmentType {
     INCREASE,
     DECREASE
 }

@@ -19,7 +19,7 @@ public class CatalogController {
     @GetMapping
     public ResponseEntity<Object> getCatalog() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(shopService.RequestForCatalog());
+            return ResponseEntity.status(HttpStatus.OK).body(shopService.requestForCatalog());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
