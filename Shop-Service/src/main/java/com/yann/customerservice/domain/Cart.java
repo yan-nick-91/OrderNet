@@ -42,7 +42,7 @@ public class Cart {
                                                                   .equalsIgnoreCase(productName))
                                                   .findAny()
                                                   .orElseThrow(() -> new ProductNotFoundException("Product not found"));
-        productRelation.checkTypeForAdjustmentQuantity(adjustmentType, quantity);
+        productRelation.adjustProductQuantity(adjustmentType, quantity);
 
         if (productRelation.getQuantity() < 0) {
             throw new IllegalAdjustmentTypeException(
