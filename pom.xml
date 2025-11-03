@@ -11,6 +11,7 @@
 
     <modules>
         <module>App-Gateway</module>
+        <module>Customer-Service</module>
         <module>Inventory-Service</module>
         <module>Orders-Service</module>
         <module>Shop-Service</module>
