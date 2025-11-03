@@ -108,6 +108,55 @@ services:
     networks:
       - backend-network
 
+  #  Customer app
+  customer-service:
+    build:
+      context: Customer-Service
+    ports:
+      - "8084:8084"
+    depends_on:
+      cassandra_init:
+        condition: service_completed_successfully
+    networks:
+      - backend-network
+    environment:
+      - SPRING_CASSANDRA_CONTACT_POINTS=customer_cassandra
+    restart: on-failure
+
+  # Cassandra database
+  customer_cassandra:
+    image: cassandra:latest
+    container_name: customer_cassandra
+    ports:
+      - "9042:9042"
+    networks:
+      - backend-network
+    volumes:
+      - customer_data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=CustomerCluster
+    healthcheck:
+      test: ["CMD-SHELL", "cqlsh -e 'describe cluster' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Should run the script to create a keyspace
+  cassandra_init:
+    image: cassandra:latest
+    container_name: cassandra_init
+    depends_on:
+      customer_cassandra:
+        condition: service_healthy
+    volumes:
+      - ./Customer-Service/src/main/resources/cql/init.cql:/scripts/init.cql
+      - ./Customer-Service/init-cassandra.sh:/scripts/init.sh
+    entrypoint: ["/bin/bash", "/scripts/init.sh"]
+    networks:
+      - backend-network
+    restart: no
+
 networks:
   backend-network:
 
@@ -116,3 +165,5 @@ volumes:
     name: inventory_data
   shop_data:
     name: shop_data
+  customer_data:
+    name: customer_data
