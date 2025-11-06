@@ -1,10 +1,10 @@
 services:
-  # App Gateway
-  app-gateway:
+  # Shop Gateway
+  shop-gateway:
     build:
-      context: App-Gateway
+      context: Shop-Gateway
     ports:
-      - "8080:8080"
+      - "8070:8070"
     depends_on:
       - orders-service
       - shop-service
