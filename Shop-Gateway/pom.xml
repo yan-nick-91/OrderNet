@@ -9,9 +9,9 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>App-Gateway</artifactId>
-    <name>App-Gateway</name>
-    <description>app-gateway</description>
+    <artifactId>Shop-Gateway</artifactId>
+    <name>Shop-Gateway</name>
+    <description>shop-gateway</description>
 
     <properties>
         <java.version>21</java.version>
@@ -71,7 +71,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>App-Gateway</finalName>
+        <finalName>Shop-Gateway</finalName>
     </build>
 
 </project>

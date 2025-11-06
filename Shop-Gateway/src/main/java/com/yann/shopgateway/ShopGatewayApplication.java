@@ -1,13 +1,13 @@
-package com.yann.appgateway;
+package com.yann.shopgateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AppGatewayApplication {
+public class ShopGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppGatewayApplication.class, args);
+        SpringApplication.run(ShopGatewayApplication.class, args);
     }
 
 }

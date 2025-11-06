@@ -1,10 +1,10 @@
-package com.yann.appgateway;
+package com.yann.shopgateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AppGatewayApplicationTests {
+class ShopGatewayApplicationTests {
 
     @Test
     void contextLoads() {
