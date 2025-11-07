@@ -4,11 +4,23 @@ services:
     build:
       context: Shop-Gateway
     ports:
-      - "8070:8070"
+      - "8071:8071"
     depends_on:
       - orders-service
       - shop-service
       - inventory-service
+    networks:
+      - backend-network
+
+  # Customer Gateway
+  customer-gateway:
+    build:
+      context: Customer-Gateway
+    ports:
+      - "8070:8070"
+    depends_on:
+      - customer-service
+      - shop-service
     networks:
       - backend-network
 
