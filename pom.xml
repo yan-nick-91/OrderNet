@@ -11,6 +11,7 @@
 
     <modules>
         <module>Shop-Gateway</module>
+        <module>Customer-Gateway</module>
         <module>Customer-Service</module>
         <module>Inventory-Service</module>
         <module>Orders-Service</module>
@@ -29,11 +30,25 @@
     </parent>
 
     <dependencies>
+        <!-- Spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Webflux -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
+        <!-- Tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
